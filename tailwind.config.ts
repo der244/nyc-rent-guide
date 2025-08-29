@@ -52,6 +52,12 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				calculator: {
+					header: 'hsl(var(--calculator-header))',
+					success: 'hsl(var(--calculator-success))',
+					warning: 'hsl(var(--calculator-warning))',
+					info: 'hsl(var(--calculator-info))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

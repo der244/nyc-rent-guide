@@ -1,0 +1,85 @@
+[
+  {
+    "order": 56,
+    "effective_from": "2024-10-01",
+    "effective_to": "2025-09-30",
+    "one_year": { "type": "flat", "pct": 2.75 },
+    "two_year": { "type": "flat", "pct": 5.25 }
+  },
+  {
+    "order": 55,
+    "effective_from": "2023-10-01",
+    "effective_to": "2024-09-30",
+    "one_year": { "type": "flat", "pct": 3.0 },
+    "two_year": {
+      "type": "split",
+      "year1_pct": 2.75,
+      "year2_pct_on_year1_rent": 3.2
+    }
+  },
+  {
+    "order": 54,
+    "effective_from": "2022-10-01",
+    "effective_to": "2023-09-30",
+    "one_year": { "type": "flat", "pct": 3.25 },
+    "two_year": { "type": "flat", "pct": 5.0 }
+  },
+  {
+    "order": 53,
+    "effective_from": "2021-10-01",
+    "effective_to": "2022-09-30",
+    "one_year": {
+      "type": "split_by_month",
+      "first_months": 6,
+      "first_pct": 0.0,
+      "remaining_months_pct": 1.5
+    },
+    "two_year": { "type": "flat", "pct": 2.5 }
+  },
+  {
+    "order": 52,
+    "effective_from": "2020-10-01",
+    "effective_to": "2021-09-30",
+    "one_year": { "type": "flat", "pct": 0.0 },
+    "two_year": {
+      "type": "split",
+      "year1_pct": 0.0,
+      "year2_pct_on_year1_rent": 1.0
+    }
+  },
+  {
+    "order": 51,
+    "effective_from": "2019-10-01",
+    "effective_to": "2020-09-30",
+    "one_year": { "type": "flat", "pct": 1.5 },
+    "two_year": { "type": "flat", "pct": 2.5 }
+  },
+  {
+    "order": 50,
+    "effective_from": "2018-10-01",
+    "effective_to": "2019-09-30",
+    "one_year": { "type": "flat", "pct": 1.5 },
+    "two_year": { "type": "flat", "pct": 2.5 }
+  },
+  {
+    "order": 49,
+    "effective_from": "2017-10-01",
+    "effective_to": "2018-09-30",
+    "one_year": { "type": "flat", "pct": 1.25 },
+    "two_year": { "type": "flat", "pct": 2.0 }
+  },
+  {
+    "order": 48,
+    "effective_from": "2016-10-01",
+    "effective_to": "2017-09-30",
+    "one_year": { "type": "flat", "pct": 0.0 },
+    "two_year": { "type": "flat", "pct": 2.0 }
+  },
+  {
+    "order": 47,
+    "effective_from": "2015-10-01",
+    "effective_to": "2016-09-30",
+    "one_year": { "type": "flat", "pct": 0.0 },
+    "two_year": { "type": "flat", "pct": 2.0 }
+  }
+]
