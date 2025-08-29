@@ -20,10 +20,22 @@ export default function RentCalculator() {
       // Simulate brief loading for better UX
       await new Promise(resolve => setTimeout(resolve, 300));
       
-      const calculationResult = calculateRentIncrease(calculationInputs);
+      // Calculate both 1-year and 2-year scenarios
+      const oneYearResult = calculateRentIncrease({
+        ...calculationInputs,
+        leaseTerm: 1
+      });
       
-      if (calculationResult) {
-        setResult(calculationResult);
+      const twoYearResult = calculateRentIncrease({
+        ...calculationInputs,
+        leaseTerm: 2
+      });
+      
+      // Use the selected term as the primary result, but we'll show both
+      const primaryResult = calculationInputs.leaseTerm === 1 ? oneYearResult : twoYearResult;
+      
+      if (primaryResult && (oneYearResult || twoYearResult)) {
+        setResult(primaryResult);
         setInputs(calculationInputs);
         
         // Scroll to results
@@ -34,7 +46,7 @@ export default function RentCalculator() {
         
         toast({
           title: "Calculation complete",
-          description: `Rent increase calculated using RGB Order #${calculationResult.order}`,
+          description: `Both 1-year and 2-year scenarios calculated using RGB Order #${primaryResult.order}`,
         });
       } else {
         toast({
@@ -88,12 +100,12 @@ export default function RentCalculator() {
                   <h2 className="text-lg font-semibold mb-4">How It Works</h2>
                   <div className="space-y-4 text-sm">
                     <div>
-                      <h3 className="font-medium text-calculator-header mb-2">Supported Lease Types</h3>
+                      <h3 className="font-medium text-calculator-header mb-2">Complete Analysis</h3>
                       <ul className="space-y-1 text-muted-foreground">
-                        <li>• One-year lease renewals</li>
-                        <li>• Two-year lease renewals</li>
-                        <li>• Split percentage increases (different rates per year)</li>
-                        <li>• Monthly split increases (different rates by month)</li>
+                        <li>• Both 1-year and 2-year scenarios calculated</li>
+                        <li>• Side-by-side comparison like official renewal forms</li>
+                        <li>• Split percentage increases handled automatically</li>
+                        <li>• Monthly breakdown for complex lease structures</li>
                       </ul>
                     </div>
                     

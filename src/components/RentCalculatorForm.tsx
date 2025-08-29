@@ -150,6 +150,9 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
               <Label htmlFor="two-year" className="font-normal">2 Years</Label>
             </div>
           </RadioGroup>
+          <p className="text-xs text-muted-foreground">
+            Both 1-year and 2-year scenarios will be calculated for comparison
+          </p>
         </div>
 
         {/* Current Legal Regulated Rent */}
