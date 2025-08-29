@@ -1,11 +1,11 @@
 import React from 'react';
-import { Copy, FileText, CheckCircle, AlertCircle } from 'lucide-react';
+import { Copy, FileText, CheckCircle, AlertCircle, Calculator } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CalculationResult } from '../types/rgb';
-import { formatCurrency, formatPercent } from '../utils/rentCalculator';
+import { formatCurrency, formatPercent, getGuideline, calculateRentIncrease } from '../utils/rentCalculator';
 import { useToast } from '@/hooks/use-toast';
 
 interface RentCalculatorResultsProps {
@@ -20,6 +20,31 @@ interface RentCalculatorResultsProps {
 
 export default function RentCalculatorResults({ result, inputs }: RentCalculatorResultsProps) {
   const { toast } = useToast();
+
+  // Calculate both 1-year and 2-year scenarios for comparison
+  const getBothScenarios = () => {
+    const guideline = getGuideline(inputs.leaseStartDate, inputs.leaseTerm);
+    if (!guideline) return null;
+
+    const oneYearResult = calculateRentIncrease({
+      ...inputs,
+      leaseTerm: 1
+    });
+
+    const twoYearResult = calculateRentIncrease({
+      ...inputs,
+      leaseTerm: 2
+    });
+
+    return {
+      oneYear: oneYearResult,
+      twoYear: twoYearResult,
+      effectivePeriod: `${guideline.order.effective_from} to ${guideline.order.effective_to}`,
+      orderNumber: guideline.order.order
+    };
+  };
+
+  const scenarios = getBothScenarios();
 
   const copyToClipboard = async () => {
     const summary = {
@@ -122,10 +147,139 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
         </CardContent>
       </Card>
 
-      {/* Increase Breakdown */}
+      {/* Comprehensive Comparison Table */}
+      {scenarios && (
+        <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Calculator className="h-5 w-5 text-primary" />
+              <CardTitle className="text-lg font-semibold">
+                RGB Order #{scenarios.orderNumber} - Complete Analysis
+              </CardTitle>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Effective Period: {new Date(scenarios.effectivePeriod.split(' to ')[0]).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })} to {new Date(scenarios.effectivePeriod.split(' to ')[1]).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </p>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-muted/50">
+                    <TableHead className="font-semibold">Current Rent</TableHead>
+                    <TableHead className="text-center font-semibold">1-Year Lease</TableHead>
+                    <TableHead className="text-center font-semibold">2-Year Lease</TableHead>
+                  </TableRow>
+                  <TableRow className="bg-muted/30">
+                    <TableHead className="text-muted-foreground">Starting Amount</TableHead>
+                    <TableHead className="text-center text-muted-foreground">
+                      {scenarios.oneYear?.increases[0]?.percentIncrease !== undefined 
+                        ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} increase`
+                        : 'N/A'
+                      }
+                    </TableHead>
+                    <TableHead className="text-center text-muted-foreground">
+                      {scenarios.twoYear?.increases.length === 1 
+                        ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} increase`
+                        : scenarios.twoYear?.increases.length === 2
+                        ? `Yr1: ${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} | Yr2: ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)}`
+                        : 'Split increase'
+                      }
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {/* Main rent calculation row */}
+                  <TableRow className="border-b-2">
+                    <TableCell className="font-bold text-lg">
+                      {formatCurrency(inputs.currentRent)}
+                    </TableCell>
+                    <TableCell className="text-center space-y-1">
+                      <div className="text-sm text-muted-foreground">
+                        +{formatCurrency(scenarios.oneYear?.increases[0]?.dollarIncrease || 0)}
+                      </div>
+                      <div className="text-lg font-bold text-calculator-success">
+                        {formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-center space-y-1">
+                      <div className="text-sm text-muted-foreground">
+                        +{formatCurrency(scenarios.twoYear?.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0) || 0)}
+                      </div>
+                      <div className="text-lg font-bold text-calculator-success">
+                        {formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+
+                  {/* Preferential rent row if applicable */}
+                  {inputs.preferentialRent && (
+                    <TableRow className="bg-calculator-info/5">
+                      <TableCell className="font-semibold text-calculator-info">
+                        {formatCurrency(inputs.preferentialRent)}
+                        <div className="text-xs text-muted-foreground">Preferential Rent</div>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <div className="text-sm text-muted-foreground">No change</div>
+                        <div className="font-semibold text-calculator-info">
+                          {formatCurrency(inputs.preferentialRent)}
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <div className="text-sm text-muted-foreground">No change</div>
+                        <div className="font-semibold text-calculator-info">
+                          {formatCurrency(inputs.preferentialRent)}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+
+            {/* Detailed breakdown for 2-year split leases */}
+            {scenarios.twoYear?.increases.length === 2 && (
+              <div className="mt-6 p-4 bg-muted/30 rounded-lg">
+                <h4 className="font-semibold mb-3 text-sm">2-Year Lease Yearly Breakdown:</h4>
+                <div className="grid md:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <p className="font-medium">Year 1</p>
+                    <p>{formatCurrency(inputs.currentRent)} → {formatCurrency(scenarios.twoYear.increases[0].newRent)}</p>
+                    <p className="text-muted-foreground">
+                      {formatPercent(scenarios.twoYear.increases[0].percentIncrease)} increase 
+                      (+{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)})
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Year 2</p>
+                    <p>{formatCurrency(scenarios.twoYear.increases[0].newRent)} → {formatCurrency(scenarios.twoYear.increases[1].newRent)}</p>
+                    <p className="text-muted-foreground">
+                      {formatPercent(scenarios.twoYear.increases[1].percentIncrease)} increase 
+                      (+{formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)})
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Original Increase Breakdown */}
       <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
         <CardHeader>
-          <CardTitle className="text-lg font-semibold">Increase Breakdown</CardTitle>
+          <CardTitle className="text-lg font-semibold">Selected Lease Term Breakdown</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Detailed calculation for your {inputs.leaseTerm}-year lease selection
+          </p>
         </CardHeader>
         <CardContent>
           <Table>
