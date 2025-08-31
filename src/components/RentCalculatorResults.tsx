@@ -155,7 +155,7 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
                     <TableCell className="text-center space-y-1">
                       <div className="text-lg font-bold text-calculator-success">
                         {scenarios.twoYear?.increases.length === 2 
-                          ? `${formatCurrency(scenarios.twoYear.increases[0].newRent)} / ${formatCurrency(scenarios.twoYear.increases[1].newRent)}`
+                          ? `${formatCurrency(scenarios.twoYear.increases[0].newRent)} / ${formatCurrency(scenarios.twoYear.newLegalRent)}`
                           : formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)
                         }
                       </div>
