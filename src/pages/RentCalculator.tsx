@@ -31,8 +31,8 @@ export default function RentCalculator() {
         leaseTerm: 2
       });
       
-      // Use the selected term as the primary result, but we'll show both
-      const primaryResult = calculationInputs.leaseTerm === 1 ? oneYearResult : twoYearResult;
+      // Use the 1-year result as the primary result for display
+      const primaryResult = oneYearResult;
       
       if (primaryResult && (oneYearResult || twoYearResult)) {
         setResult(primaryResult);

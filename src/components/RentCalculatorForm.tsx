@@ -18,7 +18,7 @@ interface RentCalculatorFormProps {
 
 export default function RentCalculatorForm({ onCalculate, isCalculating }: RentCalculatorFormProps) {
   const [leaseStartDate, setLeaseStartDate] = useState<Date>(new Date());
-  const [leaseTerm, setLeaseTerm] = useState<"1" | "2">("1");
+  
   const [currentRent, setCurrentRent] = useState<string>("");
   const [preferentialRent, setPreferentialRent] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -53,7 +53,6 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
     if (Object.keys(newErrors).length === 0) {
       onCalculate({
         leaseStartDate,
-        leaseTerm: parseInt(leaseTerm) as 1 | 2,
         currentRent: rentAmount,
         preferentialRent: prefAmount,
       });
@@ -133,27 +132,6 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
           )}
         </div>
 
-        {/* Lease Term */}
-        <div className="space-y-3">
-          <Label className="text-sm font-medium">Lease Term</Label>
-          <RadioGroup
-            value={leaseTerm}
-            onValueChange={(value) => setLeaseTerm(value as "1" | "2")}
-            className="flex gap-6"
-          >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="1" id="one-year" />
-              <Label htmlFor="one-year" className="font-normal">1 Year</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="2" id="two-year" />
-              <Label htmlFor="two-year" className="font-normal">2 Years</Label>
-            </div>
-          </RadioGroup>
-          <p className="text-xs text-muted-foreground">
-            Both 1-year and 2-year scenarios will be calculated for comparison
-          </p>
-        </div>
 
         {/* Current Legal Regulated Rent */}
         <div className="space-y-2">

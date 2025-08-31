@@ -13,7 +13,6 @@ export type RentIncrease =
 
 export interface CalculationInputs {
   leaseStartDate: Date;
-  leaseTerm: 1 | 2;
   currentRent: number;
   preferentialRent?: number;
   unitPaysHeat?: boolean;

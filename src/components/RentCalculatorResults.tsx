@@ -12,7 +12,6 @@ interface RentCalculatorResultsProps {
   result: CalculationResult;
   inputs: {
     leaseStartDate: Date;
-    leaseTerm: 1 | 2;
     currentRent: number;
     preferentialRent?: number;
   };
@@ -23,9 +22,6 @@ export default function RentCalculatorResults({ result, inputs }: RentCalculator
 
   // Calculate both 1-year and 2-year scenarios for comparison
   const getBothScenarios = () => {
-    const guideline = getGuideline(inputs.leaseStartDate, inputs.leaseTerm);
-    if (!guideline) return null;
-
     const oneYearResult = calculateRentIncrease({
       ...inputs,
       leaseTerm: 1
@@ -36,11 +32,14 @@ export default function RentCalculatorResults({ result, inputs }: RentCalculator
       leaseTerm: 2
     });
 
+    // Get the guideline info from one of the results
+    const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
+    
     return {
       oneYear: oneYearResult,
       twoYear: twoYearResult,
-      effectivePeriod: `${guideline.order.effective_from} to ${guideline.order.effective_to}`,
-      orderNumber: guideline.order.order
+      effectivePeriod: oneYearGuideline ? `${oneYearGuideline.order.effective_from} to ${oneYearGuideline.order.effective_to}` : '',
+      orderNumber: oneYearGuideline?.order.order || 0
     };
   };
 
@@ -49,7 +48,6 @@ export default function RentCalculatorResults({ result, inputs }: RentCalculator
   const copyToClipboard = async () => {
     const summary = {
       leaseStart: inputs.leaseStartDate.toDateString(),
-      leaseTerm: `${inputs.leaseTerm} year${inputs.leaseTerm > 1 ? 's' : ''}`,
       currentRent: formatCurrency(inputs.currentRent),
       newLegalRent: formatCurrency(result.newLegalRent),
       increases: result.increases,
@@ -61,7 +59,6 @@ export default function RentCalculatorResults({ result, inputs }: RentCalculator
 NYC Rent Stabilized Renewal Calculation
 
 Lease Start: ${summary.leaseStart}
-Lease Term: ${summary.leaseTerm}
 Current Legal Rent: ${summary.currentRent}
 New Legal Rent: ${summary.newLegalRent}
 
@@ -276,10 +273,10 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
       {/* Original Increase Breakdown */}
       <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
         <CardHeader>
-          <CardTitle className="text-lg font-semibold">Selected Lease Term Breakdown</CardTitle>
-          <p className="text-sm text-muted-foreground">
-            Detailed calculation for your {inputs.leaseTerm}-year lease selection
-          </p>
+            <CardTitle className="text-lg font-semibold">Detailed Increase Breakdown</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Step-by-step calculation breakdown
+            </p>
         </CardHeader>
         <CardContent>
           <Table>
@@ -319,7 +316,6 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
           <CardHeader>
             <CardTitle className="text-lg font-semibold">
               Monthly Payment Schedule
-              {inputs.leaseTerm === 2 ? ' (24 Months)' : ' (12 Months)'}
             </CardTitle>
           </CardHeader>
           <CardContent>
