@@ -248,10 +248,18 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
         <Card className="shadow-lg border-0 print:hidden" style={{ boxShadow: 'var(--shadow-card)' }}>
           <CardHeader className="bg-gradient-to-r from-calculator-success to-calculator-success/90 text-white rounded-t-lg">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-xl font-semibold flex items-center gap-2">
-                <CheckCircle className="h-5 w-5" />
-                RGB Order #{scenarios.orderNumber} - Renewal Calculation
-              </CardTitle>
+              <div>
+                <CardTitle className="text-xl font-semibold flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5" />
+                  RGB Order #{scenarios.orderNumber} - Renewal Calculation
+                </CardTitle>
+                {(inputs.address || inputs.unit) && (
+                  <div className="mt-2 text-sm text-white/90">
+                    {inputs.address && <div>📍 {inputs.address}</div>}
+                    {inputs.unit && <div>🏠 Unit {inputs.unit}</div>}
+                  </div>
+                )}
+              </div>
               <div className="flex gap-3">
                 <Button onClick={copyToClipboard} variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
                   <Copy className="h-4 w-4 mr-2" />
