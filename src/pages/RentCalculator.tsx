@@ -77,58 +77,94 @@ export default function RentCalculator() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto space-y-8">
-          {/* Form */}
-          <div className="grid lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-1">
+        <div className="max-w-7xl mx-auto space-y-8">
+          {/* Form and Results Side by Side */}
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Form */}
+            <div>
               <RentCalculatorForm 
                 onCalculate={handleCalculate}
                 isCalculating={isCalculating}
               />
             </div>
             
-            {/* Quick Info */}
-            <div className="lg:col-span-2">
-              <Card className="h-fit shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
-                <CardContent className="p-6">
-                  <h2 className="text-lg font-semibold mb-4">How It Works</h2>
-                  <div className="space-y-4 text-sm">
-                    <div>
-                      <h3 className="font-medium text-calculator-header mb-2">Complete Analysis</h3>
-                      <ul className="space-y-1 text-muted-foreground">
-                        <li>• Both 1-year and 2-year scenarios calculated</li>
-                        <li>• Side-by-side comparison like official renewal forms</li>
-                        <li>• Split percentage increases handled automatically</li>
-                        <li>• Monthly breakdown for complex lease structures</li>
-                      </ul>
+            {/* Results or Quick Info */}
+            <div>
+              {result && inputs ? (
+                <div id="results">
+                  <RentCalculatorResults result={result} inputs={inputs} />
+                </div>
+              ) : (
+                <Card className="h-fit shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
+                  <CardContent className="p-6">
+                    <h2 className="text-lg font-semibold mb-4">How It Works</h2>
+                    <div className="space-y-4 text-sm">
+                      <div>
+                        <h3 className="font-medium text-calculator-header mb-2">Complete Analysis</h3>
+                        <ul className="space-y-1 text-muted-foreground">
+                          <li>• Both 1-year and 2-year scenarios calculated</li>
+                          <li>• Side-by-side comparison like official renewal forms</li>
+                          <li>• Split percentage increases handled automatically</li>
+                          <li>• Monthly breakdown for complex lease structures</li>
+                        </ul>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-medium text-calculator-header mb-2">Preferential Rent</h3>
+                        <p className="text-muted-foreground">
+                          If you pay less than the legal regulated rent due to a preferential rent agreement, 
+                          enter both amounts to see the legal increase and your actual payment.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-medium text-calculator-header mb-2">Coverage Period</h3>
+                        <p className="text-muted-foreground">
+                          This calculator covers RGB Orders #47-56 (October 2015 - September 2025). 
+                          Guidelines are updated annually each October.
+                        </p>
+                      </div>
                     </div>
-                    
-                    <div>
-                      <h3 className="font-medium text-calculator-header mb-2">Preferential Rent</h3>
-                      <p className="text-muted-foreground">
-                        If you pay less than the legal regulated rent due to a preferential rent agreement, 
-                        enter both amounts to see the legal increase and your actual payment.
-                      </p>
-                    </div>
-                    
-                    <div>
-                      <h3 className="font-medium text-calculator-header mb-2">Coverage Period</h3>
-                      <p className="text-muted-foreground">
-                        This calculator covers RGB Orders #47-56 (October 2015 - September 2025). 
-                        Guidelines are updated annually each October.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </div>
 
-          {/* Results */}
+          {/* Additional Info Section - Now Below */}
           {result && inputs && (
-            <div id="results">
-              <RentCalculatorResults result={result} inputs={inputs} />
-            </div>
+            <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
+              <CardContent className="p-6">
+                <h2 className="text-lg font-semibold mb-4">Important Information</h2>
+                <div className="grid md:grid-cols-3 gap-6 text-sm">
+                  <div>
+                    <h3 className="font-medium text-calculator-header mb-2">Complete Analysis</h3>
+                    <ul className="space-y-1 text-muted-foreground">
+                      <li>• Both 1-year and 2-year scenarios calculated</li>
+                      <li>• Side-by-side comparison like official renewal forms</li>
+                      <li>• Split percentage increases handled automatically</li>
+                      <li>• Monthly breakdown for complex lease structures</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-medium text-calculator-header mb-2">Preferential Rent</h3>
+                    <p className="text-muted-foreground">
+                      If you pay less than the legal regulated rent due to a preferential rent agreement, 
+                      enter both amounts to see the legal increase and your actual payment.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-medium text-calculator-header mb-2">Coverage Period</h3>
+                    <p className="text-muted-foreground">
+                      This calculator covers RGB Orders #47-56 (October 2015 - September 2025). 
+                      Guidelines are updated annually each October.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           )}
 
           {/* References */}

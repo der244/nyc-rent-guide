@@ -79,6 +79,15 @@ function calculateSplit(
   const year1Rent = baseRent * (1 + rule.year1_pct / 100);
   const year2Rent = year1Rent * (1 + rule.year2_pct_on_year1_rent / 100);
 
+  // Calculate preferential rent for each year if it exists
+  let year1PreferentialRent = inputs.preferentialRent;
+  let year2PreferentialRent = inputs.preferentialRent;
+  
+  if (inputs.preferentialRent) {
+    year1PreferentialRent = inputs.preferentialRent * (1 + rule.year1_pct / 100);
+    year2PreferentialRent = year1PreferentialRent * (1 + rule.year2_pct_on_year1_rent / 100);
+  }
+
   const monthlyBreakdown = [];
   
   // Months 1-12: Year 1 rent
@@ -87,7 +96,7 @@ function calculateSplit(
       month,
       period: 'Year 1',
       legalRent: year1Rent,
-      tenantPay: inputs.preferentialRent || year1Rent
+      tenantPay: year1PreferentialRent || year1Rent
     });
   }
   
@@ -97,7 +106,7 @@ function calculateSplit(
       month,
       period: 'Year 2',
       legalRent: year2Rent,
-      tenantPay: inputs.preferentialRent || year2Rent
+      tenantPay: year2PreferentialRent || year2Rent
     });
   }
 
@@ -121,9 +130,9 @@ function calculateSplit(
       }
     ],
     monthlyBreakdown,
-    preferentialResult: inputs.preferentialRent ? {
-      newTenantPay: Math.round((inputs.preferentialRent * (1 + (rule.year1_pct + rule.year2_pct_on_year1_rent) / 100)) * 100) / 100,
-      explanation: `Preferential rent increases by total ${rule.year1_pct + rule.year2_pct_on_year1_rent}% over 2 years`
+    preferentialResult: inputs.preferentialRent && year2PreferentialRent ? {
+      newTenantPay: Math.round(year2PreferentialRent * 100) / 100,
+      explanation: `Preferential rent increases by ${rule.year1_pct}% in Year 1, then ${rule.year2_pct_on_year1_rent}% in Year 2`
     } : undefined,
     appliedRule: `Order #${order.order}, Year 1: ${rule.year1_pct}%, Year 2: ${rule.year2_pct_on_year1_rent}% on Year 1 rent`
   };
@@ -139,6 +148,15 @@ function calculateSplitByMonth(
   const firstMonthsRent = baseRent * (1 + rule.first_pct / 100);
   const remainingMonthsRent = baseRent * (1 + rule.remaining_months_pct / 100);
 
+  // Calculate preferential rent for each period if it exists
+  let firstMonthsPreferentialRent = inputs.preferentialRent;
+  let remainingMonthsPreferentialRent = inputs.preferentialRent;
+  
+  if (inputs.preferentialRent) {
+    firstMonthsPreferentialRent = inputs.preferentialRent * (1 + rule.first_pct / 100);
+    remainingMonthsPreferentialRent = inputs.preferentialRent * (1 + rule.remaining_months_pct / 100);
+  }
+
   const monthlyBreakdown = [];
   
   // First months (e.g., 1-6)
@@ -147,7 +165,7 @@ function calculateSplitByMonth(
       month,
       period: `Months 1-${rule.first_months}`,
       legalRent: firstMonthsRent,
-      tenantPay: inputs.preferentialRent || firstMonthsRent
+      tenantPay: firstMonthsPreferentialRent || firstMonthsRent
     });
   }
   
@@ -157,7 +175,7 @@ function calculateSplitByMonth(
       month,
       period: `Months ${rule.first_months + 1}-12`,
       legalRent: remainingMonthsRent,
-      tenantPay: inputs.preferentialRent || remainingMonthsRent
+      tenantPay: remainingMonthsPreferentialRent || remainingMonthsRent
     });
   }
 
@@ -181,9 +199,9 @@ function calculateSplitByMonth(
       }
     ],
     monthlyBreakdown,
-    preferentialResult: inputs.preferentialRent ? {
-      newTenantPay: Math.round((inputs.preferentialRent * (1 + rule.remaining_months_pct / 100)) * 100) / 100,
-      explanation: `Preferential rent increases by ${rule.remaining_months_pct}% (same as remaining months)`
+    preferentialResult: inputs.preferentialRent && remainingMonthsPreferentialRent ? {
+      newTenantPay: Math.round(remainingMonthsPreferentialRent * 100) / 100,
+      explanation: `Preferential rent: ${rule.first_pct}% for months 1-${rule.first_months}, then ${rule.remaining_months_pct}% for remaining months`
     } : undefined,
     appliedRule: `Order #${order.order}, First ${rule.first_months} months: ${rule.first_pct}%, Remaining months: ${rule.remaining_months_pct}%`
   };
