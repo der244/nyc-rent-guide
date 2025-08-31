@@ -211,30 +211,63 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
                 <span className="font-medium">{result.appliedRule}</span>
               </div>
 
-              {/* Detailed breakdown for 2-year leases */}
-              {scenarios.twoYear && scenarios.twoYear.increases.length === 2 && (
-                <div className="p-4 bg-muted/30 rounded-lg">
-                  <h4 className="font-semibold mb-3 text-sm">2-Year Lease Yearly Breakdown:</h4>
-                  <div className="grid md:grid-cols-2 gap-4 text-sm">
+              {/* Detailed breakdown for both 1-year and 2-year leases */}
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* 1-Year Lease Breakdown */}
+                <div className="p-4 bg-muted/20 rounded-lg">
+                  <h4 className="font-semibold mb-3 text-sm text-calculator-success">1-Year Lease Details:</h4>
+                  <div className="text-sm space-y-2">
                     <div>
-                      <p className="font-medium">Year 1</p>
-                      <p>{formatCurrency(inputs.currentRent)} → {formatCurrency(scenarios.twoYear.increases[0].newRent)}</p>
+                      <p className="font-medium">Single Term Increase</p>
+                      <p>{formatCurrency(inputs.currentRent)} → {formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}</p>
                       <p className="text-muted-foreground">
-                        {formatPercent(scenarios.twoYear.increases[0].percentIncrease)} increase 
-                        (+{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)})
-                      </p>
-                    </div>
-                    <div>
-                      <p className="font-medium">Year 2</p>
-                      <p>{formatCurrency(scenarios.twoYear.increases[0].newRent)} → {formatCurrency(scenarios.twoYear.increases[1].newRent)}</p>
-                      <p className="text-muted-foreground">
-                        {formatPercent(scenarios.twoYear.increases[1].percentIncrease)} increase 
-                        (+{formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)})
+                        {scenarios.oneYear?.increases[0]?.percentIncrease !== undefined 
+                          ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} increase (+${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)})`
+                          : 'No increase available'
+                        }
                       </p>
                     </div>
                   </div>
                 </div>
-              )}
+
+                {/* 2-Year Lease Breakdown */}
+                <div className="p-4 bg-muted/20 rounded-lg">
+                  <h4 className="font-semibold mb-3 text-sm text-calculator-success">2-Year Lease Details:</h4>
+                  <div className="text-sm space-y-2">
+                    {scenarios.twoYear && scenarios.twoYear.increases.length === 2 ? (
+                      <>
+                        <div>
+                          <p className="font-medium">Year 1</p>
+                          <p>{formatCurrency(inputs.currentRent)} → {formatCurrency(scenarios.twoYear.increases[0].newRent)}</p>
+                          <p className="text-muted-foreground">
+                            {formatPercent(scenarios.twoYear.increases[0].percentIncrease)} increase 
+                            (+{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)})
+                          </p>
+                        </div>
+                        <div>
+                          <p className="font-medium">Year 2</p>
+                          <p>{formatCurrency(scenarios.twoYear.increases[0].newRent)} → {formatCurrency(scenarios.twoYear.increases[1].newRent)}</p>
+                          <p className="text-muted-foreground">
+                            {formatPercent(scenarios.twoYear.increases[1].percentIncrease)} increase 
+                            (+{formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)})
+                          </p>
+                        </div>
+                      </>
+                    ) : scenarios.twoYear ? (
+                      <div>
+                        <p className="font-medium">2-Year Term</p>
+                        <p>{formatCurrency(inputs.currentRent)} → {formatCurrency(scenarios.twoYear.newLegalRent)}</p>
+                        <p className="text-muted-foreground">
+                          {formatPercent(scenarios.twoYear.increases[0]?.percentIncrease || 0)} total increase over 2 years
+                          (+{formatCurrency(scenarios.twoYear.increases[0]?.dollarIncrease || 0)})
+                        </p>
+                      </div>
+                    ) : (
+                      <p className="text-muted-foreground">2-year option not available</p>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
