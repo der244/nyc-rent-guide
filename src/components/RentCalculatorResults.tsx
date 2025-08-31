@@ -195,7 +195,7 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
                       <TableCell className="text-center space-y-1">
                         <div className="font-semibold text-calculator-info">
                           {scenarios.oneYear?.increases.length === 2 
-                            ? `${formatCurrency((inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100)))} / ${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}`
+                            ? `${formatCurrency(scenarios.oneYear.increases[0].newRent === inputs.preferentialRent ? inputs.preferentialRent! : (inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100)))} / ${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}`
                             : formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)
                           }
                         </div>
