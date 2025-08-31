@@ -227,6 +227,8 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
               value={currentRent}
               onChange={handleCurrentRentChange}
               placeholder="2,000.00"
+              inputMode="decimal"
+              pattern="[0-9]*"
               className={cn(
                 "pl-8",
                 errors.currentRent && "border-destructive"
@@ -250,6 +252,8 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
               value={preferentialRent}
               onChange={handlePreferentialRentChange}
               placeholder="1,800.00"
+              inputMode="decimal"
+              pattern="[0-9]*"
               className={cn(
                 "pl-8",
                 errors.preferentialRent && "border-destructive"
