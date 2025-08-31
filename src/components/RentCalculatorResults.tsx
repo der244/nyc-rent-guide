@@ -89,7 +89,14 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
           <h1 className="text-2xl font-bold">NYC Rent Stabilized Renewal Calculation</h1>
           <h2 className="text-lg text-gray-700">RGB Order #{scenarios.orderNumber}</h2>
           <p className="text-sm">
-            Effective Period: {new Date(scenarios.effectivePeriod.split(' to ')[0]).toLocaleDateString('en-US', { 
+            <strong>Lease Start Date:</strong> {inputs.leaseStartDate.toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          </p>
+          <p className="text-sm">
+            <strong>Effective Period:</strong> {new Date(scenarios.effectivePeriod.split(' to ')[0]).toLocaleDateString('en-US', { 
               year: 'numeric', 
               month: 'long', 
               day: 'numeric' 
@@ -99,7 +106,7 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
               day: 'numeric' 
             })}
           </p>
-          <p className="text-sm text-gray-600">Calculated on: {new Date().toLocaleDateString()}</p>
+          <p className="text-sm text-gray-600"><strong>Calculated on:</strong> {new Date().toLocaleDateString()}</p>
         </div>
 
         <div className="border border-gray-300 p-4 mb-4">
