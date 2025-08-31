@@ -29,16 +29,6 @@ export function calculateRentIncrease(inputs: CalculationInputs, leaseTerm: 1 | 
   const { order, rule } = guideline;
   const baseRent = inputs.currentRent;
 
-  // For 1-year leases, if the 2-year rule is a split, use the first year rate for consistency
-  if (leaseTerm === 1) {
-    const twoYearGuideline = getGuideline(inputs.leaseStartDate, 2);
-    if (twoYearGuideline?.rule.type === 'split') {
-      const splitRule = twoYearGuideline.rule;
-      const adjustedRule = { type: 'flat' as const, pct: splitRule.year1_pct };
-      return calculateFlat(twoYearGuideline.order, adjustedRule, baseRent, inputs, leaseTerm);
-    }
-  }
-
   switch (rule.type) {
     case 'flat':
       return calculateFlat(order, rule, baseRent, inputs, leaseTerm);
