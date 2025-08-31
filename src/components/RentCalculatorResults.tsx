@@ -248,7 +248,30 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
             <div className="mt-6 space-y-4">
               <div className="text-sm">
                 <span className="font-medium text-muted-foreground">Applied Rule: </span>
-                <span className="font-medium">{result.appliedRule}</span>
+                <span className="font-medium">
+                  {(() => {
+                    const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
+                    const twoYearGuideline = getGuideline(inputs.leaseStartDate, 2);
+                    
+                    const oneYearPct = oneYearGuideline?.rule.type === 'flat' ? 
+                      `${oneYearGuideline.rule.pct}%` :
+                      oneYearGuideline?.rule.type === 'split' ?
+                      `${oneYearGuideline.rule.year1_pct}% / ${oneYearGuideline.rule.year2_pct_on_year1_rent}%` :
+                      oneYearGuideline?.rule.type === 'split_by_month' ?
+                      `${oneYearGuideline.rule.first_pct}% / ${oneYearGuideline.rule.remaining_months_pct}%` :
+                      'N/A';
+                    
+                    const twoYearPct = twoYearGuideline?.rule.type === 'flat' ? 
+                      `${twoYearGuideline.rule.pct}%` :
+                      twoYearGuideline?.rule.type === 'split' ?
+                      `${twoYearGuideline.rule.year1_pct}% / ${twoYearGuideline.rule.year2_pct_on_year1_rent}%` :
+                      twoYearGuideline?.rule.type === 'split_by_month' ?
+                      `${twoYearGuideline.rule.first_pct}% / ${twoYearGuideline.rule.remaining_months_pct}%` :
+                      'N/A';
+                    
+                    return `1-Year: ${oneYearPct} | 2-Year: ${twoYearPct}`;
+                  })()}
+                </span>
               </div>
 
               {/* Detailed breakdown for both 1-year and 2-year leases */}
