@@ -125,35 +125,55 @@ All colors MUST be HSL.
 
 /* Print-friendly styles */
 @media print {
+  /* Hide everything except the print-only content */
+  body * {
+    visibility: hidden;
+  }
+  
+  .print-only, .print-only * {
+    visibility: visible;
+  }
+  
+  .print-only {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  
+  /* General print formatting */
   body {
     @apply bg-white text-black;
+    margin: 0;
+    padding: 20px;
+    font-size: 12pt;
+    line-height: 1.4;
   }
   
-  .no-print {
-    display: none !important;
+  h1 { font-size: 18pt; margin-bottom: 10pt; }
+  h2 { font-size: 16pt; margin-bottom: 8pt; }
+  h3 { font-size: 14pt; margin-bottom: 6pt; }
+  
+  .grid {
+    display: table;
+    width: 100%;
   }
   
-  header {
-    background: white !important;
-    color: black !important;
+  .grid > div {
+    display: table-cell;
+    width: 50%;
+    padding: 10pt;
+    vertical-align: top;
   }
   
-  .card {
+  /* Force page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+  
+  /* Remove shadows and unnecessary styling */
+  * {
     box-shadow: none !important;
-    border: 1px solid #ddd !important;
-    page-break-inside: avoid;
-  }
-  
-  .gradient {
-    background: white !important;
-    color: black !important;
-  }
-  
-  button {
-    display: none !important;
-  }
-  
-  .print-show {
-    display: block !important;
+    text-shadow: none !important;
   }
 }
