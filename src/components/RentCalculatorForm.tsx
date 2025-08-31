@@ -18,6 +18,7 @@ interface RentCalculatorFormProps {
 
 export default function RentCalculatorForm({ onCalculate, isCalculating }: RentCalculatorFormProps) {
   const [leaseStartDate, setLeaseStartDate] = useState<Date>(new Date());
+  const [dateInputValue, setDateInputValue] = useState<string>('');
   
   const [currentRent, setCurrentRent] = useState<string>("");
   const [preferentialRent, setPreferentialRent] = useState<string>("");
@@ -86,6 +87,30 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
     }
   };
 
+  const handleDateInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setDateInputValue(value);
+    
+    // Try to parse the date
+    const parsedDate = new Date(value);
+    if (!isNaN(parsedDate.getTime()) && value.length >= 8) {
+      setLeaseStartDate(parsedDate);
+      if (errors.leaseStartDate) {
+        setErrors(prev => ({ ...prev, leaseStartDate: '' }));
+      }
+    }
+  };
+
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      setLeaseStartDate(date);
+      setDateInputValue(format(date, 'yyyy-MM-dd'));
+      if (errors.leaseStartDate) {
+        setErrors(prev => ({ ...prev, leaseStartDate: '' }));
+      }
+    }
+  };
+
   return (
     <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
       <CardHeader className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
@@ -97,39 +122,45 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
           <Label htmlFor="lease-start" className="text-sm font-medium">
             Lease Start Date
           </Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                id="lease-start"
-                variant="outline"
-                className={cn(
-                  "w-full justify-start text-left font-normal",
-                  !leaseStartDate && "text-muted-foreground",
-                  errors.leaseStartDate && "border-destructive"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {leaseStartDate ? format(leaseStartDate, "PPP") : "Pick a date"}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                mode="single"
-                selected={leaseStartDate}
-                onSelect={(date) => {
-                  setLeaseStartDate(date || new Date());
-                  if (errors.leaseStartDate) {
-                    setErrors(prev => ({ ...prev, leaseStartDate: '' }));
-                  }
-                }}
-                initialFocus
-                className="p-3 pointer-events-auto"
-              />
-            </PopoverContent>
-          </Popover>
+          <div className="relative">
+            <Input
+              id="lease-start"
+              type="date"
+              value={dateInputValue || (leaseStartDate ? format(leaseStartDate, 'yyyy-MM-dd') : '')}
+              onChange={handleDateInputChange}
+              className={cn(
+                "pr-10",
+                errors.leaseStartDate && "border-destructive"
+              )}
+              placeholder="YYYY-MM-DD"
+            />
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-muted"
+                >
+                  <CalendarIcon className="h-4 w-4" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="end">
+                <Calendar
+                  mode="single"
+                  selected={leaseStartDate}
+                  onSelect={handleDateSelect}
+                  initialFocus
+                  className="p-3 pointer-events-auto"
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
           {errors.leaseStartDate && (
             <p className="text-sm text-destructive">{errors.leaseStartDate}</p>
           )}
+          <p className="text-xs text-muted-foreground">
+            Enter date manually (YYYY-MM-DD) or click the calendar icon
+          </p>
         </div>
 
 
