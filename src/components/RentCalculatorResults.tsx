@@ -244,7 +244,19 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   <Copy className="h-4 w-4 mr-2" />
                   Copy Results
                 </Button>
-                <Button onClick={() => window.print()} variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
+                <Button onClick={() => {
+                  // Set document title for meaningful filename
+                  const currentTitle = document.title;
+                  const date = new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }).replace(/\//g, '-');
+                  document.title = `NYC-Rent-Calculation-${date}-RGB${scenarios.orderNumber}`;
+                  
+                  window.print();
+                  
+                  // Restore original title after print
+                  setTimeout(() => {
+                    document.title = currentTitle;
+                  }, 1000);
+                }} variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
                   <FileText className="h-4 w-4 mr-2" />
                   Print
                 </Button>
