@@ -136,6 +136,7 @@ function calculateSplit(
     monthlyBreakdown,
     preferentialResult: inputs.preferentialRent && year2PreferentialRent ? {
       newTenantPay: Math.round(year2PreferentialRent * 100) / 100,
+      year1Amount: Math.round(year1PreferentialRent * 100) / 100,
       explanation: `Preferential rent increases by ${rule.year1_pct}% in Year 1, then ${rule.year2_pct_on_year1_rent}% in Year 2`
     } : undefined,
     appliedRule: `Order #${order.order}, Year 1: ${rule.year1_pct}%, Year 2: ${rule.year2_pct_on_year1_rent}% on Year 1 rent`

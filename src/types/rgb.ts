@@ -38,6 +38,7 @@ export interface CalculationResult {
   }>;
   preferentialResult?: {
     newTenantPay: number;
+    year1Amount?: number;
     explanation: string;
   };
   appliedRule: string;
