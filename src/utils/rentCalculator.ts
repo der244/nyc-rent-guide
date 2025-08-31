@@ -23,7 +23,13 @@ export function getGuideline(date: Date, term: 1 | 2): { order: RGBOrder; rule: 
 function preciseCalculate(amount: number, percentage: number): number {
   // Convert to cents to avoid floating point errors
   const cents = Math.round(amount * 100);
-  const increasedCents = Math.round(cents * (1 + percentage / 100));
+  
+  // Convert percentage to basis points (e.g., 2.75% becomes 275 basis points)
+  const basisPoints = Math.round(percentage * 100);
+  
+  // Calculate increase using integer arithmetic: cents * (10000 + basisPoints) / 10000
+  const increasedCents = Math.round((cents * (10000 + basisPoints)) / 10000);
+  
   return increasedCents / 100;
 }
 
