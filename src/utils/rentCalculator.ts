@@ -19,20 +19,6 @@ export function getGuideline(date: Date, term: 1 | 2): { order: RGBOrder; rule: 
   return null;
 }
 
-// Helper function for precise currency calculations using integer arithmetic
-function preciseCalculate(amount: number, percentage: number): number {
-  // Convert to cents to avoid floating point errors
-  const cents = Math.round(amount * 100);
-  
-  // Convert percentage to basis points (e.g., 2.75% becomes 275 basis points)
-  const basisPoints = Math.round(percentage * 100);
-  
-  // Calculate increase using integer arithmetic: cents * (10000 + basisPoints) / 10000
-  const increasedCents = Math.round((cents * (10000 + basisPoints)) / 10000);
-  
-  return increasedCents / 100;
-}
-
 export function calculateRentIncrease(inputs: CalculationInputs, leaseTerm: 1 | 2): CalculationResult | null {
   const guideline = getGuideline(inputs.leaseStartDate, leaseTerm);
   
@@ -76,7 +62,7 @@ function calculateFlat(
       dollarIncrease: dollarIncrease
     }],
     preferentialResult: inputs.preferentialRent ? {
-      newTenantPay: preciseCalculate(inputs.preferentialRent, rule.pct),
+      newTenantPay: Math.round((inputs.preferentialRent * (1 + rule.pct / 100)) * 100) / 100,
       explanation: `Preferential rent increases by ${rule.pct}%`
     } : undefined,
     appliedRule: `Order #${order.order}, ${rule.pct}% increase`
@@ -93,22 +79,13 @@ function calculateSplit(
   const year1Rent = baseRent * (1 + rule.year1_pct / 100);
   const year2Rent = year1Rent * (1 + rule.year2_pct_on_year1_rent / 100);
 
-  // Calculate preferential rent for each year using precise arithmetic
+  // Calculate preferential rent for each year if it exists
   let year1PreferentialRent = inputs.preferentialRent;
   let year2PreferentialRent = inputs.preferentialRent;
   
   if (inputs.preferentialRent) {
-    // Use precise calculation to avoid floating point errors
-    year1PreferentialRent = preciseCalculate(inputs.preferentialRent, rule.year1_pct);
-    year2PreferentialRent = preciseCalculate(year1PreferentialRent, rule.year2_pct_on_year1_rent);
-    
-    console.log('🔍 PRECISE CALC:', {
-      original: inputs.preferentialRent,
-      year1Pct: rule.year1_pct,
-      year2Pct: rule.year2_pct_on_year1_rent,
-      year1Result: year1PreferentialRent,
-      year2Result: year2PreferentialRent
-    });
+    year1PreferentialRent = inputs.preferentialRent * (1 + rule.year1_pct / 100);
+    year2PreferentialRent = year1PreferentialRent * (1 + rule.year2_pct_on_year1_rent / 100);
   }
 
   const monthlyBreakdown = [];
@@ -154,8 +131,7 @@ function calculateSplit(
     ],
     monthlyBreakdown,
     preferentialResult: inputs.preferentialRent && year2PreferentialRent ? {
-      newTenantPay: year2PreferentialRent,
-      year1Amount: year1PreferentialRent,
+      newTenantPay: Math.round(year2PreferentialRent * 100) / 100,
       explanation: `Preferential rent increases by ${rule.year1_pct}% in Year 1, then ${rule.year2_pct_on_year1_rent}% in Year 2`
     } : undefined,
     appliedRule: `Order #${order.order}, Year 1: ${rule.year1_pct}%, Year 2: ${rule.year2_pct_on_year1_rent}% on Year 1 rent`
@@ -177,8 +153,8 @@ function calculateSplitByMonth(
   let remainingMonthsPreferentialRent = inputs.preferentialRent;
   
   if (inputs.preferentialRent) {
-    firstMonthsPreferentialRent = preciseCalculate(inputs.preferentialRent, rule.first_pct);
-    remainingMonthsPreferentialRent = preciseCalculate(inputs.preferentialRent, rule.remaining_months_pct);
+    firstMonthsPreferentialRent = inputs.preferentialRent * (1 + rule.first_pct / 100);
+    remainingMonthsPreferentialRent = inputs.preferentialRent * (1 + rule.remaining_months_pct / 100);
   }
 
   const monthlyBreakdown = [];
@@ -224,7 +200,7 @@ function calculateSplitByMonth(
     ],
     monthlyBreakdown,
     preferentialResult: inputs.preferentialRent && remainingMonthsPreferentialRent ? {
-      newTenantPay: remainingMonthsPreferentialRent,
+      newTenantPay: Math.round(remainingMonthsPreferentialRent * 100) / 100,
       explanation: `Preferential rent: ${rule.first_pct}% for months 1-${rule.first_months}, then ${rule.remaining_months_pct}% for remaining months`
     } : undefined,
     appliedRule: `Order #${order.order}, First ${rule.first_months} months: ${rule.first_pct}%, Remaining months: ${rule.remaining_months_pct}%`

@@ -21,7 +21,7 @@
     "two_year": {
       "type": "split",
       "year1_pct": 2.75,
-      "year2_pct_on_year1_rent": 3.25
+      "year2_pct_on_year1_rent": 3.2
     }
   },
   {

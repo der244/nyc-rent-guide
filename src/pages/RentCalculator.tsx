@@ -4,12 +4,11 @@ import RentCalculatorForm from '../components/RentCalculatorForm';
 import RentCalculatorResults from '../components/RentCalculatorResults';
 import { CalculationInputs, CalculationResult } from '../types/rgb';
 import { calculateRentIncrease } from '../utils/rentCalculator';
-import { testOrder55Specifically, runRentCalculationTests } from '../utils/testRentCalculations';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 
 export default function RentCalculator() {
-  const [result, setResult] = useState<{ oneYear: CalculationResult; twoYear: CalculationResult } | null>(null);
+  const [result, setResult] = useState<CalculationResult | null>(null);
   const [inputs, setInputs] = useState<CalculationInputs | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
   const { toast } = useToast();
@@ -18,22 +17,19 @@ export default function RentCalculator() {
     setIsCalculating(true);
     
     try {
-      // Run validation tests in development
-      if (process.env.NODE_ENV === 'development') {
-        console.log('🔧 Development Mode: Running validation tests...');
-        testOrder55Specifically();
-        runRentCalculationTests();
-      }
-      
       // Simulate brief loading for better UX
       await new Promise(resolve => setTimeout(resolve, 300));
       
       // Calculate both 1-year and 2-year scenarios
       const oneYearResult = calculateRentIncrease(calculationInputs, 1);
+      
       const twoYearResult = calculateRentIncrease(calculationInputs, 2);
       
-      if (oneYearResult && twoYearResult) {
-        setResult({ oneYear: oneYearResult, twoYear: twoYearResult });
+      // Use the 1-year result as the primary result for display
+      const primaryResult = oneYearResult;
+      
+      if (primaryResult && (oneYearResult || twoYearResult)) {
+        setResult(primaryResult);
         setInputs(calculationInputs);
         
         // Scroll to results
@@ -44,7 +40,7 @@ export default function RentCalculator() {
         
         toast({
           title: "Calculation complete",
-          description: `Both 1-year and 2-year scenarios calculated using RGB Order #${oneYearResult.order}`,
+          description: `Both 1-year and 2-year scenarios calculated using RGB Order #${primaryResult.order}`,
         });
       } else {
         toast({
@@ -54,7 +50,6 @@ export default function RentCalculator() {
         });
       }
     } catch (error) {
-      console.error("Calculation error:", error);
       toast({
         title: "Calculation error",
         description: "An error occurred while calculating the rent increase. Please try again.",
