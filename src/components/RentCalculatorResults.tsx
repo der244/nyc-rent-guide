@@ -40,37 +40,101 @@ export default function RentCalculatorResults({ result, inputs }: RentCalculator
   const scenarios = getBothScenarios();
 
   const copyToClipboard = async () => {
-    const summary = {
-      leaseStart: inputs.leaseStartDate.toDateString(),
-      currentRent: formatCurrency(inputs.currentRent),
-      newLegalRent: formatCurrency(result.newLegalRent),
-      increases: result.increases,
-      appliedRule: result.appliedRule,
-      calculatedOn: new Date().toDateString()
-    };
+    const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
+    const twoYearGuideline = getGuideline(inputs.leaseStartDate, 2);
+    
+    const oneYearPct = oneYearGuideline?.rule.type === 'flat' ? 
+      `${oneYearGuideline.rule.pct}%` :
+      oneYearGuideline?.rule.type === 'split' ?
+      `${oneYearGuideline.rule.year1_pct}% / ${oneYearGuideline.rule.year2_pct_on_year1_rent}%` :
+      oneYearGuideline?.rule.type === 'split_by_month' ?
+      `${oneYearGuideline.rule.first_pct}% / ${oneYearGuideline.rule.remaining_months_pct}%` :
+      'N/A';
+    
+    const twoYearPct = twoYearGuideline?.rule.type === 'flat' ? 
+      `${twoYearGuideline.rule.pct}%` :
+      twoYearGuideline?.rule.type === 'split' ?
+      `${twoYearGuideline.rule.year1_pct}% / ${twoYearGuideline.rule.year2_pct_on_year1_rent}%` :
+      twoYearGuideline?.rule.type === 'split_by_month' ?
+      `${twoYearGuideline.rule.first_pct}% / ${twoYearGuideline.rule.remaining_months_pct}%` :
+      'N/A';
 
     const readableText = `
-NYC Rent Stabilized Renewal Calculation
+NYC RENT STABILIZED RENEWAL CALCULATION
+RGB Order #${scenarios.orderNumber}
 
-Lease Start: ${summary.leaseStart}
-Current Legal Rent: ${summary.currentRent}
-New Legal Rent: ${summary.newLegalRent}
+LEASE INFORMATION:
+• Lease Start Date: ${inputs.leaseStartDate.toLocaleDateString('en-US', { 
+  weekday: 'long',
+  year: 'numeric', 
+  month: 'long', 
+  day: 'numeric' 
+})}
+• Current Legal Regulated Rent: ${formatCurrency(inputs.currentRent)}${inputs.preferentialRent ? `\n• Current Preferential Rent (Tenant Pays): ${formatCurrency(inputs.preferentialRent)}` : ''}
+• RGB Effective Period: ${new Date(scenarios.effectivePeriod.split(' to ')[0]).toLocaleDateString('en-US', { 
+  year: 'numeric', 
+  month: 'long', 
+  day: 'numeric' 
+})} to ${new Date(scenarios.effectivePeriod.split(' to ')[1]).toLocaleDateString('en-US', { 
+  year: 'numeric', 
+  month: 'long', 
+  day: 'numeric' 
+})}
 
-${result.increases.map(inc => 
-  `${inc.period}: ${formatCurrency(inc.oldRent)} → ${formatCurrency(inc.newRent)} (${formatPercent(inc.percentIncrease)} increase, +${formatCurrency(inc.dollarIncrease)})`
-).join('\n')}
+RENEWAL OPTIONS:
 
-Applied Rule: ${summary.appliedRule}
-Calculated on: ${summary.calculatedOn}
+1-YEAR LEASE OPTION:
+• New Legal Regulated Rent: ${formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}
+• Applied Rate: ${oneYearPct}
+• Total Increase: ${scenarios.oneYear?.increases.length === 1 
+  ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} (+${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)})`
+  : scenarios.oneYear?.increases.length === 2
+  ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} = ${formatPercent(scenarios.oneYear.increases.reduce((sum, inc) => sum + inc.percentIncrease, 0))} (+${formatCurrency(scenarios.oneYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))})`
+  : 'N/A'
+}${inputs.preferentialRent && scenarios.oneYear?.preferentialResult ? `\n• New Tenant Payment: ${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}` : ''}
 
-Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.
+2-YEAR LEASE OPTION:
+• New Legal Regulated Rent: ${formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}
+• Applied Rate: ${twoYearPct}
+• Total Increase: ${scenarios.twoYear?.increases.length === 1 
+  ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} (+${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)})`
+  : scenarios.twoYear?.increases.length === 2
+  ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} = ${formatPercent(scenarios.twoYear.increases.reduce((sum, inc) => sum + inc.percentIncrease, 0))} (+${formatCurrency(scenarios.twoYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))})`
+  : 'Split increase over 2 years'
+}${inputs.preferentialRent && scenarios.twoYear?.preferentialResult ? `\n• New Tenant Payment: ${formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}` : ''}
+
+${scenarios.twoYear?.increases.length === 2 ? `
+DETAILED 2-YEAR BREAKDOWN:
+• Year 1: ${formatCurrency(inputs.currentRent)} → ${formatCurrency(scenarios.twoYear.increases[0].newRent)} (${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} increase)
+• Year 2: ${formatCurrency(scenarios.twoYear.increases[0].newRent)} → ${formatCurrency(scenarios.twoYear.increases[1].newRent)} (${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} increase)
+` : ''}
+CALCULATION DETAILS:
+• Calculated on: ${new Date().toLocaleDateString('en-US', { 
+  weekday: 'long',
+  year: 'numeric', 
+  month: 'long', 
+  day: 'numeric' 
+})} at ${new Date().toLocaleTimeString('en-US', { 
+  hour: '2-digit', 
+  minute: '2-digit', 
+  timeZoneName: 'short' 
+})}
+• Applied RGB Guidelines: 1-Year: ${oneYearPct} | 2-Year: ${twoYearPct}
+
+IMPORTANT DISCLAIMER:
+This calculation is for NYC rent-stabilized apartments only and is not legal advice. 
+Please confirm with the NYC Housing and Community Renewal (HCR) or Rent Guidelines Board (RGB). 
+Vacancy allowances, Major Capital Improvements (MCI), Individual Apartment Improvements (IAI), 
+and other adjustments are not included in this calculation.
+
+For official RGB orders and guidelines, visit: nyc.gov/site/rentguidelinesboard
     `.trim();
 
     try {
       await navigator.clipboard.writeText(readableText);
       toast({
-        title: "Results copied to clipboard",
-        description: "The calculation results have been copied in a readable format.",
+        title: "Detailed results copied to clipboard",
+        description: "Complete calculation details have been copied in a comprehensive format.",
       });
     } catch (err) {
       toast({
