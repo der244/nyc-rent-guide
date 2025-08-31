@@ -273,45 +273,6 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
         </Card>
       )}
 
-      {/* Original Increase Breakdown */}
-      <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
-        <CardHeader>
-            <CardTitle className="text-lg font-semibold">Detailed Increase Breakdown</CardTitle>
-            <p className="text-sm text-muted-foreground">
-              Step-by-step calculation breakdown
-            </p>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Period</TableHead>
-                <TableHead>Previous Rent</TableHead>
-                <TableHead>New Rent</TableHead>
-                <TableHead>% Increase</TableHead>
-                <TableHead>$ Increase</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {result.increases.map((increase, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium">{increase.period}</TableCell>
-                  <TableCell>{formatCurrency(increase.oldRent)}</TableCell>
-                  <TableCell className="font-semibold">{formatCurrency(increase.newRent)}</TableCell>
-                  <TableCell>
-                    <Badge variant={increase.percentIncrease > 0 ? "secondary" : "outline"}>
-                      {formatPercent(increase.percentIncrease)}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="font-semibold">
-                    {increase.dollarIncrease > 0 ? '+' : ''}{formatCurrency(increase.dollarIncrease)}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
 
       {/* Monthly Breakdown for Split Leases */}
       {result.monthlyBreakdown && (
