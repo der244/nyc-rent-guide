@@ -83,9 +83,112 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
 
   return (
     <div className="space-y-6">
-      {/* Unified Results - Summary with Complete Analysis */}
+      {/* Print-only simplified view */}
+      <div className="print-only hidden print:block print:space-y-4">
+        <div className="text-center mb-6">
+          <h1 className="text-2xl font-bold">NYC Rent Stabilized Renewal Calculation</h1>
+          <h2 className="text-lg text-gray-700">RGB Order #{scenarios.orderNumber}</h2>
+          <p className="text-sm">
+            Effective Period: {new Date(scenarios.effectivePeriod.split(' to ')[0]).toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })} to {new Date(scenarios.effectivePeriod.split(' to ')[1]).toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          </p>
+          <p className="text-sm text-gray-600">Calculated on: {new Date().toLocaleDateString()}</p>
+        </div>
+
+        <div className="border border-gray-300 p-4 mb-4">
+          <h3 className="font-bold text-lg mb-3">Current Legal Regulated Rent</h3>
+          <p className="text-2xl font-bold">{formatCurrency(inputs.currentRent)}</p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="border border-gray-300 p-4">
+            <h3 className="font-bold text-lg mb-3">1-Year Lease Option</h3>
+            <p className="text-xl font-bold text-green-700">{formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}</p>
+            <p className="text-sm">
+              {scenarios.oneYear?.increases.length === 1 
+                ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} increase (+${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)})`
+                : scenarios.oneYear?.increases.length === 2
+                ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} increase (+${formatCurrency(scenarios.oneYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))})`
+                : 'N/A'
+              }
+            </p>
+            {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && (
+              <div className="mt-3 pt-2 border-t border-gray-200">
+                <p className="text-sm font-medium">Tenant Pays (Preferential):</p>
+                <p className="text-lg font-bold text-blue-700">{formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}</p>
+              </div>
+            )}
+          </div>
+
+          <div className="border border-gray-300 p-4">
+            <h3 className="font-bold text-lg mb-3">2-Year Lease Option</h3>
+            <p className="text-xl font-bold text-green-700">{formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}</p>
+            <p className="text-sm">
+              {scenarios.twoYear?.increases.length === 1 
+                ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} increase (+${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)})`
+                : scenarios.twoYear?.increases.length === 2
+                ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} increase (+${formatCurrency(scenarios.twoYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))})`
+                : 'Split increase over 2 years'
+              }
+            </p>
+            {inputs.preferentialRent && scenarios.twoYear?.preferentialResult && (
+              <div className="mt-3 pt-2 border-t border-gray-200">
+                <p className="text-sm font-medium">Tenant Pays (Preferential):</p>
+                <p className="text-lg font-bold text-blue-700">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="border border-gray-300 p-4 mb-4">
+          <h3 className="font-bold mb-2">Applied Rules</h3>
+          <p className="text-sm">
+            {(() => {
+              const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
+              const twoYearGuideline = getGuideline(inputs.leaseStartDate, 2);
+              
+              const oneYearPct = oneYearGuideline?.rule.type === 'flat' ? 
+                `${oneYearGuideline.rule.pct}%` :
+                oneYearGuideline?.rule.type === 'split' ?
+                `${oneYearGuideline.rule.year1_pct}% / ${oneYearGuideline.rule.year2_pct_on_year1_rent}%` :
+                oneYearGuideline?.rule.type === 'split_by_month' ?
+                `${oneYearGuideline.rule.first_pct}% / ${oneYearGuideline.rule.remaining_months_pct}%` :
+                'N/A';
+              
+              const twoYearPct = twoYearGuideline?.rule.type === 'flat' ? 
+                `${twoYearGuideline.rule.pct}%` :
+                twoYearGuideline?.rule.type === 'split' ?
+                `${twoYearGuideline.rule.year1_pct}% / ${twoYearGuideline.rule.year2_pct_on_year1_rent}%` :
+                twoYearGuideline?.rule.type === 'split_by_month' ?
+                `${twoYearGuideline.rule.first_pct}% / ${twoYearGuideline.rule.remaining_months_pct}%` :
+                'N/A';
+              
+              return `1-Year: ${oneYearPct} | 2-Year: ${twoYearPct}`;
+            })()}
+          </p>
+        </div>
+
+        <div className="border border-gray-300 p-4 text-sm">
+          <p className="font-medium mb-2">Important Disclaimer</p>
+          <p>
+            This calculation is for NYC rent-stabilized apartments only and is not legal advice. 
+            Please confirm with the NYC Housing and Community Renewal (HCR) or Rent Guidelines Board (RGB). 
+            Vacancy allowances, Major Capital Improvements (MCI), Individual Apartment Improvements (IAI), 
+            and other adjustments are not included in this calculation.
+          </p>
+        </div>
+      </div>
+
+      {/* Screen-only detailed view */}
       {scenarios && (
-        <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
+        <Card className="shadow-lg border-0 print:hidden" style={{ boxShadow: 'var(--shadow-card)' }}>
           <CardHeader className="bg-gradient-to-r from-calculator-success to-calculator-success/90 text-white rounded-t-lg">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xl font-semibold flex items-center gap-2">
@@ -337,9 +440,9 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
       )}
 
 
-      {/* Monthly Breakdown for Split Leases */}
+      {/* Monthly Breakdown for Split Leases - Screen only */}
       {result.monthlyBreakdown && (
-        <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
+        <Card className="shadow-lg border-0 print:hidden" style={{ boxShadow: 'var(--shadow-card)' }}>
           <CardHeader>
             <CardTitle className="text-lg font-semibold">
               Monthly Payment Schedule
@@ -380,8 +483,8 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
         </Card>
       )}
 
-      {/* Important Notice */}
-      <Card className="border-calculator-warning/50 bg-calculator-warning/5">
+      {/* Important Notice - Screen only */}
+      <Card className="border-calculator-warning/50 bg-calculator-warning/5 print:hidden">
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
             <AlertCircle className="h-5 w-5 text-calculator-warning mt-0.5 flex-shrink-0" />
