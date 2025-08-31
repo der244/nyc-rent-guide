@@ -120,7 +120,7 @@ export default function RentCalculator() {
                       <div>
                         <h3 className="font-medium text-calculator-header mb-2">Coverage Period</h3>
                         <p className="text-muted-foreground">
-                          This calculator covers RGB Orders #47-56 (October 2015 - September 2025). 
+                          This calculator covers RGB Orders #47-57 (October 2015 - September 2026). 
                           Guidelines are updated annually each October.
                         </p>
                       </div>
@@ -158,7 +158,7 @@ export default function RentCalculator() {
                   <div>
                     <h3 className="font-medium text-calculator-header mb-2">Coverage Period</h3>
                     <p className="text-muted-foreground">
-                      This calculator covers RGB Orders #47-56 (October 2015 - September 2025). 
+                      This calculator covers RGB Orders #47-57 (October 2015 - September 2026). 
                       Guidelines are updated annually each October.
                     </p>
                   </div>
