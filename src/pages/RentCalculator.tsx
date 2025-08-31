@@ -21,15 +21,9 @@ export default function RentCalculator() {
       await new Promise(resolve => setTimeout(resolve, 300));
       
       // Calculate both 1-year and 2-year scenarios
-      const oneYearResult = calculateRentIncrease({
-        ...calculationInputs,
-        leaseTerm: 1
-      });
+      const oneYearResult = calculateRentIncrease(calculationInputs, 1);
       
-      const twoYearResult = calculateRentIncrease({
-        ...calculationInputs,
-        leaseTerm: 2
-      });
+      const twoYearResult = calculateRentIncrease(calculationInputs, 2);
       
       // Use the 1-year result as the primary result for display
       const primaryResult = oneYearResult;

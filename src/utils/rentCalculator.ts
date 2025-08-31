@@ -19,8 +19,8 @@ export function getGuideline(date: Date, term: 1 | 2): { order: RGBOrder; rule: 
   return null;
 }
 
-export function calculateRentIncrease(inputs: CalculationInputs & { leaseTerm: 1 | 2 }): CalculationResult | null {
-  const guideline = getGuideline(inputs.leaseStartDate, inputs.leaseTerm);
+export function calculateRentIncrease(inputs: CalculationInputs, leaseTerm: 1 | 2): CalculationResult | null {
+  const guideline = getGuideline(inputs.leaseStartDate, leaseTerm);
   
   if (!guideline) {
     return null;
@@ -31,11 +31,11 @@ export function calculateRentIncrease(inputs: CalculationInputs & { leaseTerm: 1
 
   switch (rule.type) {
     case 'flat':
-      return calculateFlat(order, rule, baseRent, inputs);
+      return calculateFlat(order, rule, baseRent, inputs, leaseTerm);
     case 'split':
-      return calculateSplit(order, rule, baseRent, inputs);
+      return calculateSplit(order, rule, baseRent, inputs, leaseTerm);
     case 'split_by_month':
-      return calculateSplitByMonth(order, rule, baseRent, inputs);
+      return calculateSplitByMonth(order, rule, baseRent, inputs, leaseTerm);
     default:
       return null;
   }
@@ -45,7 +45,8 @@ function calculateFlat(
   order: RGBOrder, 
   rule: { type: 'flat'; pct: number }, 
   baseRent: number, 
-  inputs: CalculationInputs & { leaseTerm: 1 | 2 }
+  inputs: CalculationInputs,
+  leaseTerm: 1 | 2
 ): CalculationResult {
   const newRent = baseRent * (1 + rule.pct / 100);
   const dollarIncrease = newRent - baseRent;
@@ -54,7 +55,7 @@ function calculateFlat(
     order: order.order,
     newLegalRent: newRent,
     increases: [{
-      period: inputs.leaseTerm === 1 ? 'Year 1' : 'Years 1-2',
+      period: leaseTerm === 1 ? 'Year 1' : 'Years 1-2',
       oldRent: baseRent,
       newRent: newRent,
       percentIncrease: rule.pct,
@@ -72,7 +73,8 @@ function calculateSplit(
   order: RGBOrder,
   rule: { type: 'split'; year1_pct: number; year2_pct_on_year1_rent: number },
   baseRent: number,
-  inputs: CalculationInputs & { leaseTerm: 1 | 2 }
+  inputs: CalculationInputs,
+  leaseTerm: 1 | 2
 ): CalculationResult {
   const year1Rent = baseRent * (1 + rule.year1_pct / 100);
   const year2Rent = year1Rent * (1 + rule.year2_pct_on_year1_rent / 100);
@@ -131,7 +133,8 @@ function calculateSplitByMonth(
   order: RGBOrder,
   rule: { type: 'split_by_month'; first_months: number; first_pct: number; remaining_months_pct: number },
   baseRent: number,
-  inputs: CalculationInputs & { leaseTerm: 1 | 2 }
+  inputs: CalculationInputs,
+  leaseTerm: 1 | 2
 ): CalculationResult {
   const firstMonthsRent = baseRent * (1 + rule.first_pct / 100);
   const remainingMonthsRent = baseRent * (1 + rule.remaining_months_pct / 100);

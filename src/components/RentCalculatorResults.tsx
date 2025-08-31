@@ -22,15 +22,9 @@ export default function RentCalculatorResults({ result, inputs }: RentCalculator
 
   // Calculate both 1-year and 2-year scenarios for comparison
   const getBothScenarios = () => {
-    const oneYearResult = calculateRentIncrease({
-      ...inputs,
-      leaseTerm: 1
-    });
+    const oneYearResult = calculateRentIncrease(inputs, 1);
 
-    const twoYearResult = calculateRentIncrease({
-      ...inputs,
-      leaseTerm: 2
-    });
+    const twoYearResult = calculateRentIncrease(inputs, 2);
 
     // Get the guideline info from one of the results
     const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
