@@ -154,13 +154,21 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
                     </TableCell>
                     <TableCell className="text-center space-y-1">
                       <div className="text-lg font-bold text-calculator-success">
-                        {formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}
+                        {scenarios.twoYear?.increases.length === 2 
+                          ? `${formatCurrency(scenarios.twoYear.increases[0].newRent)} / ${formatCurrency(scenarios.twoYear.increases[1].newRent)}`
+                          : formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)
+                        }
                       </div>
                       <div className="text-sm text-muted-foreground">
                         {scenarios.twoYear?.increases.length === 1 
                           ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)}`
                           : scenarios.twoYear?.increases.length === 2
-                          ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)}+${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +${formatCurrency(scenarios.twoYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))}`
+                          ? (
+                              <div className="space-y-1">
+                                <div>{formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + {formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +{formatCurrency(scenarios.twoYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))}</div>
+                                <div className="text-xs italic">Year 1 / Year 2 amounts shown above</div>
+                              </div>
+                            )
                           : 'Split increase'
                         }
                       </div>
@@ -187,13 +195,21 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
                       </TableCell>
                       <TableCell className="text-center space-y-1">
                         <div className="font-semibold text-calculator-info">
-                          {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
+                          {scenarios.twoYear?.preferentialResult && scenarios.twoYear.increases.length === 2
+                            ? `${formatCurrency(scenarios.oneYear?.preferentialResult ? scenarios.oneYear.preferentialResult.newTenantPay : inputs.preferentialRent!)} / ${formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}`
+                            : formatCurrency(scenarios.twoYear?.preferentialResult?.newTenantPay || inputs.preferentialRent!)
+                          }
                         </div>
                         <div className="text-sm text-muted-foreground">
                           {scenarios.twoYear?.increases.length === 1 
-                            ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay - inputs.preferentialRent)}`
+                            ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} | +${formatCurrency((scenarios.twoYear.preferentialResult?.newTenantPay || 0) - (inputs.preferentialRent || 0))}`
                             : scenarios.twoYear?.increases.length === 2
-                            ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)}+${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +${formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay - inputs.preferentialRent)}`
+                            ? (
+                                <div className="space-y-1">
+                                  <div>{formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + {formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +{formatCurrency((scenarios.twoYear.preferentialResult?.newTenantPay || 0) - (inputs.preferentialRent || 0))}</div>
+                                  <div className="text-xs italic">Year 1 / Year 2 amounts shown above</div>
+                                </div>
+                              )
                             : 'Split increase'
                           }
                         </div>
