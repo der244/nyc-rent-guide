@@ -84,21 +84,22 @@ function calculateSplit(
   let year2PreferentialRent = inputs.preferentialRent;
   
   if (inputs.preferentialRent) {
-    // Keep full precision throughout the calculation chain
+    // Calculate Year 1 and round it before calculating Year 2
     const year1PrefExact = inputs.preferentialRent * (1 + rule.year1_pct / 100);
-    const year2PrefExact = year1PrefExact * (1 + rule.year2_pct_on_year1_rent / 100);
+    const year1PrefRounded = Math.round(year1PrefExact * 100) / 100;
+    const year2PrefExact = year1PrefRounded * (1 + rule.year2_pct_on_year1_rent / 100);
     
     console.log('🔍 DETAILED PREF CALC:', {
       original: inputs.preferentialRent,
       year1Pct: rule.year1_pct,
       year2Pct: rule.year2_pct_on_year1_rent,
       year1Exact: year1PrefExact,
+      year1Rounded: year1PrefRounded,
       year2Exact: year2PrefExact,
-      year1Rounded: Math.round(year1PrefExact * 100) / 100,
       year2Rounded: Math.round(year2PrefExact * 100) / 100
     });
     
-    year1PreferentialRent = year1PrefExact;
+    year1PreferentialRent = year1PrefRounded;
     year2PreferentialRent = year2PrefExact;
   }
 
