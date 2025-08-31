@@ -15,6 +15,8 @@ export interface CalculationInputs {
   leaseStartDate: Date;
   currentRent: number;
   preferentialRent?: number;
+  address?: string;
+  unit?: string;
   unitPaysHeat?: boolean;
 }
 

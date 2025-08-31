@@ -22,6 +22,8 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
   
   const [currentRent, setCurrentRent] = useState<string>("");
   const [preferentialRent, setPreferentialRent] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const [unit, setUnit] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validateAndSubmit = () => {
@@ -56,6 +58,8 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
         leaseStartDate,
         currentRent: rentAmount,
         preferentialRent: prefAmount,
+        address: address.trim() || undefined,
+        unit: unit.trim() || undefined,
       });
     }
   };
@@ -247,6 +251,40 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
           )}
           <p className="text-xs text-muted-foreground">
             If you pay less than the legal regulated rent due to a preferential rent agreement
+          </p>
+        </div>
+
+        {/* Address (Optional) */}
+        <div className="space-y-2">
+          <Label htmlFor="address" className="text-sm font-medium">
+            Property Address <span className="text-muted-foreground font-normal">(Optional)</span>
+          </Label>
+          <Input
+            id="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="123 Main Street, New York, NY 10001"
+            className="w-full"
+          />
+          <p className="text-xs text-muted-foreground">
+            Include address for reference in printed calculations
+          </p>
+        </div>
+
+        {/* Unit (Optional) */}
+        <div className="space-y-2">
+          <Label htmlFor="unit" className="text-sm font-medium">
+            Unit Number <span className="text-muted-foreground font-normal">(Optional)</span>
+          </Label>
+          <Input
+            id="unit"
+            value={unit}
+            onChange={(e) => setUnit(e.target.value)}
+            placeholder="Apt 4B"
+            className="w-full"
+          />
+          <p className="text-xs text-muted-foreground">
+            Apartment or unit identifier
           </p>
         </div>
 

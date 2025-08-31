@@ -14,6 +14,8 @@ interface RentCalculatorResultsProps {
     leaseStartDate: Date;
     currentRent: number;
     preferentialRent?: number;
+    address?: string;
+    unit?: string;
   };
 }
 
@@ -67,6 +69,7 @@ export default function RentCalculatorResults({ result, inputs }: RentCalculator
 
     const readableText = `NYC RENT STABILIZED RENEWAL CALCULATION
 RGB Order #${scenarios.orderNumber}
+${inputs.address ? `\nPROPERTY: ${inputs.address}` : ''}${inputs.unit ? `\nUNIT: ${inputs.unit}` : ''}
 
 CURRENT RENT: ${formatCurrency(inputs.currentRent)}${inputs.preferentialRent ? ` (Tenant Pays: ${formatCurrency(inputs.preferentialRent)})` : ''}
 LEASE START: ${inputs.leaseStartDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
@@ -118,6 +121,16 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
         <div className="text-center mb-6">
           <h1 className="text-2xl font-bold">NYC Rent Stabilized Renewal Calculation</h1>
           <h2 className="text-lg text-gray-700">RGB Order #{scenarios.orderNumber}</h2>
+          {inputs.address && (
+            <p className="text-sm font-medium mt-2">
+              <strong>Property:</strong> {inputs.address}
+            </p>
+          )}
+          {inputs.unit && (
+            <p className="text-sm font-medium">
+              <strong>Unit:</strong> {inputs.unit}
+            </p>
+          )}
           <p className="text-sm">
             <strong>Lease Start Date:</strong> {inputs.leaseStartDate.toLocaleDateString('en-US', { 
               year: 'numeric', 
@@ -248,7 +261,9 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   // Set document title for meaningful filename
                   const currentTitle = document.title;
                   const date = new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }).replace(/\//g, '-');
-                  document.title = `NYC-Rent-Calculation-${date}-RGB${scenarios.orderNumber}`;
+                  const addressPart = inputs.address ? `-${inputs.address.split(',')[0].replace(/\s/g, '-').replace(/[^a-zA-Z0-9-]/g, '')}` : '';
+                  const unitPart = inputs.unit ? `-${inputs.unit.replace(/\s/g, '')}` : '';
+                  document.title = `NYC-Rent-Calculation-${date}${addressPart}${unitPart}-RGB${scenarios.orderNumber}`;
                   
                   window.print();
                   
