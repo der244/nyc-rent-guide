@@ -111,107 +111,122 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
     }
   };
 
-  const printResults = () => {
-    const originalTitle = document.title;
-    document.title = `NYC-Rent-Calculation-${inputs.leaseStartDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }).replace(/\//g, '-')}-RGB${scenarios.orderNumber}`;
-    window.print();
-    document.title = originalTitle;
-  };
-
   return (
     <div className="space-y-6">
       {/* Print-only simplified view */}
-      <div className="print-only hidden print:block">
-        <div className="text-center mb-4">
-          <h1 className="text-xl font-bold">NYC Rent Stabilized Renewal Calculation</h1>
-          <h2 className="text-base font-semibold">RGB Order #{scenarios.orderNumber}</h2>
-          <div className="text-xs mt-2">
-            <p><strong>Lease Start:</strong> {inputs.leaseStartDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
-            <p><strong>Calculated:</strong> {new Date().toLocaleDateString()}</p>
-          </div>
+      <div className="print-only hidden print:block print:space-y-4">
+        <div className="text-center mb-6">
+          <h1 className="text-2xl font-bold">NYC Rent Stabilized Renewal Calculation</h1>
+          <h2 className="text-lg text-gray-700">RGB Order #{scenarios.orderNumber}</h2>
+          <p className="text-sm">
+            <strong>Lease Start Date:</strong> {inputs.leaseStartDate.toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          </p>
+          <p className="text-sm">
+            <strong>Effective Period:</strong> {new Date(scenarios.effectivePeriod.split(' to ')[0]).toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })} to {new Date(scenarios.effectivePeriod.split(' to ')[1]).toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          </p>
+          <p className="text-sm text-gray-600"><strong>Calculated on:</strong> {new Date().toLocaleDateString()}</p>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 mb-4 text-xs">
-          <div className="border border-gray-300 p-2">
-            <h3 className="font-bold text-sm mb-1">Current Rent</h3>
-            <p className="text-base font-bold">{formatCurrency(inputs.currentRent)}</p>
-            <p className="text-xs">Legal Regulated</p>
-            {inputs.preferentialRent && (
-              <>
-                <p className="text-sm font-bold text-blue-700 mt-1">{formatCurrency(inputs.preferentialRent)}</p>
-                <p className="text-xs">Preferential (Current)</p>
-              </>
-            )}
-          </div>
+        <div className="border border-gray-300 p-4 mb-4">
+          <h3 className="font-bold text-lg mb-3">Current Rent Information</h3>
+          <p className="text-xl font-bold mb-2">{formatCurrency(inputs.currentRent)}</p>
+          <p className="text-sm mb-2">Legal Regulated Rent</p>
+          {inputs.preferentialRent && (
+            <>
+              <p className="text-lg font-bold text-blue-700">{formatCurrency(inputs.preferentialRent)}</p>
+              <p className="text-sm">Current Preferential Rent (Tenant Currently Pays)</p>
+            </>
+          )}
+        </div>
 
-          <div className="border border-gray-300 p-2">
-            <h3 className="font-bold text-sm mb-1">1-Year Lease</h3>
-            <p className="text-base font-bold text-green-700">{formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}</p>
-            <p className="text-xs">
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="border border-gray-300 p-4">
+            <h3 className="font-bold text-lg mb-3">1-Year Lease Option</h3>
+            <p className="text-xl font-bold text-green-700">{formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}</p>
+            <p className="text-sm">
               {scenarios.oneYear?.increases.length === 1 
-                ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} increase`
+                ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} increase (+${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)})`
                 : scenarios.oneYear?.increases.length === 2
-                ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)}`
+                ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} increase (+${formatCurrency(scenarios.oneYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))})`
                 : 'N/A'
               }
             </p>
             {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && (
-              <>
-                <p className="text-sm font-bold text-blue-700 mt-1">{formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}</p>
-                <p className="text-xs">New Preferential</p>
-              </>
+              <div className="mt-3 pt-2 border-t border-gray-200">
+                <p className="text-sm font-medium">Tenant Pays (Preferential):</p>
+                <p className="text-lg font-bold text-blue-700">{formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}</p>
+              </div>
             )}
           </div>
 
-          <div className="border border-gray-300 p-2">
-            <h3 className="font-bold text-sm mb-1">2-Year Lease</h3>
-            <p className="text-base font-bold text-green-700">{formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}</p>
-            <p className="text-xs">
+          <div className="border border-gray-300 p-4">
+            <h3 className="font-bold text-lg mb-3">2-Year Lease Option</h3>
+            <p className="text-xl font-bold text-green-700">{formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}</p>
+            <p className="text-sm">
               {scenarios.twoYear?.increases.length === 1 
-                ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} increase`
+                ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} increase (+${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)})`
                 : scenarios.twoYear?.increases.length === 2
-                ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)}`
-                : 'Split increase'
+                ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} increase (+${formatCurrency(scenarios.twoYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))})`
+                : 'Split increase over 2 years'
               }
             </p>
             {inputs.preferentialRent && scenarios.twoYear?.preferentialResult && (
-              <>
-                <p className="text-sm font-bold text-blue-700 mt-1">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
-                <p className="text-xs">New Preferential</p>
-              </>
+              <div className="mt-3 pt-2 border-t border-gray-200">
+                <p className="text-sm font-medium">Tenant Pays (Preferential):</p>
+                <p className="text-lg font-bold text-blue-700">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
+              </div>
             )}
           </div>
         </div>
 
-        <div className="border border-gray-300 p-2 mb-3 text-xs">
-          <h3 className="font-bold text-sm mb-1">Applied RGB Rules</h3>
-          <p>
-            <strong>1-Year:</strong> {(() => {
+        <div className="border border-gray-300 p-4 mb-4">
+          <h3 className="font-bold mb-2">Applied Rules</h3>
+          <p className="text-sm">
+            {(() => {
               const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
-              return oneYearGuideline?.rule.type === 'flat' ? 
+              const twoYearGuideline = getGuideline(inputs.leaseStartDate, 2);
+              
+              const oneYearPct = oneYearGuideline?.rule.type === 'flat' ? 
                 `${oneYearGuideline.rule.pct}%` :
                 oneYearGuideline?.rule.type === 'split' ?
                 `${oneYearGuideline.rule.year1_pct}% / ${oneYearGuideline.rule.year2_pct_on_year1_rent}%` :
                 oneYearGuideline?.rule.type === 'split_by_month' ?
                 `${oneYearGuideline.rule.first_pct}% / ${oneYearGuideline.rule.remaining_months_pct}%` :
                 'N/A';
-            })()} | 
-            <strong>2-Year:</strong> {(() => {
-              const twoYearGuideline = getGuideline(inputs.leaseStartDate, 2);
-              return twoYearGuideline?.rule.type === 'flat' ? 
+              
+              const twoYearPct = twoYearGuideline?.rule.type === 'flat' ? 
                 `${twoYearGuideline.rule.pct}%` :
                 twoYearGuideline?.rule.type === 'split' ?
                 `${twoYearGuideline.rule.year1_pct}% / ${twoYearGuideline.rule.year2_pct_on_year1_rent}%` :
                 twoYearGuideline?.rule.type === 'split_by_month' ?
                 `${twoYearGuideline.rule.first_pct}% / ${twoYearGuideline.rule.remaining_months_pct}%` :
                 'N/A';
+              
+              return `1-Year: ${oneYearPct} | 2-Year: ${twoYearPct}`;
             })()}
           </p>
         </div>
 
-        <div className="border border-gray-300 p-2 text-xs">
-          <p className="font-bold mb-1">Disclaimer</p>
-          <p>For NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB. Excludes vacancy allowances, MCI, IAI, and other adjustments.</p>
+        <div className="border border-gray-300 p-4 text-sm">
+          <p className="font-medium mb-2">Important Disclaimer</p>
+          <p>
+            This calculation is for NYC rent-stabilized apartments only and is not legal advice. 
+            Please confirm with the NYC Housing and Community Renewal (HCR) or Rent Guidelines Board (RGB). 
+            Vacancy allowances, Major Capital Improvements (MCI), Individual Apartment Improvements (IAI), 
+            and other adjustments are not included in this calculation.
+          </p>
         </div>
       </div>
 
@@ -229,7 +244,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   <Copy className="h-4 w-4 mr-2" />
                   Copy Results
                 </Button>
-                <Button onClick={printResults} variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
+                <Button onClick={() => window.print()} variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
                   <FileText className="h-4 w-4 mr-2" />
                   Print
                 </Button>
