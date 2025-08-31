@@ -18,7 +18,7 @@ interface RentCalculatorFormProps {
 
 export default function RentCalculatorForm({ onCalculate, isCalculating }: RentCalculatorFormProps) {
   const [leaseStartDate, setLeaseStartDate] = useState<Date>(new Date());
-  const [dateInputValue, setDateInputValue] = useState<string>('');
+  const [dateInputValue, setDateInputValue] = useState<string>(format(new Date(), 'MM/dd/yyyy'));
   
   const [currentRent, setCurrentRent] = useState<string>("");
   const [preferentialRent, setPreferentialRent] = useState<string>("");
@@ -91,20 +91,22 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
     const value = e.target.value;
     setDateInputValue(value);
     
-    // Try to parse the date
+    // Clear existing date error when user starts typing
+    if (errors.leaseStartDate) {
+      setErrors(prev => ({ ...prev, leaseStartDate: '' }));
+    }
+    
+    // Try to parse the date (supports MM/dd/yyyy, MM-dd-yyyy, yyyy-MM-dd formats)
     const parsedDate = new Date(value);
     if (!isNaN(parsedDate.getTime()) && value.length >= 8) {
       setLeaseStartDate(parsedDate);
-      if (errors.leaseStartDate) {
-        setErrors(prev => ({ ...prev, leaseStartDate: '' }));
-      }
     }
   };
 
   const handleDateSelect = (date: Date | undefined) => {
     if (date) {
       setLeaseStartDate(date);
-      setDateInputValue(format(date, 'yyyy-MM-dd'));
+      setDateInputValue(format(date, 'MM/dd/yyyy'));
       if (errors.leaseStartDate) {
         setErrors(prev => ({ ...prev, leaseStartDate: '' }));
       }
@@ -125,14 +127,14 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
           <div className="relative">
             <Input
               id="lease-start"
-              type="date"
-              value={dateInputValue || (leaseStartDate ? format(leaseStartDate, 'yyyy-MM-dd') : '')}
+              type="text"
+              value={dateInputValue}
               onChange={handleDateInputChange}
               className={cn(
                 "pr-10",
                 errors.leaseStartDate && "border-destructive"
               )}
-              placeholder="YYYY-MM-DD"
+              placeholder="MM/dd/yyyy"
             />
             <Popover>
               <PopoverTrigger asChild>
@@ -159,7 +161,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
             <p className="text-sm text-destructive">{errors.leaseStartDate}</p>
           )}
           <p className="text-xs text-muted-foreground">
-            Enter date manually (YYYY-MM-DD) or click the calendar icon
+            Enter date manually (MM/dd/yyyy) or click the calendar icon
           </p>
         </div>
 
