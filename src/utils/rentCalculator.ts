@@ -79,13 +79,17 @@ function calculateSplit(
   const year1Rent = baseRent * (1 + rule.year1_pct / 100);
   const year2Rent = year1Rent * (1 + rule.year2_pct_on_year1_rent / 100);
 
-  // Calculate preferential rent for each year if it exists
+  // Calculate preferential rent for each year if it exists (keep full precision)
   let year1PreferentialRent = inputs.preferentialRent;
   let year2PreferentialRent = inputs.preferentialRent;
   
   if (inputs.preferentialRent) {
-    year1PreferentialRent = inputs.preferentialRent * (1 + rule.year1_pct / 100);
-    year2PreferentialRent = year1PreferentialRent * (1 + rule.year2_pct_on_year1_rent / 100);
+    // Keep full precision throughout the calculation chain
+    const year1PrefExact = inputs.preferentialRent * (1 + rule.year1_pct / 100);
+    const year2PrefExact = year1PrefExact * (1 + rule.year2_pct_on_year1_rent / 100);
+    
+    year1PreferentialRent = year1PrefExact;
+    year2PreferentialRent = year2PrefExact;
   }
 
   const monthlyBreakdown = [];
