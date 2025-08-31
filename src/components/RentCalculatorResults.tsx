@@ -140,8 +140,15 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
         </div>
 
         <div className="border border-gray-300 p-4 mb-4">
-          <h3 className="font-bold text-lg mb-3">Current Legal Regulated Rent</h3>
-          <p className="text-2xl font-bold">{formatCurrency(inputs.currentRent)}</p>
+          <h3 className="font-bold text-lg mb-3">Current Rent Information</h3>
+          <p className="text-xl font-bold mb-2">{formatCurrency(inputs.currentRent)}</p>
+          <p className="text-sm mb-2">Legal Regulated Rent</p>
+          {inputs.preferentialRent && (
+            <>
+              <p className="text-lg font-bold text-blue-700">{formatCurrency(inputs.preferentialRent)}</p>
+              <p className="text-sm">Current Preferential Rent (Tenant Currently Pays)</p>
+            </>
+          )}
         </div>
 
         <div className="grid grid-cols-2 gap-4 mb-6">
