@@ -165,9 +165,9 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
       />
       <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
         <CardHeader className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
-          <CardTitle className="text-xl font-semibold">Lease Information</CardTitle>
+          <CardTitle className="text-lg sm:text-xl font-semibold">Lease Information</CardTitle>
         </CardHeader>
-      <CardContent className="space-y-6 p-6">
+      <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
         {/* Lease Start Date */}
         <div className="space-y-2">
           <Label htmlFor="lease-start" className="text-sm font-medium">
@@ -302,7 +302,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
         <Button 
           onClick={validateAndSubmit}
           disabled={isCalculating}
-          className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary font-medium"
+          className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary font-medium text-sm sm:text-base"
           size="lg"
         >
           {isCalculating ? 'Calculating...' : 'Calculate Rent Increase'}

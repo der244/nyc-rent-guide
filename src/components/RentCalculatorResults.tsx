@@ -263,22 +263,22 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
       {scenarios && (
         <Card className="shadow-lg border-0 print:hidden" style={{ boxShadow: 'var(--shadow-card)' }}>
           <CardHeader className="bg-gradient-to-r from-calculator-success to-calculator-success/90 text-white rounded-t-lg">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div>
-                <CardTitle className="text-xl font-semibold flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5" />
+                <CardTitle className="text-lg sm:text-xl font-semibold flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />
                   RGB Order #{scenarios.orderNumber} - Renewal Calculation
                 </CardTitle>
                 {(inputs.address || inputs.unit) && (
-                  <div className="mt-2 text-sm text-white/90">
+                  <div className="mt-2 text-sm text-white/90 space-y-1">
                     {inputs.address && <div>📍 {inputs.address}</div>}
                     {inputs.unit && <div>🏠 Unit {inputs.unit}</div>}
                   </div>
                 )}
               </div>
-              <div className="flex gap-3">
-                <Button onClick={copyToClipboard} variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
-                  <Copy className="h-4 w-4 mr-2" />
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                <Button onClick={copyToClipboard} variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30 text-xs sm:text-sm">
+                  <Copy className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                   Copy Results
                 </Button>
                 <Button onClick={() => {
@@ -295,13 +295,13 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   setTimeout(() => {
                     document.title = currentTitle;
                   }, 1000);
-                }} variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
-                  <FileText className="h-4 w-4 mr-2" />
+                }} variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30 text-xs sm:text-sm">
+                  <FileText className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                   Print
                 </Button>
               </div>
             </div>
-            <p className="text-white/90 text-sm mt-2">
+            <p className="text-white/90 text-xs sm:text-sm mt-2 leading-relaxed">
               Effective Period: {new Date(scenarios.effectivePeriod.split(' to ')[0]).toLocaleDateString('en-US', { 
                 year: 'numeric', 
                 month: 'long', 
@@ -313,21 +313,21 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
               })}
             </p>
           </CardHeader>
-          <CardContent className="p-6">
+          <CardContent className="p-3 sm:p-6">
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/50">
-                    <TableHead className="font-semibold w-[140px]">Current Rent</TableHead>
-                    <TableHead className="text-center font-semibold">1-Year Lease</TableHead>
-                    <TableHead className="text-center font-semibold">2-Year Lease</TableHead>
+                    <TableHead className="font-semibold w-[120px] sm:w-[140px] text-xs sm:text-sm">Current Rent</TableHead>
+                    <TableHead className="text-center font-semibold text-xs sm:text-sm">1-Year Lease</TableHead>
+                    <TableHead className="text-center font-semibold text-xs sm:text-sm">2-Year Lease</TableHead>
                   </TableRow>
                   <TableRow className="bg-muted/30">
-                    <TableHead className="text-muted-foreground text-sm">Starting Amount</TableHead>
-                    <TableHead className="text-center text-muted-foreground text-sm">
+                    <TableHead className="text-muted-foreground text-xs">Starting Amount</TableHead>
+                    <TableHead className="text-center text-muted-foreground text-xs px-1">
                       New Amount | % Increase | $ Increase
                     </TableHead>
-                    <TableHead className="text-center text-muted-foreground text-sm">
+                    <TableHead className="text-center text-muted-foreground text-xs px-1">
                       New Amount | % Increase | $ Increase
                     </TableHead>
                   </TableRow>
@@ -335,13 +335,13 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                 <TableBody>
                   {/* Main rent calculation row */}
                   <TableRow className="border-b-2">
-                    <TableCell className="font-bold text-lg">
+                    <TableCell className="font-bold text-base sm:text-lg">
                       {formatCurrency(inputs.currentRent)}
                       <div className="text-xs text-muted-foreground">Legal Regulated Rent</div>
                     </TableCell>
-                    <TableCell className="text-center space-y-1">
-                      <div className="flex items-center justify-center gap-2">
-                        <div className="text-lg font-bold text-calculator-success">
+                    <TableCell className="text-center space-y-1 px-1 sm:px-3">
+                      <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
+                        <div className="text-sm sm:text-lg font-bold text-calculator-success break-words">
                           {scenarios.oneYear?.increases.length === 2 
                             ? `${formatCurrency(scenarios.oneYear.increases[0].newRent)} / ${formatCurrency(scenarios.oneYear.newLegalRent)}`
                             : formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)
@@ -350,13 +350,13 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-6 w-6 p-0 hover:bg-muted"
+                          className="h-5 w-5 sm:h-6 sm:w-6 p-0 hover:bg-muted flex-shrink-0"
                           onClick={() => copyLeaseAmount(scenarios.oneYear?.newLegalRent || inputs.currentRent, '1-year')}
                         >
-                          <Copy className="h-3 w-3" />
+                          <Copy className="h-2 w-2 sm:h-3 sm:w-3" />
                         </Button>
                       </div>
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-xs text-muted-foreground leading-tight">
                         {scenarios.oneYear?.increases.length === 1 
                           ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)}`
                           : scenarios.oneYear?.increases.length === 2
@@ -372,9 +372,9 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         }
                       </div>
                     </TableCell>
-                    <TableCell className="text-center space-y-1">
-                      <div className="flex items-center justify-center gap-2">
-                        <div className="text-lg font-bold text-calculator-success">
+                    <TableCell className="text-center space-y-1 px-1 sm:px-3">
+                      <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
+                        <div className="text-sm sm:text-lg font-bold text-calculator-success break-words">
                           {scenarios.twoYear?.increases.length === 2 
                             ? `${formatCurrency(scenarios.twoYear.increases[0].newRent)} / ${formatCurrency(scenarios.twoYear.newLegalRent)}`
                             : formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)
@@ -383,13 +383,13 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-6 w-6 p-0 hover:bg-muted"
+                          className="h-5 w-5 sm:h-6 sm:w-6 p-0 hover:bg-muted flex-shrink-0"
                           onClick={() => copyLeaseAmount(scenarios.twoYear?.newLegalRent || inputs.currentRent, '2-year')}
                         >
-                          <Copy className="h-3 w-3" />
+                          <Copy className="h-2 w-2 sm:h-3 sm:w-3" />
                         </Button>
                       </div>
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-xs text-muted-foreground leading-tight">
                         {scenarios.twoYear?.increases.length === 1 
                           ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)}`
                           : scenarios.twoYear?.increases.length === 2
@@ -493,11 +493,11 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
               </div>
 
               {/* Detailed breakdown for both 1-year and 2-year leases */}
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 {/* 1-Year Lease Breakdown */}
-                <div className="p-4 bg-muted/20 rounded-lg">
-                  <h4 className="font-semibold mb-3 text-sm text-calculator-success">1-Year Lease Details:</h4>
-                  <div className="text-sm space-y-2">
+                <div className="p-3 sm:p-4 bg-muted/20 rounded-lg">
+                  <h4 className="font-semibold mb-2 sm:mb-3 text-sm text-calculator-success">1-Year Lease Details:</h4>
+                  <div className="text-xs sm:text-sm space-y-2">
                     <div>
                       <p className="font-medium">Single Term Increase</p>
                       <p>{formatCurrency(inputs.currentRent)} → {formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}</p>
@@ -512,9 +512,9 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                 </div>
 
                 {/* 2-Year Lease Breakdown */}
-                <div className="p-4 bg-muted/20 rounded-lg">
-                  <h4 className="font-semibold mb-3 text-sm text-calculator-success">2-Year Lease Details:</h4>
-                  <div className="text-sm space-y-2">
+                <div className="p-3 sm:p-4 bg-muted/20 rounded-lg">
+                  <h4 className="font-semibold mb-2 sm:mb-3 text-sm text-calculator-success">2-Year Lease Details:</h4>
+                  <div className="text-xs sm:text-sm space-y-2">
                     {scenarios.twoYear && scenarios.twoYear.increases.length === 2 ? (
                       <>
                         <div>

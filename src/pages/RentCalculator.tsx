@@ -64,22 +64,22 @@ export default function RentCalculator() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20">
       {/* Header */}
       <header className="bg-gradient-to-r from-calculator-header to-calculator-header/90 text-white">
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center gap-3 mb-4">
-            <Building2 className="h-8 w-8" />
-            <h1 className="text-3xl font-bold">NYC Stabilized Rent Calculator</h1>
+        <div className="container mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <Building2 className="h-6 w-6 sm:h-8 sm:w-8" />
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold leading-tight">NYC Stabilized Rent Calculator</h1>
           </div>
-          <p className="text-xl text-white/90 max-w-3xl">
+          <p className="text-base sm:text-lg lg:text-xl text-white/90 max-w-3xl leading-relaxed">
             Calculate rent-stabilized renewal increases for NYC apartments based on official 
             Rent Guidelines Board (RGB) orders from the last 10 years.
           </p>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-7xl mx-auto space-y-8">
-          {/* Form and Results Side by Side */}
-          <div className="grid lg:grid-cols-2 gap-8">
+      <main className="container mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+        <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
+          {/* Form and Results - Mobile First, Side by Side on Desktop */}
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-8">
             {/* Form */}
             <div>
               <RentCalculatorForm 
@@ -96,12 +96,12 @@ export default function RentCalculator() {
                 </div>
               ) : (
                 <Card className="h-fit shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
-                  <CardContent className="p-6">
-                    <h2 className="text-lg font-semibold mb-4">How It Works</h2>
-                    <div className="space-y-4 text-sm">
+                  <CardContent className="p-4 sm:p-6">
+                    <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">How It Works</h2>
+                    <div className="space-y-3 sm:space-y-4 text-sm">
                       <div>
                         <h3 className="font-medium text-calculator-header mb-2">Complete Analysis</h3>
-                        <ul className="space-y-1 text-muted-foreground">
+                        <ul className="space-y-1 text-muted-foreground text-xs sm:text-sm">
                           <li>• Both 1-year and 2-year scenarios calculated</li>
                           <li>• Side-by-side comparison like official renewal forms</li>
                           <li>• Split percentage increases handled automatically</li>
@@ -111,7 +111,7 @@ export default function RentCalculator() {
                       
                       <div>
                         <h3 className="font-medium text-calculator-header mb-2">Preferential Rent</h3>
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground text-xs sm:text-sm">
                           If you pay less than the legal regulated rent due to a preferential rent agreement, 
                           enter both amounts to see the legal increase and your actual payment.
                         </p>
@@ -119,7 +119,7 @@ export default function RentCalculator() {
                       
                       <div>
                         <h3 className="font-medium text-calculator-header mb-2">Coverage Period</h3>
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground text-xs sm:text-sm">
                           This calculator covers RGB Orders #47-57 (October 2015 - September 2026). 
                           Guidelines are updated annually each October.
                         </p>
@@ -134,12 +134,12 @@ export default function RentCalculator() {
           {/* Additional Info Section - Now Below */}
           {result && inputs && (
             <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
-              <CardContent className="p-6">
-                <h2 className="text-lg font-semibold mb-4">Important Information</h2>
-                <div className="grid md:grid-cols-3 gap-6 text-sm">
+              <CardContent className="p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Important Information</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 text-sm">
                   <div>
                     <h3 className="font-medium text-calculator-header mb-2">Complete Analysis</h3>
-                    <ul className="space-y-1 text-muted-foreground">
+                    <ul className="space-y-1 text-muted-foreground text-xs sm:text-sm">
                       <li>• Both 1-year and 2-year scenarios calculated</li>
                       <li>• Side-by-side comparison like official renewal forms</li>
                       <li>• Split percentage increases handled automatically</li>
@@ -149,15 +149,15 @@ export default function RentCalculator() {
                   
                   <div>
                     <h3 className="font-medium text-calculator-header mb-2">Preferential Rent</h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-muted-foreground text-xs sm:text-sm">
                       If you pay less than the legal regulated rent due to a preferential rent agreement, 
                       enter both amounts to see the legal increase and your actual payment.
                     </p>
                   </div>
                   
-                  <div>
+                  <div className="sm:col-span-2 md:col-span-1">
                     <h3 className="font-medium text-calculator-header mb-2">Coverage Period</h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-muted-foreground text-xs sm:text-sm">
                       This calculator covers RGB Orders #47-57 (October 2015 - September 2026). 
                       Guidelines are updated annually each October.
                     </p>
@@ -169,49 +169,49 @@ export default function RentCalculator() {
 
           {/* References */}
           <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
-            <CardContent className="p-6">
-              <h2 className="text-lg font-semibold mb-4">Official Sources & References</h2>
-              <div className="grid md:grid-cols-2 gap-6 text-sm">
+            <CardContent className="p-4 sm:p-6">
+              <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Official Sources & References</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 text-sm">
                 <div>
-                  <h3 className="font-medium mb-3">NYC Rent Guidelines Board</h3>
+                  <h3 className="font-medium mb-2 sm:mb-3">NYC Rent Guidelines Board</h3>
                   <div className="space-y-2 text-muted-foreground">
                     <a 
                       href="https://rentguidelinesboard.cityofnewyork.us/" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 hover:text-primary transition-colors"
+                      className="flex items-center gap-1 hover:text-primary transition-colors text-xs sm:text-sm break-all sm:break-normal"
                     >
-                      Official RGB Website <ExternalLink className="h-3 w-3" />
+                      Official RGB Website <ExternalLink className="h-3 w-3 flex-shrink-0" />
                     </a>
                     <a 
                       href="https://rentguidelinesboard.cityofnewyork.us/resources/rent-stabilized-lease-renewal/" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 hover:text-primary transition-colors"
+                      className="flex items-center gap-1 hover:text-primary transition-colors text-xs sm:text-sm break-all sm:break-normal"
                     >
-                      Lease Renewal Guidelines <ExternalLink className="h-3 w-3" />
+                      Lease Renewal Guidelines <ExternalLink className="h-3 w-3 flex-shrink-0" />
                     </a>
                   </div>
                 </div>
                 
                 <div>
-                  <h3 className="font-medium mb-3">NYC Housing & Community Renewal</h3>
+                  <h3 className="font-medium mb-2 sm:mb-3">NYC Housing & Community Renewal</h3>
                   <div className="space-y-2 text-muted-foreground">
                     <a 
                       href="https://hcr.ny.gov/" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 hover:text-primary transition-colors"
+                      className="flex items-center gap-1 hover:text-primary transition-colors text-xs sm:text-sm break-all sm:break-normal"
                     >
-                      Official HCR Website <ExternalLink className="h-3 w-3" />
+                      Official HCR Website <ExternalLink className="h-3 w-3 flex-shrink-0" />
                     </a>
                     <a 
                       href="https://portal.311.nyc.gov/article/?kanumber=KA-01013" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 hover:text-primary transition-colors"
+                      className="flex items-center gap-1 hover:text-primary transition-colors text-xs sm:text-sm break-all sm:break-normal"
                     >
-                      NYC311 Rent Guidelines <ExternalLink className="h-3 w-3" />
+                      NYC311 Rent Guidelines <ExternalLink className="h-3 w-3 flex-shrink-0" />
                     </a>
                   </div>
                 </div>
@@ -222,13 +222,13 @@ export default function RentCalculator() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-muted/50 mt-16">
-        <div className="container mx-auto px-4 py-6">
-          <div className="text-center text-sm text-muted-foreground">
+      <footer className="bg-muted/50 mt-8 sm:mt-12 lg:mt-16">
+        <div className="container mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
+          <div className="text-center text-xs sm:text-sm text-muted-foreground space-y-1">
             <p>
               NYC Stabilized Rent Calculator • For educational purposes only • Not legal advice
             </p>
-            <p className="mt-1">
+            <p>
               Always confirm calculations with official NYC Housing and Community Renewal (HCR) or RGB
             </p>
           </div>
