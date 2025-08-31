@@ -155,7 +155,9 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
                           ? (
                               <div className="space-y-1">
                                 <div>{formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + {formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | +{formatCurrency(scenarios.oneYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))}</div>
-                                <div className="text-xs italic">First / Final amounts shown above</div>
+                                <div className="text-xs italic">
+                                  {scenarios.oneYear.increases[0].period} / {scenarios.oneYear.increases[1].period}
+                                </div>
                               </div>
                             )
                           : 'N/A'
@@ -206,7 +208,9 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
                             ? (
                                 <div className="space-y-1">
                                   <div>{formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + {formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | +{formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay - inputs.preferentialRent)}</div>
-                                  <div className="text-xs italic">First / Final amounts shown above</div>
+                                  <div className="text-xs italic">
+                                    {scenarios.oneYear.increases[0].period} / {scenarios.oneYear.increases[1].period}
+                                  </div>
                                 </div>
                               )
                             : 'N/A'
