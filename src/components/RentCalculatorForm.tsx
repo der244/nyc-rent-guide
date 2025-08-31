@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { DollarSplash } from '@/components/ui/dollar-splash';
 import { cn } from '@/lib/utils';
 import { CalculationInputs } from '../types/rgb';
 
@@ -25,6 +26,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
   const [address, setAddress] = useState<string>("");
   const [unit, setUnit] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [showSplash, setShowSplash] = useState<boolean>(false);
 
   const validateAndSubmit = () => {
     const newErrors: Record<string, string> = {};
@@ -54,13 +56,16 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      onCalculate({
-        leaseStartDate,
-        currentRent: rentAmount,
-        preferentialRent: prefAmount,
-        address: address.trim() || undefined,
-        unit: unit.trim() || undefined,
-      });
+      setShowSplash(true);
+      setTimeout(() => {
+        onCalculate({
+          leaseStartDate,
+          currentRent: rentAmount,
+          preferentialRent: prefAmount,
+          address: address.trim() || undefined,
+          unit: unit.trim() || undefined,
+        });
+      }, 300);
     }
   };
 
@@ -153,10 +158,15 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
   };
 
   return (
-    <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
-      <CardHeader className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
-        <CardTitle className="text-xl font-semibold">Lease Information</CardTitle>
-      </CardHeader>
+    <>
+      <DollarSplash 
+        isVisible={showSplash} 
+        onComplete={() => setShowSplash(false)} 
+      />
+      <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
+        <CardHeader className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
+          <CardTitle className="text-xl font-semibold">Lease Information</CardTitle>
+        </CardHeader>
       <CardContent className="space-y-6 p-6">
         {/* Lease Start Date */}
         <div className="space-y-2">
@@ -299,5 +309,6 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
         </Button>
       </CardContent>
     </Card>
+    </>
   );
 }
