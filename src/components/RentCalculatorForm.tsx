@@ -61,12 +61,36 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
   };
 
   const formatCurrencyInput = (value: string): string => {
-    const numericValue = value.replace(/[^0-9.]/g, '');
-    if (!numericValue) return '';
+    // Remove everything except digits and decimal point
+    let numericValue = value.replace(/[^0-9.]/g, '');
+    
+    // Handle multiple decimal points - keep only the first one
+    const parts = numericValue.split('.');
+    if (parts.length > 2) {
+      numericValue = parts[0] + '.' + parts.slice(1).join('');
+    }
+    
+    // Limit to 2 decimal places
+    if (parts.length === 2 && parts[1].length > 2) {
+      numericValue = parts[0] + '.' + parts[1].substring(0, 2);
+    }
+    
+    if (!numericValue || numericValue === '.') return '';
+    
+    // If it ends with a decimal point, preserve it for user experience
+    if (numericValue.endsWith('.')) {
+      const number = parseFloat(numericValue.slice(0, -1));
+      if (isNaN(number)) return '';
+      return number.toLocaleString('en-US') + '.';
+    }
+    
     const number = parseFloat(numericValue);
     if (isNaN(number)) return '';
+    
+    // Use appropriate decimal places based on input
+    const decimalPlaces = parts.length === 2 ? parts[1].length : 0;
     return number.toLocaleString('en-US', {
-      minimumFractionDigits: 0,
+      minimumFractionDigits: decimalPlaces > 0 ? decimalPlaces : 0,
       maximumFractionDigits: 2
     });
   };
