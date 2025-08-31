@@ -62,8 +62,8 @@ function calculateFlat(
       dollarIncrease: dollarIncrease
     }],
     preferentialResult: inputs.preferentialRent ? {
-      newTenantPay: inputs.preferentialRent,
-      explanation: 'Preferential rent remains unchanged'
+      newTenantPay: Math.round((inputs.preferentialRent * (1 + rule.pct / 100)) * 100) / 100,
+      explanation: `Preferential rent increases by ${rule.pct}%`
     } : undefined,
     appliedRule: `Order #${order.order}, ${rule.pct}% increase`
   };
@@ -122,8 +122,8 @@ function calculateSplit(
     ],
     monthlyBreakdown,
     preferentialResult: inputs.preferentialRent ? {
-      newTenantPay: inputs.preferentialRent,
-      explanation: 'Preferential rent remains unchanged throughout lease term'
+      newTenantPay: Math.round((inputs.preferentialRent * (1 + (rule.year1_pct + rule.year2_pct_on_year1_rent) / 100)) * 100) / 100,
+      explanation: `Preferential rent increases by total ${rule.year1_pct + rule.year2_pct_on_year1_rent}% over 2 years`
     } : undefined,
     appliedRule: `Order #${order.order}, Year 1: ${rule.year1_pct}%, Year 2: ${rule.year2_pct_on_year1_rent}% on Year 1 rent`
   };
@@ -182,8 +182,8 @@ function calculateSplitByMonth(
     ],
     monthlyBreakdown,
     preferentialResult: inputs.preferentialRent ? {
-      newTenantPay: inputs.preferentialRent,
-      explanation: 'Preferential rent remains unchanged throughout lease term'
+      newTenantPay: Math.round((inputs.preferentialRent * (1 + rule.remaining_months_pct / 100)) * 100) / 100,
+      explanation: `Preferential rent increases by ${rule.remaining_months_pct}% (same as remaining months)`
     } : undefined,
     appliedRule: `Order #${order.order}, First ${rule.first_months} months: ${rule.first_pct}%, Remaining months: ${rule.remaining_months_pct}%`
   };

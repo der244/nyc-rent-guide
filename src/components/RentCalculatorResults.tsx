@@ -212,22 +212,26 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
                   </TableRow>
 
                   {/* Preferential rent row if applicable */}
-                  {inputs.preferentialRent && (
+                  {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && scenarios.twoYear?.preferentialResult && (
                     <TableRow className="bg-calculator-info/5">
                       <TableCell className="font-semibold text-calculator-info">
                         {formatCurrency(inputs.preferentialRent)}
                         <div className="text-xs text-muted-foreground">Preferential Rent</div>
                       </TableCell>
                       <TableCell className="text-center">
-                        <div className="text-sm text-muted-foreground">No change</div>
+                        <div className="text-sm text-muted-foreground">
+                          +{formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay - inputs.preferentialRent)}
+                        </div>
                         <div className="font-semibold text-calculator-info">
-                          {formatCurrency(inputs.preferentialRent)}
+                          {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
                         </div>
                       </TableCell>
                       <TableCell className="text-center">
-                        <div className="text-sm text-muted-foreground">No change</div>
+                        <div className="text-sm text-muted-foreground">
+                          +{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay - inputs.preferentialRent)}
+                        </div>
                         <div className="font-semibold text-calculator-info">
-                          {formatCurrency(inputs.preferentialRent)}
+                          {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
                         </div>
                       </TableCell>
                     </TableRow>
