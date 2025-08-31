@@ -331,6 +331,33 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                       New Amount | % Increase | $ Increase
                     </TableHead>
                   </TableRow>
+                  <TableRow className="bg-muted/20">
+                    <TableHead className="text-muted-foreground text-xs">Lease End Date</TableHead>
+                    <TableHead className="text-center text-muted-foreground text-xs px-1">
+                      {(() => {
+                        const endDate = new Date(inputs.leaseStartDate);
+                        endDate.setFullYear(endDate.getFullYear() + 1);
+                        endDate.setDate(endDate.getDate() - 1);
+                        return endDate.toLocaleDateString("en-US", { 
+                          month: "2-digit", 
+                          day: "2-digit", 
+                          year: "numeric" 
+                        });
+                      })()}
+                    </TableHead>
+                    <TableHead className="text-center text-muted-foreground text-xs px-1">
+                      {(() => {
+                        const endDate = new Date(inputs.leaseStartDate);
+                        endDate.setFullYear(endDate.getFullYear() + 2);
+                        endDate.setDate(endDate.getDate() - 1);
+                        return endDate.toLocaleDateString("en-US", { 
+                          month: "2-digit", 
+                          day: "2-digit", 
+                          year: "numeric" 
+                        });
+                      })()}
+                    </TableHead>
+                  </TableRow>
                 </TableHeader>
                 <TableBody>
                   {/* Main rent calculation row */}
