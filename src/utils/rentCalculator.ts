@@ -19,11 +19,10 @@ export function getGuideline(date: Date, term: 1 | 2): { order: RGBOrder; rule: 
   return null;
 }
 
-// Helper function for precise currency calculations (using cents)
+// Helper function for precise currency calculations
 function preciseCalculate(amount: number, percentage: number): number {
-  const cents = Math.round(amount * 100);
-  const increasedCents = Math.round(cents * (1 + percentage / 100));
-  return increasedCents / 100;
+  const result = amount * (1 + percentage / 100);
+  return Math.round(result * 100) / 100;
 }
 
 export function calculateRentIncrease(inputs: CalculationInputs, leaseTerm: 1 | 2): CalculationResult | null {
