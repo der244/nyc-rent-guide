@@ -88,6 +88,16 @@ function calculateSplit(
     const year1PrefExact = inputs.preferentialRent * (1 + rule.year1_pct / 100);
     const year2PrefExact = year1PrefExact * (1 + rule.year2_pct_on_year1_rent / 100);
     
+    console.log('🔍 DETAILED PREF CALC:', {
+      original: inputs.preferentialRent,
+      year1Pct: rule.year1_pct,
+      year2Pct: rule.year2_pct_on_year1_rent,
+      year1Exact: year1PrefExact,
+      year2Exact: year2PrefExact,
+      year1Rounded: Math.round(year1PrefExact * 100) / 100,
+      year2Rounded: Math.round(year2PrefExact * 100) / 100
+    });
+    
     year1PreferentialRent = year1PrefExact;
     year2PreferentialRent = year2PrefExact;
   }
