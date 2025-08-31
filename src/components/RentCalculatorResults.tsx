@@ -143,11 +143,21 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
                     </TableCell>
                     <TableCell className="text-center space-y-1">
                       <div className="text-lg font-bold text-calculator-success">
-                        {formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}
+                        {scenarios.oneYear?.increases.length === 2 
+                          ? `${formatCurrency(scenarios.oneYear.increases[0].newRent)} / ${formatCurrency(scenarios.oneYear.newLegalRent)}`
+                          : formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)
+                        }
                       </div>
                       <div className="text-sm text-muted-foreground">
-                        {scenarios.oneYear?.increases[0]?.percentIncrease !== undefined 
+                        {scenarios.oneYear?.increases.length === 1 
                           ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)}`
+                          : scenarios.oneYear?.increases.length === 2
+                          ? (
+                              <div className="space-y-1">
+                                <div>{formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + {formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | +{formatCurrency(scenarios.oneYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))}</div>
+                                <div className="text-xs italic">First / Final amounts shown above</div>
+                              </div>
+                            )
                           : 'N/A'
                         }
                       </div>
@@ -184,11 +194,21 @@ Disclaimer: For NYC rent-stabilized apartments only. Not legal advice. Confirm w
                       </TableCell>
                       <TableCell className="text-center space-y-1">
                         <div className="font-semibold text-calculator-info">
-                          {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
+                          {scenarios.oneYear?.increases.length === 2 
+                            ? `${formatCurrency((inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100)))} / ${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}`
+                            : formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)
+                          }
                         </div>
                         <div className="text-sm text-muted-foreground">
-                          {scenarios.oneYear?.increases[0]?.percentIncrease !== undefined 
+                          {scenarios.oneYear?.increases.length === 1 
                             ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay - inputs.preferentialRent)}`
+                            : scenarios.oneYear?.increases.length === 2
+                            ? (
+                                <div className="space-y-1">
+                                  <div>{formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + {formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | +{formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay - inputs.preferentialRent)}</div>
+                                  <div className="text-xs italic">First / Final amounts shown above</div>
+                                </div>
+                              )
                             : 'N/A'
                           }
                         </div>
