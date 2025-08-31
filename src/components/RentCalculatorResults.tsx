@@ -114,6 +114,22 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
     }
   };
 
+  const copyLeaseAmount = async (amount: number, leaseType: '1-year' | '2-year') => {
+    try {
+      await navigator.clipboard.writeText(formatCurrency(amount));
+      toast({
+        title: "Amount copied",
+        description: `${leaseType} lease amount ${formatCurrency(amount)} copied to clipboard`,
+      });
+    } catch (err) {
+      toast({
+        title: "Copy failed",
+        description: "Unable to copy to clipboard. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Print-only simplified view */}
@@ -324,11 +340,21 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                       <div className="text-xs text-muted-foreground">Legal Regulated Rent</div>
                     </TableCell>
                     <TableCell className="text-center space-y-1">
-                      <div className="text-lg font-bold text-calculator-success">
-                        {scenarios.oneYear?.increases.length === 2 
-                          ? `${formatCurrency(scenarios.oneYear.increases[0].newRent)} / ${formatCurrency(scenarios.oneYear.newLegalRent)}`
-                          : formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)
-                        }
+                      <div className="flex items-center justify-center gap-2">
+                        <div className="text-lg font-bold text-calculator-success">
+                          {scenarios.oneYear?.increases.length === 2 
+                            ? `${formatCurrency(scenarios.oneYear.increases[0].newRent)} / ${formatCurrency(scenarios.oneYear.newLegalRent)}`
+                            : formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)
+                          }
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 w-6 p-0 hover:bg-muted"
+                          onClick={() => copyLeaseAmount(scenarios.oneYear?.newLegalRent || inputs.currentRent, '1-year')}
+                        >
+                          <Copy className="h-3 w-3" />
+                        </Button>
                       </div>
                       <div className="text-sm text-muted-foreground">
                         {scenarios.oneYear?.increases.length === 1 
@@ -347,11 +373,21 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                       </div>
                     </TableCell>
                     <TableCell className="text-center space-y-1">
-                      <div className="text-lg font-bold text-calculator-success">
-                        {scenarios.twoYear?.increases.length === 2 
-                          ? `${formatCurrency(scenarios.twoYear.increases[0].newRent)} / ${formatCurrency(scenarios.twoYear.newLegalRent)}`
-                          : formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)
-                        }
+                      <div className="flex items-center justify-center gap-2">
+                        <div className="text-lg font-bold text-calculator-success">
+                          {scenarios.twoYear?.increases.length === 2 
+                            ? `${formatCurrency(scenarios.twoYear.increases[0].newRent)} / ${formatCurrency(scenarios.twoYear.newLegalRent)}`
+                            : formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)
+                          }
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 w-6 p-0 hover:bg-muted"
+                          onClick={() => copyLeaseAmount(scenarios.twoYear?.newLegalRent || inputs.currentRent, '2-year')}
+                        >
+                          <Copy className="h-3 w-3" />
+                        </Button>
                       </div>
                       <div className="text-sm text-muted-foreground">
                         {scenarios.twoYear?.increases.length === 1 
