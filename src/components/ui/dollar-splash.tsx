@@ -11,46 +11,92 @@ export function DollarSplash({ isVisible, onComplete }: DollarSplashProps) {
   useEffect(() => {
     if (isVisible) {
       setShow(true);
+      
+      // Create confetti burst
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      
+      moneyBurst({ 
+        x: centerX, 
+        y: centerY, 
+        count: 120, 
+        spread: 80, 
+        minDist: 180, 
+        maxDist: 450 
+      });
+
       const timer = setTimeout(() => {
         setShow(false);
         onComplete?.();
-      }, 1500);
+      }, 2000);
+      
       return () => clearTimeout(timer);
     }
   }, [isVisible, onComplete]);
 
-  if (!show) return null;
+  const moneyBurst = ({ x, y, count = 120, spread = 80, minDist = 180, maxDist = 450 }) => {
+    const container = document.createElement('div');
+    container.style.cssText = `
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 9999;
+    `;
+    document.body.appendChild(container);
 
-  return (
-    <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
-      <div className="relative">
-        {/* Multiple dollar signs with different animations */}
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className={`absolute text-4xl font-bold text-primary animate-bounce select-none`}
-            style={{
-              animationDelay: `${i * 0.1}s`,
-              animationDuration: '1s',
-              transform: `rotate(${i * 45}deg) translateY(-${50 + i * 20}px)`,
-              left: `${Math.cos((i * Math.PI) / 4) * 60}px`,
-              top: `${Math.sin((i * Math.PI) / 4) * 60}px`,
-            }}
-          >
-            $
-          </div>
-        ))}
-        
-        {/* Center burst effect */}
-        <div className="absolute inset-0 animate-ping">
-          <div className="w-16 h-16 bg-primary/20 rounded-full"></div>
-        </div>
-        
-        {/* Main central dollar sign */}
-        <div className="relative z-10 text-6xl font-bold text-primary animate-pulse">
-          $
-        </div>
-      </div>
-    </div>
-  );
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('span');
+      el.textContent = '$';
+      el.style.cssText = `
+        position: absolute;
+        color: hsl(var(--primary));
+        font-weight: 700;
+        user-select: none;
+        will-change: transform, opacity;
+        left: ${x}px;
+        top: ${y}px;
+        font-size: ${12 + Math.random() * 10}px;
+      `;
+
+      // Random angle around straight-up (-90°) with spread
+      const angle = (-90 + (Math.random() * 2 - 1) * spread) * (Math.PI / 180);
+      const distance = minDist + Math.random() * (maxDist - minDist);
+      const dx = Math.cos(angle) * distance;
+      const dy = Math.sin(angle) * distance;
+
+      // Rotation and timing
+      const rot = (Math.random() * 720 - 360);
+      const dur = 1200 + Math.random() * 800;
+      const delay = Math.random() * 100;
+
+      container.appendChild(el);
+
+      // Web Animations API for smooth confetti burst
+      const anim = el.animate(
+        [
+          { transform: 'translate(0, 0) rotate(0deg)', opacity: 1, offset: 0 },
+          { transform: `translate(${dx * 0.6}px, ${dy * 0.6 - 100}px) rotate(${rot * 0.5}deg)`, opacity: 1, offset: 0.6 },
+          { transform: `translate(${dx}px, ${dy}px) rotate(${rot}deg)`, opacity: 0, offset: 1 }
+        ],
+        { 
+          duration: dur, 
+          delay, 
+          easing: 'cubic-bezier(.22,.61,.36,1)', 
+          fill: 'forwards' 
+        }
+      );
+
+      anim.onfinish = () => el.remove();
+    }
+
+    // Clean up container after animation
+    setTimeout(() => {
+      if (container.parentNode) {
+        container.remove();
+      }
+    }, 3000);
+  };
+
+  return null; // No JSX needed since we're creating elements directly
 }
