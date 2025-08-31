@@ -1,5 +1,12 @@
 [
   {
+    "order": 57,
+    "effective_from": "2025-10-01",
+    "effective_to": "2026-09-30",
+    "one_year": { "type": "flat", "pct": 3.0 },
+    "two_year": { "type": "flat", "pct": 4.5 }
+  },
+  {
     "order": 56,
     "effective_from": "2024-10-01",
     "effective_to": "2025-09-30",
