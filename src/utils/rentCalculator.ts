@@ -9,9 +9,11 @@ export function getGuideline(date: Date, term: 1 | 2): { order: RGBOrder; rule: 
     const effectiveTo = new Date(order.effective_to);
     
     if (date >= effectiveFrom && date <= effectiveTo) {
+      const selectedRule = term === 1 ? order.one_year : order.two_year;
+      console.log(`🔍 DEBUG: Order ${order.order}, Term: ${term}, Selected Rule:`, selectedRule);
       return {
         order,
-        rule: term === 1 ? order.one_year : order.two_year
+        rule: selectedRule
       };
     }
   }
@@ -20,14 +22,17 @@ export function getGuideline(date: Date, term: 1 | 2): { order: RGBOrder; rule: 
 }
 
 export function calculateRentIncrease(inputs: CalculationInputs, leaseTerm: 1 | 2): CalculationResult | null {
+  console.log(`🔍 DEBUG: calculateRentIncrease called with lease term: ${leaseTerm}, date: ${inputs.leaseStartDate.toDateString()}`);
   const guideline = getGuideline(inputs.leaseStartDate, leaseTerm);
   
   if (!guideline) {
+    console.log('❌ DEBUG: No guideline found');
     return null;
   }
 
   const { order, rule } = guideline;
   const baseRent = inputs.currentRent;
+  console.log(`🔍 DEBUG: Using Order ${order.order}, Rule type: ${rule.type}, Details:`, rule);
 
   switch (rule.type) {
     case 'flat':
