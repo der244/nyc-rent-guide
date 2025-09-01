@@ -268,16 +268,6 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
             )}
           </tbody>
         </table>
-
-        <div className="border border-gray-300 p-4 text-sm">
-          <p className="font-medium mb-2">Important Disclaimer</p>
-          <p>
-            This calculation is for NYC rent-stabilized apartments only and is not legal advice. 
-            Please confirm with the NYC Housing and Community Renewal (HCR) or Rent Guidelines Board (RGB). 
-            Vacancy allowances, Major Capital Improvements (MCI), Individual Apartment Improvements (IAI), 
-            and other adjustments are not included in this calculation.
-          </p>
-        </div>
       </div>
 
       {/* Screen-only detailed view */}
