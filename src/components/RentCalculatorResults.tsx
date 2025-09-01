@@ -199,13 +199,9 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
           <div className="border border-gray-300 p-4">
             <h3 className="font-bold text-lg mb-3">2-Year Lease Option</h3>
             {scenarios.twoYear?.increases.length === 2 ? (
-              <div className="text-xl font-bold text-green-700 mb-2">
-                {formatCurrency(scenarios.twoYear.increases[0].newRent)}
-                <br />
-                /
-                <br />
-                {formatCurrency(scenarios.twoYear.increases[1].newRent)}
-              </div>
+              <p className="text-xl font-bold text-green-700 mb-2">
+                {formatCurrency(scenarios.twoYear.increases[0].newRent)} / {formatCurrency(scenarios.twoYear.increases[1].newRent)}
+              </p>
             ) : (
               <p className="text-xl font-bold text-green-700 mb-2">{formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}</p>
             )}
@@ -213,7 +209,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
               {scenarios.twoYear?.increases.length === 1 
                 ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} increase (+${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)})`
                 : scenarios.twoYear?.increases.length === 2
-                ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +${formatCurrency(scenarios.twoYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))}`
+                ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)} / +${formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}`
                 : 'Split increase over 2 years'
               }
             </p>
@@ -224,13 +220,9 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
               <div className="mt-3 pt-2 border-t border-gray-200">
                 <p className="text-sm font-medium">Tenant Pays (Preferential):</p>
                 {scenarios.twoYear?.increases.length === 2 ? (
-                  <div className="text-lg font-bold text-blue-700">
-                    {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay - (scenarios.twoYear.increases[1].newRent - scenarios.twoYear.increases[0].newRent))}
-                    <br />
-                    /
-                    <br />
-                    {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
-                  </div>
+                  <p className="text-lg font-bold text-blue-700">
+                    {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay - (scenarios.twoYear.increases[1].newRent - scenarios.twoYear.increases[0].newRent))} / {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
+                  </p>
                 ) : (
                   <p className="text-lg font-bold text-blue-700">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
                 )}
