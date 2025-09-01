@@ -83,9 +83,9 @@ export default function RentCalculator() {
 
       <main className="container mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
         <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
-          {/* Form and Results - Mobile First, Side by Side on Desktop */}
-          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-8">
-            {/* Form */}
+          {/* Form and Results - Responsive Layout Based on Content Width */}
+          <div className="space-y-6">
+            {/* Form - Always on Top */}
             <div>
               <RentCalculatorForm 
                 onCalculate={handleCalculate}
@@ -93,7 +93,7 @@ export default function RentCalculator() {
               />
             </div>
             
-            {/* Results or Quick Info */}
+            {/* Results or Quick Info - Below Form to Prevent Horizontal Scroll */}
             <div>
               {result && inputs ? (
                 <div id="results">

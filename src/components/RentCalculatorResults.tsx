@@ -339,8 +339,8 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
             </p>
           </CardHeader>
           <CardContent className="p-3 sm:p-6">
-            <div className="overflow-x-auto">
-              <Table>
+            <div className="w-full">
+              <Table className="table-auto w-full min-w-0">
                 <TableHeader>
                   <TableRow className="bg-muted/50">
                     <TableHead className="font-semibold w-[120px] sm:w-[140px] text-xs sm:text-sm">Current Rent</TableHead>
