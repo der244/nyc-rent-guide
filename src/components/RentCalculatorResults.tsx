@@ -186,7 +186,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
           </thead>
           <tbody>
             {/* Legal Rent Row */}
-            <tr className="border-b border-gray-300">
+            <tr className="border-b-2 border-gray-400">
               <td className="p-4">
                 <div className="text-xl font-bold">{formatCurrency(inputs.currentRent)}</div>
                 <div className="text-sm text-gray-600">Legal Regulated Rent</div>
