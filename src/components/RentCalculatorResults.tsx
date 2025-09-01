@@ -284,7 +284,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
         </div>
       </div>
 
-      {/* Screen-only detailed view */}
+      {/* Screen-only responsive view */}
       {scenarios && (
         <Card className="shadow-lg border-0 print:hidden" style={{ boxShadow: 'var(--shadow-card)' }}>
           <CardHeader className="bg-gradient-to-r from-calculator-success to-calculator-success/90 text-white rounded-t-lg">
@@ -338,356 +338,395 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
               })}
             </p>
           </CardHeader>
-          <CardContent className="p-3 sm:p-6">
-            <div className="overflow-x-auto">
+          
+          <CardContent className="p-4 sm:p-6">
+            {/* Mobile Card Layout */}
+            <div className="block lg:hidden space-y-4">
+              {/* Current Rent Card */}
+              <Card className="bg-muted/30">
+                <CardContent className="p-4">
+                  <h3 className="font-semibold text-sm text-muted-foreground mb-2">Current Rent</h3>
+                  <div className="space-y-1">
+                    <p className="text-xl font-bold">{formatCurrency(inputs.currentRent)}</p>
+                    <p className="text-sm text-muted-foreground">Legal Regulated Rent</p>
+                    {inputs.preferentialRent && (
+                      <>
+                        <p className="text-lg font-semibold text-primary">{formatCurrency(inputs.preferentialRent)}</p>
+                        <p className="text-sm text-muted-foreground">Tenant Currently Pays</p>
+                      </>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* 1-Year Lease Card */}
+              <Card className="bg-calculator-success/5 border-calculator-success/20">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-semibold text-calculator-success">1-Year Lease</h3>
+                    <Button
+                      onClick={() => copyLeaseAmount(scenarios.oneYear?.newLegalRent || inputs.currentRent, "1-Year")}
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0"
+                    >
+                      <Copy className="h-3 w-3" />
+                    </Button>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-2xl font-bold text-calculator-success">{formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}</p>
+                      <p className="text-sm text-muted-foreground">Legal Rent</p>
+                      {scenarios.oneYear?.increases && (
+                        <div className="mt-2 text-sm">
+                          {scenarios.oneYear.increases.length === 1 ? (
+                            <div className="space-y-1">
+                              <p className="font-medium">{formatPercent(scenarios.oneYear.increases[0].percentIncrease)} increase</p>
+                              <p className="text-muted-foreground">+{formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)}</p>
+                            </div>
+                          ) : scenarios.oneYear.increases.length === 2 ? (
+                            <div className="space-y-1">
+                              <p className="font-medium">{formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + {formatPercent(scenarios.oneYear.increases[1].percentIncrease)}</p>
+                              <p className="text-muted-foreground">+{formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)} + {formatCurrency(scenarios.oneYear.increases[1].dollarIncrease)}</p>
+                            </div>
+                          ) : null}
+                        </div>
+                      )}
+                    </div>
+                    {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && (
+                      <div className="pt-3 border-t border-calculator-success/20">
+                        <p className="text-lg font-semibold text-primary">{formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}</p>
+                        <p className="text-sm text-muted-foreground">Tenant Pays (Preferential)</p>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* 2-Year Lease Card */}
+              <Card className="bg-calculator-info/5 border-calculator-info/20">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-semibold text-calculator-info">2-Year Lease</h3>
+                    <Button
+                      onClick={() => copyLeaseAmount(scenarios.twoYear?.newLegalRent || inputs.currentRent, "2-Year")}
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0"
+                    >
+                      <Copy className="h-3 w-3" />
+                    </Button>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      {scenarios.twoYear?.increases.length === 2 ? (
+                        <div className="space-y-2">
+                          <div>
+                            <p className="text-lg font-bold text-calculator-info">{formatCurrency(scenarios.twoYear.increases[0].newRent)}</p>
+                            <p className="text-sm text-muted-foreground">Year 1 Legal Rent</p>
+                          </div>
+                          <div>
+                            <p className="text-2xl font-bold text-calculator-info">{formatCurrency(scenarios.twoYear.increases[1].newRent)}</p>
+                            <p className="text-sm text-muted-foreground">Year 2 Legal Rent</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <p className="text-2xl font-bold text-calculator-info">{formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}</p>
+                          <p className="text-sm text-muted-foreground">Legal Rent</p>
+                        </div>
+                      )}
+                      {scenarios.twoYear?.increases && (
+                        <div className="mt-2 text-sm">
+                          {scenarios.twoYear.increases.length === 1 ? (
+                            <div className="space-y-1">
+                              <p className="font-medium">{formatPercent(scenarios.twoYear.increases[0].percentIncrease)} increase</p>
+                              <p className="text-muted-foreground">+{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)}</p>
+                            </div>
+                          ) : scenarios.twoYear.increases.length === 2 ? (
+                            <div className="space-y-1">
+                              <p className="font-medium">{formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + {formatPercent(scenarios.twoYear.increases[1].percentIncrease)}</p>
+                              <p className="text-muted-foreground">+{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)} / +{formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}</p>
+                            </div>
+                          ) : null}
+                        </div>
+                      )}
+                    </div>
+                    {inputs.preferentialRent && scenarios.twoYear?.preferentialResult && (
+                      <div className="pt-3 border-t border-calculator-info/20">
+                        {scenarios.twoYear?.increases.length === 2 ? (
+                          <div className="space-y-2">
+                            <div>
+                              <p className="text-sm font-semibold text-primary">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay - (scenarios.twoYear.increases[1].newRent - scenarios.twoYear.increases[0].newRent))}</p>
+                              <p className="text-xs text-muted-foreground">Year 1 Tenant Pays</p>
+                            </div>
+                            <div>
+                              <p className="text-lg font-semibold text-primary">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
+                              <p className="text-xs text-muted-foreground">Year 2 Tenant Pays</p>
+                            </div>
+                          </div>
+                        ) : (
+                          <div>
+                            <p className="text-lg font-semibold text-primary">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
+                            <p className="text-sm text-muted-foreground">Tenant Pays (Preferential)</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Desktop Table Layout */}
+            <div className="hidden lg:block">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/50">
-                    <TableHead className="font-semibold w-[120px] sm:w-[140px] text-xs sm:text-sm">Current Rent</TableHead>
-                    <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[200px] sm:min-w-[280px]">1-Year Lease</TableHead>
-                    <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[200px] sm:min-w-[280px]">2-Year Lease</TableHead>
-                  </TableRow>
-                  <TableRow className="bg-muted/30">
-                    <TableHead className="text-muted-foreground text-xs">Starting Amount</TableHead>
-                    <TableHead className="text-center text-muted-foreground text-xs px-1">
-                      New Amount | % Increase | $ Increase
-                    </TableHead>
-                    <TableHead className="text-center text-muted-foreground text-xs px-1">
-                      New Amount | % Increase | $ Increase
-                    </TableHead>
-                  </TableRow>
-                  <TableRow className="bg-muted/20">
-                    <TableHead className="text-muted-foreground text-xs">Lease End Date</TableHead>
-                    <TableHead className="text-center text-muted-foreground text-xs px-1">
-                      {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
-                    </TableHead>
-                    <TableHead className="text-center text-muted-foreground text-xs px-1">
-                      {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
-                    </TableHead>
+                    <TableHead className="font-semibold text-sm">Current Rent</TableHead>
+                    <TableHead className="text-center font-semibold text-sm">1-Year Lease</TableHead>
+                    <TableHead className="text-center font-semibold text-sm">2-Year Lease</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {/* Main rent calculation row */}
-                  <TableRow className="border-b-2">
-                    <TableCell className="font-bold text-base sm:text-lg">
-                      {formatCurrency(inputs.currentRent)}
-                      <div className="text-xs text-muted-foreground">Legal Regulated Rent</div>
-                    </TableCell>
-                    <TableCell className="text-center space-y-1 px-2 sm:px-4">
-                      <div className="flex flex-col items-center justify-center gap-1">
-                        {scenarios.oneYear?.increases.length === 2 ? (
-                          <div className="flex items-center justify-center gap-2 relative">
-                            <div className="flex flex-col items-center">
-                              <div className="text-sm sm:text-lg font-bold text-calculator-success">
-                                {formatCurrency(scenarios.oneYear.increases[0].newRent)}
-                              </div>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.oneYear.increases[0].newRent, '1-year year 1')}
-                                title="Copy Year 1 amount"
-                              >
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
-                            <div className="text-sm sm:text-lg font-bold text-calculator-success">/</div>
-                            <div className="flex flex-col items-center">
-                              <div className="text-sm sm:text-lg font-bold text-calculator-success">
-                                {formatCurrency(scenarios.oneYear.newLegalRent)}
-                              </div>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.oneYear.newLegalRent, '1-year final')}
-                                title="Copy final amount"
-                              >
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="flex flex-col items-center">
-                            <div className="text-sm sm:text-lg font-bold text-calculator-success break-words">
-                              {formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}
-                            </div>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                              onClick={() => copyLeaseAmount(scenarios.oneYear?.newLegalRent || inputs.currentRent, '1-year')}
-                              title="Copy amount"
-                            >
-                              <Copy className="h-2 w-2" />
-                            </Button>
+                  <TableRow className="hover:bg-muted/30">
+                    <TableCell className="font-medium">
+                      <div className="space-y-2">
+                        <p className="text-xl font-bold">{formatCurrency(inputs.currentRent)}</p>
+                        <p className="text-sm text-muted-foreground">Legal Regulated Rent</p>
+                        {inputs.preferentialRent && (
+                          <div className="pt-2 border-t border-muted">
+                            <p className="text-lg font-semibold text-primary">{formatCurrency(inputs.preferentialRent)}</p>
+                            <p className="text-sm text-muted-foreground">Tenant Currently Pays</p>
                           </div>
                         )}
                       </div>
-                      <div className="text-xs text-muted-foreground leading-tight whitespace-nowrap">
-                        {scenarios.oneYear?.increases.length === 1 
-                          ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)}`
-                          : scenarios.oneYear?.increases.length === 2
-                          ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | +${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)} / +${formatCurrency(scenarios.oneYear.increases[1].dollarIncrease)}`
-                          : 'N/A'
-                        }
-                      </div>
-                      {scenarios.oneYear?.increases.length === 2 && (
-                        <div className="text-xs text-muted-foreground italic">
-                          {scenarios.oneYear.increases[0].period} / {scenarios.oneYear.increases[1].period}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-center gap-2">
+                          <span className="text-xl font-bold text-calculator-success">{formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}</span>
+                          <Button
+                            onClick={() => copyLeaseAmount(scenarios.oneYear?.newLegalRent || inputs.currentRent, "1-Year")}
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 w-6 p-0 opacity-60 hover:opacity-100"
+                          >
+                            <Copy className="h-3 w-3" />
+                          </Button>
                         </div>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-center space-y-1 px-2 sm:px-4">
-                      <div className="flex flex-col items-center justify-center gap-1">
-                        {scenarios.twoYear?.increases.length === 2 ? (
-                          <div className="flex items-center justify-center gap-2 relative">
-                            <div className="flex flex-col items-center">
-                              <div className="text-sm sm:text-lg font-bold text-calculator-success">
-                                {formatCurrency(scenarios.twoYear.increases[0].newRent)}
-                              </div>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.twoYear.increases[0].newRent, '2-year year 1')}
-                                title="Copy Year 1 amount"
-                              >
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
-                            <div className="text-sm sm:text-lg font-bold text-calculator-success">/</div>
-                            <div className="flex flex-col items-center">
-                              <div className="text-sm sm:text-lg font-bold text-calculator-success">
-                                {formatCurrency(scenarios.twoYear.newLegalRent)}
-                              </div>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.twoYear.newLegalRent, '2-year final')}
-                                title="Copy final amount"
-                              >
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
+                        <p className="text-sm text-muted-foreground">Legal Rent</p>
+                        {scenarios.oneYear?.increases && (
+                          <div className="text-sm space-y-1">
+                            {scenarios.oneYear.increases.length === 1 ? (
+                              <>
+                                <p className="font-medium">{formatPercent(scenarios.oneYear.increases[0].percentIncrease)}</p>
+                                <p className="text-muted-foreground">+{formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)}</p>
+                              </>
+                            ) : scenarios.oneYear.increases.length === 2 ? (
+                              <>
+                                <p className="font-medium">{formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + {formatPercent(scenarios.oneYear.increases[1].percentIncrease)}</p>
+                                <p className="text-muted-foreground">+{formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)} + {formatCurrency(scenarios.oneYear.increases[1].dollarIncrease)}</p>
+                              </>
+                            ) : null}
                           </div>
-                        ) : (
-                          <div className="flex flex-col items-center">
-                            <div className="text-sm sm:text-lg font-bold text-calculator-success break-words">
-                              {formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}
-                            </div>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                              onClick={() => copyLeaseAmount(scenarios.twoYear?.newLegalRent || inputs.currentRent, '2-year')}
-                              title="Copy amount"
-                            >
-                              <Copy className="h-2 w-2" />
-                            </Button>
+                        )}
+                        {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && (
+                          <div className="pt-2 border-t border-muted space-y-1">
+                            <p className="text-lg font-semibold text-primary">{formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}</p>
+                            <p className="text-sm text-muted-foreground">Tenant Pays</p>
                           </div>
                         )}
                       </div>
-                      <div className="text-xs text-muted-foreground leading-tight whitespace-nowrap">
-                        {scenarios.twoYear?.increases.length === 1 
-                          ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)}`
-                          : scenarios.twoYear?.increases.length === 2
-                          ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)} / +${formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}`
-                          : 'Split increase'
-                        }
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-center gap-2">
+                          {scenarios.twoYear?.increases.length === 2 ? (
+                            <div className="space-y-1 text-center">
+                              <div className="flex items-center gap-2">
+                                <span className="text-lg font-bold text-calculator-info">{formatCurrency(scenarios.twoYear.increases[0].newRent)}</span>
+                                <span className="text-sm text-muted-foreground">/</span>
+                                <span className="text-xl font-bold text-calculator-info">{formatCurrency(scenarios.twoYear.increases[1].newRent)}</span>
+                              </div>
+                              <p className="text-sm text-muted-foreground">Year 1 / Year 2</p>
+                            </div>
+                          ) : (
+                            <span className="text-xl font-bold text-calculator-info">{formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}</span>
+                          )}
+                          <Button
+                            onClick={() => copyLeaseAmount(scenarios.twoYear?.newLegalRent || inputs.currentRent, "2-Year")}
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 w-6 p-0 opacity-60 hover:opacity-100"
+                          >
+                            <Copy className="h-3 w-3" />
+                          </Button>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Legal Rent</p>
+                        {scenarios.twoYear?.increases && (
+                          <div className="text-sm space-y-1">
+                            {scenarios.twoYear.increases.length === 1 ? (
+                              <>
+                                <p className="font-medium">{formatPercent(scenarios.twoYear.increases[0].percentIncrease)}</p>
+                                <p className="text-muted-foreground">+{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)}</p>
+                              </>
+                            ) : scenarios.twoYear.increases.length === 2 ? (
+                              <>
+                                <p className="font-medium">{formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + {formatPercent(scenarios.twoYear.increases[1].percentIncrease)}</p>
+                                <p className="text-muted-foreground">+{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)} / +{formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}</p>
+                              </>
+                            ) : null}
+                          </div>
+                        )}
+                        {inputs.preferentialRent && scenarios.twoYear?.preferentialResult && (
+                          <div className="pt-2 border-t border-muted space-y-1">
+                            {scenarios.twoYear?.increases.length === 2 ? (
+                              <div className="space-y-1">
+                                <div className="flex items-center gap-2 justify-center">
+                                  <span className="text-base font-semibold text-primary">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay - (scenarios.twoYear.increases[1].newRent - scenarios.twoYear.increases[0].newRent))}</span>
+                                  <span className="text-sm text-muted-foreground">/</span>
+                                  <span className="text-lg font-semibold text-primary">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</span>
+                                </div>
+                                <p className="text-sm text-muted-foreground">Year 1 / Year 2 Tenant Pays</p>
+                              </div>
+                            ) : (
+                              <>
+                                <p className="text-lg font-semibold text-primary">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
+                                <p className="text-sm text-muted-foreground">Tenant Pays</p>
+                              </>
+                            )}
+                          </div>
+                        )}
                       </div>
-                      {scenarios.twoYear?.increases.length === 2 && (
-                        <div className="text-xs text-muted-foreground italic">Year 1 / Year 2 amounts shown above</div>
-                      )}
                     </TableCell>
                   </TableRow>
-
-                  {/* Preferential rent row if applicable */}
-                  {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && scenarios.twoYear?.preferentialResult && (
-                    <TableRow className="bg-calculator-info/5">
-                      <TableCell className="font-semibold text-calculator-info">
-                        {formatCurrency(inputs.preferentialRent)}
-                        <div className="text-xs text-muted-foreground">Preferential Rent (Tenant Pays)</div>
-                      </TableCell>
-                      <TableCell className="text-center space-y-1 px-2 sm:px-4">
-                        {scenarios.oneYear?.increases.length === 2 ? (
-                          <div className="flex items-center justify-center gap-2 relative">
-                            <div className="flex flex-col items-center">
-                              <div className="font-semibold text-calculator-info">
-                                {formatCurrency(scenarios.oneYear.increases[0].newRent === inputs.preferentialRent ? inputs.preferentialRent! : (inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100)))}
-                              </div>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.oneYear.increases[0].newRent === inputs.preferentialRent ? inputs.preferentialRent! : (inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100)), '1-year preferential year 1')}
-                                title="Copy Year 1 preferential amount"
-                              >
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
-                            <div className="font-semibold text-calculator-info">/</div>
-                            <div className="flex flex-col items-center">
-                              <div className="font-semibold text-calculator-info">
-                                {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
-                              </div>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.oneYear.preferentialResult.newTenantPay, '1-year preferential final')}
-                                title="Copy final preferential amount"
-                              >
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="flex flex-col items-center">
-                            <div className="font-semibold text-calculator-info">
-                              {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
-                            </div>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                              onClick={() => copyLeaseAmount(scenarios.oneYear.preferentialResult.newTenantPay, '1-year preferential')}
-                              title="Copy preferential amount"
-                            >
-                              <Copy className="h-2 w-2" />
-                            </Button>
-                          </div>
-                        )}
-                        <div className="text-sm text-muted-foreground whitespace-nowrap">
-                          {scenarios.oneYear?.increases.length === 1 
-                            ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay - inputs.preferentialRent)}`
-                            : scenarios.oneYear?.increases.length === 2
-                            ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | +${formatCurrency((inputs.preferentialRent! * scenarios.oneYear.increases[0].percentIncrease / 100))} / +${formatCurrency((inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100)) * scenarios.oneYear.increases[1].percentIncrease / 100)}`
-                            : 'N/A'
-                          }
-                        </div>
-                        {scenarios.oneYear?.increases.length === 2 && (
-                          <div className="text-xs text-muted-foreground italic">
-                            {scenarios.oneYear.increases[0].period} / {scenarios.oneYear.increases[1].period}
-                          </div>
-                        )}
-                      </TableCell>
-                      <TableCell className="text-center space-y-1 px-2 sm:px-4">
-                        {scenarios.twoYear?.preferentialResult && scenarios.twoYear.increases.length === 2 ? (
-                          <div className="flex items-center justify-center gap-2 relative">
-                            <div className="flex flex-col items-center">
-                              <div className="font-semibold text-calculator-info">
-                                {formatCurrency(scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!)}
-                              </div>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!, '2-year preferential year 1')}
-                                title="Copy Year 1 preferential amount"
-                              >
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
-                            <div className="font-semibold text-calculator-info">/</div>
-                            <div className="flex flex-col items-center">
-                              <div className="font-semibold text-calculator-info">
-                                {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
-                              </div>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.twoYear.preferentialResult.newTenantPay, '2-year preferential final')}
-                                title="Copy final preferential amount"
-                              >
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="flex flex-col items-center">
-                            <div className="font-semibold text-calculator-info">
-                              {formatCurrency(scenarios.twoYear?.preferentialResult?.newTenantPay || inputs.preferentialRent!)}
-                            </div>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                              onClick={() => copyLeaseAmount(scenarios.twoYear?.preferentialResult?.newTenantPay || inputs.preferentialRent!, '2-year preferential')}
-                              title="Copy preferential amount"
-                            >
-                              <Copy className="h-2 w-2" />
-                            </Button>
-                          </div>
-                        )}
-                        <div className="text-sm text-muted-foreground whitespace-nowrap">
-                          {scenarios.twoYear?.increases.length === 1 
-                            ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} | +${formatCurrency((scenarios.twoYear.preferentialResult?.newTenantPay || 0) - (inputs.preferentialRent || 0))}`
-                            : scenarios.twoYear?.increases.length === 2
-                            ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +${formatCurrency((inputs.preferentialRent! * scenarios.twoYear.increases[0].percentIncrease / 100))} / +${formatCurrency((scenarios.twoYear.preferentialResult?.year1Amount || inputs.preferentialRent!) * scenarios.twoYear.increases[1].percentIncrease / 100)}`
-                            : 'Split increase'
-                          }
-                        </div>
-                        {scenarios.twoYear?.increases.length === 2 && (
-                          <div className="text-xs text-muted-foreground italic">Year 1 / Year 2 amounts shown above</div>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  )}
                 </TableBody>
               </Table>
-            </div>
-
-            {/* Applied rule and breakdown */}
-            <div className="mt-6">
-              <div className="text-sm">
-                <span className="font-medium text-muted-foreground">Applied Rule: </span>
-                <span className="font-medium">
-                  {(() => {
-                    const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
-                    const twoYearGuideline = getGuideline(inputs.leaseStartDate, 2);
-                    
-                    const oneYearPct = oneYearGuideline?.rule.type === 'flat' ? 
-                      `${oneYearGuideline.rule.pct}%` :
-                      oneYearGuideline?.rule.type === 'split' ?
-                      `${oneYearGuideline.rule.year1_pct}% / ${oneYearGuideline.rule.year2_pct_on_year1_rent}%` :
-                      oneYearGuideline?.rule.type === 'split_by_month' ?
-                      `${oneYearGuideline.rule.first_pct}% / ${oneYearGuideline.rule.remaining_months_pct}%` :
-                      'N/A';
-                    
-                    const twoYearPct = twoYearGuideline?.rule.type === 'flat' ? 
-                      `${twoYearGuideline.rule.pct}%` :
-                      twoYearGuideline?.rule.type === 'split' ?
-                      `${twoYearGuideline.rule.year1_pct}% / ${twoYearGuideline.rule.year2_pct_on_year1_rent}%` :
-                      twoYearGuideline?.rule.type === 'split_by_month' ?
-                      `${twoYearGuideline.rule.first_pct}% / ${twoYearGuideline.rule.remaining_months_pct}%` :
-                      'N/A';
-                    
-                    return `1-Year: ${oneYearPct} | 2-Year: ${twoYearPct}`;
-                  })()}
-                </span>
-              </div>
             </div>
           </CardContent>
         </Card>
       )}
 
+      {/* Applied rule and breakdown */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 print:hidden">
+        <Card className="bg-muted/30">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+              <Calculator className="h-4 w-4 sm:h-5 sm:w-5" />
+              Applied Rules
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm space-y-3">
+            {(() => {
+              const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
+              const twoYearGuideline = getGuideline(inputs.leaseStartDate, 2);
+              
+              const oneYearPct = oneYearGuideline?.rule.type === 'flat' ? 
+                `${oneYearGuideline.rule.pct}%` :
+                oneYearGuideline?.rule.type === 'split' ?
+                `Year 1: ${oneYearGuideline.rule.year1_pct}% | Year 2: ${oneYearGuideline.rule.year2_pct_on_year1_rent}%` :
+                oneYearGuideline?.rule.type === 'split_by_month' ?
+                `First Month: ${oneYearGuideline.rule.first_pct}% | Remaining: ${oneYearGuideline.rule.remaining_months_pct}%` :
+                'N/A';
+              
+              const twoYearPct = twoYearGuideline?.rule.type === 'flat' ? 
+                `${twoYearGuideline.rule.pct}%` :
+                twoYearGuideline?.rule.type === 'split' ?
+                `Year 1: ${twoYearGuideline.rule.year1_pct}% | Year 2: ${twoYearGuideline.rule.year2_pct_on_year1_rent}%` :
+                twoYearGuideline?.rule.type === 'split_by_month' ?
+                `First Month: ${twoYearGuideline.rule.first_pct}% | Remaining: ${twoYearGuideline.rule.remaining_months_pct}%` :
+                'N/A';
+              
+              return (
+                <>
+                  <div className="space-y-2">
+                    <div>
+                      <Badge variant="outline" className="bg-calculator-success/10 text-calculator-success border-calculator-success/30 mb-2">
+                        1-Year Lease
+                      </Badge>
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{oneYearPct}</p>
+                    </div>
+                    <div>
+                      <Badge variant="outline" className="bg-calculator-info/10 text-calculator-info border-calculator-info/30 mb-2">
+                        2-Year Lease
+                      </Badge>
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{twoYearPct}</p>
+                    </div>
+                  </div>
+                </>
+              );
+            })()}
+          </CardContent>
+        </Card>
 
+        <Card className="bg-muted/30">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+              Important Notes
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="text-xs sm:text-sm text-muted-foreground space-y-3 leading-relaxed">
+            <p>
+              <strong className="text-foreground">Legal vs. Preferential Rent:</strong> If you pay less than the legal regulated rent (preferential rent), your landlord can increase your preferential rent up to the legal rent limit or apply the guideline increase, whichever is lower.
+            </p>
+            <p>
+              <strong className="text-foreground">Additional Increases:</strong> This calculation does not include vacancy allowances, Major Capital Improvements (MCI), Individual Apartment Improvements (IAI), or other permitted adjustments.
+            </p>
+            <p>
+              <strong className="text-foreground">Verification Required:</strong> Always confirm calculations with NYC Housing and Community Renewal (HCR) or the Rent Guidelines Board (RGB) for official verification.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
 
-      {/* Important Notice - Screen only */}
-      <Card className="border-calculator-warning/50 bg-calculator-warning/5 print:hidden">
-        <CardContent className="p-4">
-          <div className="flex items-start gap-3">
-            <AlertCircle className="h-5 w-5 text-calculator-warning mt-0.5 flex-shrink-0" />
-            <div className="space-y-2 text-sm">
-              <p className="font-medium text-calculator-warning">Important Disclaimer</p>
-              <p className="text-foreground/80">
-                This calculation is for NYC rent-stabilized apartments only and is not legal advice. 
-                Please confirm with the NYC Housing and Community Renewal (HCR) or Rent Guidelines Board (RGB). 
-                Vacancy allowances, Major Capital Improvements (MCI), Individual Apartment Improvements (IAI), 
-                and other adjustments are not included in this calculation.
+      {/* Links section */}
+      <Card className="border-dashed border-2 border-muted-foreground/30 print:hidden">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base sm:text-lg">Official NYC Resources</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+            <a
+              href="https://rentguidelinesboard.cityofnewyork.us/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 p-3 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors border border-primary/20 hover:border-primary/30"
+            >
+              <span className="text-primary font-medium">RGB Official Site</span>
+            </a>
+            <a
+              href="https://portal.hcr.ny.gov/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 p-3 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors border border-primary/20 hover:border-primary/30"
+            >
+              <span className="text-primary font-medium">HCR Portal</span>
+            </a>
+            <a
+              href="https://www1.nyc.gov/site/rentguidelinesboard/resources/rent-stabilized-lease-renewal.page"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 p-3 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors border border-primary/20 hover:border-primary/30"
+            >
+              <span className="text-primary font-medium">Lease Renewal Guide</span>
+            </a>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Important Notice */}
+      <Card className="bg-destructive/5 border-destructive/30 print:hidden">
+        <CardContent className="p-4 sm:p-6">
+          <div className="flex gap-3">
+            <AlertCircle className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
+            <div className="space-y-2">
+              <p className="font-semibold text-destructive">Important Disclaimer</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                This calculator is for informational purposes only and is not legal advice. Rent stabilization laws are complex and subject to change. 
+                Always consult with the NYC Housing and Community Renewal (HCR), Rent Guidelines Board (RGB), or a qualified attorney for official calculations and legal guidance. 
+                This tool does not account for all possible rent adjustments, exemptions, or special circumstances that may apply to your specific situation.
               </p>
             </div>
           </div>
