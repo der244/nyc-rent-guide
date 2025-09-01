@@ -300,7 +300,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
                 "pr-10",
                 errors.leaseStartDate && "border-destructive"
               )}
-              placeholder="1/1/24 or MM/dd/yyyy"
+              placeholder="1/1/24 or mm/dd/yyyy"
             />
             <Popover>
               <PopoverTrigger asChild>
@@ -327,7 +327,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
             <p className="text-sm text-destructive">{errors.leaseStartDate}</p>
           )}
            <p className="text-xs text-muted-foreground">
-             Enter date manually (1/1/24 or MM/dd/yyyy) or click the calendar icon
+             Enter date manually (1/1/24 or mm/dd/yyyy) or click the calendar icon.
            </p>
         </div>
 
