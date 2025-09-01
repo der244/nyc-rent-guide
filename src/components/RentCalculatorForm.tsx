@@ -214,6 +214,52 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
     }
   };
 
+  const handleDateBlur = () => {
+    const parseDate = (input: string): Date | null => {
+      const parts = input.split('/');
+      if (parts.length !== 3) return null;
+      
+      let [month, day, year] = parts;
+      
+      // Need all parts to have content
+      if (!month || !day || !year) return null;
+      
+      // Convert 2-digit year to 4-digit year
+      if (year.length === 2) {
+        const currentYear = new Date().getFullYear();
+        const currentCentury = Math.floor(currentYear / 100) * 100;
+        const yearNum = parseInt(year);
+        
+        if (yearNum <= currentYear % 100) {
+          year = (currentCentury + yearNum).toString();
+        } else {
+          year = (currentCentury - 100 + yearNum).toString();
+        }
+      }
+      
+      const parsedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+      
+      // Validate the date is real
+      if (
+        parsedDate.getFullYear() == parseInt(year) &&
+        parsedDate.getMonth() == parseInt(month) - 1 &&
+        parsedDate.getDate() == parseInt(day)
+      ) {
+        return parsedDate;
+      }
+      
+      return null;
+    };
+
+    const parsedDate = parseDate(dateInputValue);
+    if (parsedDate) {
+      // Format to full MM/dd/yyyy format
+      const formatted = format(parsedDate, 'MM/dd/yyyy');
+      setDateInputValue(formatted);
+      setLeaseStartDate(parsedDate);
+    }
+  };
+
   const handleDateSelect = (date: Date | undefined) => {
     if (date) {
       setLeaseStartDate(date);
@@ -246,6 +292,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
               type="text"
               value={dateInputValue}
               onChange={handleDateInputChange}
+              onBlur={handleDateBlur}
               className={cn(
                 "pr-10",
                 errors.leaseStartDate && "border-destructive"
