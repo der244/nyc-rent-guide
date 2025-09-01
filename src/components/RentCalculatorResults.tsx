@@ -162,14 +162,18 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
 
         <div className="border border-gray-300 p-4 mb-4">
           <h3 className="font-bold text-lg mb-3">Current Rent Information</h3>
-          <p className="text-xl font-bold mb-2">{formatCurrency(inputs.currentRent)}</p>
-          <p className="text-sm mb-2">Legal Regulated Rent</p>
-          {inputs.preferentialRent && (
-            <>
-              <p className="text-lg font-bold text-blue-700">{formatCurrency(inputs.preferentialRent)}</p>
-              <p className="text-sm">Current Preferential Rent (Tenant Currently Pays)</p>
-            </>
-          )}
+          <p className="text-xl font-bold mb-2">
+            {inputs.preferentialRent 
+              ? `${formatCurrency(inputs.currentRent)} / ${formatCurrency(inputs.preferentialRent)}`
+              : formatCurrency(inputs.currentRent)
+            }
+          </p>
+          <p className="text-sm mb-2">
+            {inputs.preferentialRent 
+              ? "Legal / Preferential Rent (Tenant Currently Pays)"
+              : "Legal Regulated Rent"
+            }
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 mb-6">
@@ -194,19 +198,42 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
 
           <div className="border border-gray-300 p-4">
             <h3 className="font-bold text-lg mb-3">2-Year Lease Option</h3>
-            <p className="text-xl font-bold text-green-700">{formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}</p>
+            {scenarios.twoYear?.increases.length === 2 ? (
+              <div className="text-xl font-bold text-green-700 mb-2">
+                {formatCurrency(scenarios.twoYear.increases[0].newRent)}
+                <br />
+                /
+                <br />
+                {formatCurrency(scenarios.twoYear.increases[1].newRent)}
+              </div>
+            ) : (
+              <p className="text-xl font-bold text-green-700 mb-2">{formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}</p>
+            )}
             <p className="text-sm">
               {scenarios.twoYear?.increases.length === 1 
                 ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} increase (+${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)})`
                 : scenarios.twoYear?.increases.length === 2
-                ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} increase (+${formatCurrency(scenarios.twoYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))})`
+                ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +${formatCurrency(scenarios.twoYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))}`
                 : 'Split increase over 2 years'
               }
             </p>
+            {scenarios.twoYear?.increases.length === 2 && (
+              <p className="text-xs text-gray-600 mt-1">Year 1 / Year 2 amounts shown above</p>
+            )}
             {inputs.preferentialRent && scenarios.twoYear?.preferentialResult && (
               <div className="mt-3 pt-2 border-t border-gray-200">
                 <p className="text-sm font-medium">Tenant Pays (Preferential):</p>
-                <p className="text-lg font-bold text-blue-700">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
+                {scenarios.twoYear?.increases.length === 2 ? (
+                  <div className="text-lg font-bold text-blue-700">
+                    {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay - (scenarios.twoYear.increases[1].newRent - scenarios.twoYear.increases[0].newRent))}
+                    <br />
+                    /
+                    <br />
+                    {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
+                  </div>
+                ) : (
+                  <p className="text-lg font-bold text-blue-700">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
+                )}
               </div>
             )}
           </div>
