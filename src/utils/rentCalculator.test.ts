@@ -18,7 +18,7 @@ describe('rentCalculator', () => {
       expect(guideline?.rule).toEqual({
         type: 'split',
         year1_pct: 2.75,
-        year2_pct_on_year1_rent: 3.25
+        year2_pct_on_year1_rent: 3.2
       });
     });
 
@@ -66,16 +66,16 @@ describe('rentCalculator', () => {
       expect(year1Increase?.newRent).toBe(1808.18); // 1759.79 + (1759.79 * 0.0275 rounded)
       expect(year1Increase?.dollarIncrease).toBe(48.39);
       
-      // Year 2: 3.25% on Year 1 rent
+      // Year 2: 3.2% on Year 1 rent
       const year2Increase = result?.increases[1];
-      expect(year2Increase?.percentIncrease).toBe(3.25);
+      expect(year2Increase?.percentIncrease).toBe(3.2);
       expect(year2Increase?.oldRent).toBe(1808.18);
-      expect(year2Increase?.newRent).toBe(1866.94); // 1808.18 + (1808.18 * 0.0325 rounded)
-      expect(year2Increase?.dollarIncrease).toBe(58.76);
+      expect(year2Increase?.newRent).toBe(1866.04); // 1808.18 + (1808.18 * 0.032 rounded)
+      expect(year2Increase?.dollarIncrease).toBe(57.86);
       
       // Test preferential rent calculations
       expect(result?.preferentialResult?.year1Amount).toBe(1758.82); // 1711.75 + (1711.75 * 0.0275 rounded)
-      expect(result?.preferentialResult?.newTenantPay).toBe(1815.97); // 1758.82 + (1758.82 * 0.0325 rounded)
+      expect(result?.preferentialResult?.newTenantPay).toBe(1815.10); // 1758.82 + (1758.82 * 0.032 rounded)
       
       // Test monthly breakdown
       expect(result?.monthlyBreakdown).toHaveLength(24);
@@ -88,8 +88,8 @@ describe('rentCalculator', () => {
       
       // Check second year months (13-24)
       for (let i = 12; i < 24; i++) {
-        expect(result?.monthlyBreakdown?.[i].legalRent).toBe(1866.94);
-        expect(result?.monthlyBreakdown?.[i].tenantPay).toBe(1815.97);
+        expect(result?.monthlyBreakdown?.[i].legalRent).toBe(1866.04);
+        expect(result?.monthlyBreakdown?.[i].tenantPay).toBe(1815.10);
       }
     });
   });

@@ -24,15 +24,8 @@ function preciseCalculate(amount: number, percentage: number): number {
   // 1. Calculate the increase amount
   const increaseAmount = amount * (percentage / 100);
 
-  // 2. For specific cases, adjust rounding to match regulatory standards
-  let roundedIncrease;
-  if (Math.abs(amount - 1758.82) < 0.01 && Math.abs(percentage - 3.25) < 0.01) {
-    // Special case for Order 55 year 2 preferential calculation
-    roundedIncrease = 56.28;
-  } else {
-    // Standard rounding to nearest cent
-    roundedIncrease = Math.round(increaseAmount * 100) / 100;
-  }
+  // Standard rounding to nearest cent
+  const roundedIncrease = Math.round(increaseAmount * 100) / 100;
 
   // 3. Add the rounded increase to the original amount
   const newAmount = amount + roundedIncrease;
