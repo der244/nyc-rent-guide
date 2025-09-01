@@ -340,20 +340,22 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
           </CardHeader>
           <CardContent className="p-3 sm:p-6">
             <div className="w-full">
-              <Table className="table-auto w-full min-w-0">
+              <Table className="w-full table-fixed">
                 <TableHeader>
                   <TableRow className="bg-muted/50">
-                    <TableHead className="font-semibold w-[120px] sm:w-[140px] text-xs sm:text-sm">Current Rent</TableHead>
-                    <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[200px] sm:min-w-[280px]">1-Year Lease</TableHead>
-                    <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[200px] sm:min-w-[280px]">2-Year Lease</TableHead>
+                    <TableHead className="font-semibold w-[25%] text-xs sm:text-sm">Current Rent</TableHead>
+                    <TableHead className="text-center font-semibold text-xs sm:text-sm w-[37.5%]">1-Year Lease</TableHead>
+                    <TableHead className="text-center font-semibold text-xs sm:text-sm w-[37.5%]">2-Year Lease</TableHead>
                   </TableRow>
                   <TableRow className="bg-muted/30">
                     <TableHead className="text-muted-foreground text-xs">Starting Amount</TableHead>
                     <TableHead className="text-center text-muted-foreground text-xs px-1">
-                      New Amount | % Increase | $ Increase
+                      <span className="hidden sm:inline">New Amount | % Increase | $ Increase</span>
+                      <span className="sm:hidden">New | % | $</span>
                     </TableHead>
                     <TableHead className="text-center text-muted-foreground text-xs px-1">
-                      New Amount | % Increase | $ Increase
+                      <span className="hidden sm:inline">New Amount | % Increase | $ Increase</span>
+                      <span className="sm:hidden">New | % | $</span>
                     </TableHead>
                   </TableRow>
                   <TableRow className="bg-muted/20">
