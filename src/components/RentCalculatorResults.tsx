@@ -232,7 +232,10 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   {scenarios.oneYear?.preferentialResult && (
                     <>
                       <div className="text-2xl font-bold text-blue-700">
-                        {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
+                        {scenarios.oneYear.increases.length === 2 && scenarios.oneYear.preferentialResult.year1Amount ? 
+                          `${formatCurrency(scenarios.oneYear.preferentialResult.year1Amount)} / ${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}` :
+                          formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)
+                        }
                       </div>
                       <div className="text-sm text-gray-600 mt-1">
                         Tenant Pays (Preferential)
@@ -244,7 +247,10 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   {scenarios.twoYear?.preferentialResult && (
                     <>
                       <div className="text-2xl font-bold text-blue-700">
-                        {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
+                        {scenarios.twoYear.increases.length === 2 && scenarios.twoYear.preferentialResult.year1Amount ? 
+                          `${formatCurrency(scenarios.twoYear.preferentialResult.year1Amount)} / ${formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}` :
+                          formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)
+                        }
                       </div>
                       <div className="text-sm text-gray-600 mt-1">
                         Tenant Pays (Preferential)
