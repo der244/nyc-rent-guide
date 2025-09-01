@@ -200,7 +200,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                 </div>
                 <div className="text-sm text-gray-600 mt-1">
                   {scenarios.oneYear?.increases.length === 2 ? 
-                    `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} / ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | ${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease + scenarios.oneYear.increases[1].dollarIncrease)}` :
+                    `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} / ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | ${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)} / ${formatCurrency(scenarios.oneYear.increases[1].dollarIncrease)}` :
                     `${formatPercent(scenarios.oneYear?.increases[0]?.percentIncrease || 0)} | ${formatCurrency(scenarios.oneYear?.increases[0]?.dollarIncrease || 0)}`
                   }
                 </div>
@@ -214,7 +214,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                 </div>
                 <div className="text-sm text-gray-600 mt-1">
                   {scenarios.twoYear?.increases.length === 2 ? 
-                    `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} / ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | ${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease + scenarios.twoYear.increases[1].dollarIncrease)}` :
+                    `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} / ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | ${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)} / ${formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}` :
                     `${formatPercent(scenarios.twoYear?.increases[0]?.percentIncrease || 0)} | ${formatCurrency(scenarios.twoYear?.increases[0]?.dollarIncrease || 0)}`
                   }
                 </div>
@@ -238,7 +238,10 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         }
                       </div>
                       <div className="text-sm text-gray-600 mt-1">
-                        Tenant Pays (Preferential)
+                        {scenarios.oneYear.increases.length === 2 && scenarios.oneYear.preferentialResult.year1Amount ? 
+                          `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} / ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | ${formatCurrency(inputs.preferentialRent! * scenarios.oneYear.increases[0].percentIncrease / 100)} / ${formatCurrency((scenarios.oneYear.preferentialResult.year1Amount || inputs.preferentialRent!) * scenarios.oneYear.increases[1].percentIncrease / 100)}` :
+                          `${formatPercent(scenarios.oneYear?.increases[0]?.percentIncrease || 0)} | ${formatCurrency((scenarios.oneYear.preferentialResult?.newTenantPay || 0) - (inputs.preferentialRent || 0))}`
+                        }
                       </div>
                     </>
                   )}
@@ -253,7 +256,10 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         }
                       </div>
                       <div className="text-sm text-gray-600 mt-1">
-                        Tenant Pays (Preferential)
+                        {scenarios.twoYear.increases.length === 2 && scenarios.twoYear.preferentialResult.year1Amount ? 
+                          `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} / ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | ${formatCurrency(inputs.preferentialRent! * scenarios.twoYear.increases[0].percentIncrease / 100)} / ${formatCurrency((scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!) * scenarios.twoYear.increases[1].percentIncrease / 100)}` :
+                          `${formatPercent(scenarios.twoYear?.increases[0]?.percentIncrease || 0)} | ${formatCurrency((scenarios.twoYear.preferentialResult?.newTenantPay || 0) - (inputs.preferentialRent || 0))}`
+                        }
                       </div>
                     </>
                   )}
