@@ -349,7 +349,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           }
                         </div>
                         {scenarios.oneYear?.increases.length === 2 ? (
-                          <div className="flex gap-1">
+                          <div className="flex gap-3 justify-center">
                             <Button
                               variant="ghost"
                               size="sm"
@@ -406,7 +406,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           }
                         </div>
                         {scenarios.twoYear?.increases.length === 2 ? (
-                          <div className="flex gap-1">
+                          <div className="flex gap-3 justify-center">
                             <Button
                               variant="ghost"
                               size="sm"
@@ -469,7 +469,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           }
                         </div>
                         {scenarios.oneYear?.increases.length === 2 ? (
-                          <div className="flex gap-1 justify-center">
+                          <div className="flex gap-3 justify-center">
                             <Button
                               variant="ghost"
                               size="sm"
@@ -524,7 +524,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           }
                         </div>
                         {scenarios.twoYear?.preferentialResult && scenarios.twoYear.increases.length === 2 ? (
-                          <div className="flex gap-1 justify-center">
+                          <div className="flex gap-3 justify-center">
                             <Button
                               variant="ghost"
                               size="sm"
