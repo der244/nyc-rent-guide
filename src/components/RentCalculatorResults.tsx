@@ -430,7 +430,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           : scenarios.oneYear?.increases.length === 2
                           ? (
                               <div className="space-y-1">
-                                <div>{formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + {formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | +{formatCurrency(scenarios.oneYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))}</div>
+                                <div>{formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + {formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | +{formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)} / +{formatCurrency(scenarios.oneYear.increases[1].dollarIncrease)}</div>
                                 <div className="text-xs italic">
                                   {scenarios.oneYear.increases[0].period} / {scenarios.oneYear.increases[1].period}
                                 </div>
@@ -497,7 +497,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           : scenarios.twoYear?.increases.length === 2
                           ? (
                               <div className="space-y-1">
-                                <div>{formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + {formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +{formatCurrency(scenarios.twoYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))}</div>
+                                <div>{formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + {formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)} / +{formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}</div>
                                 <div className="text-xs italic">Year 1 / Year 2 amounts shown above</div>
                               </div>
                             )
