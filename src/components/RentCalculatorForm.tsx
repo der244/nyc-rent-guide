@@ -18,8 +18,8 @@ interface RentCalculatorFormProps {
 }
 
 export default function RentCalculatorForm({ onCalculate, isCalculating }: RentCalculatorFormProps) {
-  const [leaseStartDate, setLeaseStartDate] = useState<Date>(new Date());
-  const [dateInputValue, setDateInputValue] = useState<string>(format(new Date(), 'MM/dd/yyyy'));
+  const [leaseStartDate, setLeaseStartDate] = useState<Date | undefined>(undefined);
+  const [dateInputValue, setDateInputValue] = useState<string>('');
   
   const [currentRent, setCurrentRent] = useState<string>("");
   const [preferentialRent, setPreferentialRent] = useState<string>("");
