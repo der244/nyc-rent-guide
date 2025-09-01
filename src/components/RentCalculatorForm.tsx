@@ -156,6 +156,9 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
               if (year.length > 4) year = year.slice(0, 4);
               formatted += year;
             }
+          } else if (day.length >= 2) {
+            // Auto-add slash after 2 digits for day
+            formatted += '/';
           }
         }
       } else if (month.length >= 2) {
