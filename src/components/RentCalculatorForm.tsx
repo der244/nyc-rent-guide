@@ -121,41 +121,68 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
   };
 
   const handleDateInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+    let value = e.target.value;
     
-    // Auto-format with slashes as user types
-    if (value.length >= 2) {
-      value = value.slice(0, 2) + '/' + value.slice(2);
-    }
-    if (value.length >= 5) {
-      value = value.slice(0, 5) + '/' + value.slice(5, 9);
+    // Allow digits and slashes only
+    value = value.replace(/[^\d/]/g, '');
+    
+    // Handle auto-formatting but preserve user-typed slashes
+    const parts = value.split('/');
+    let formatted = '';
+    
+    if (parts.length >= 1) {
+      // Month part
+      let month = parts[0].replace(/\D/g, '');
+      if (month.length > 2) month = month.slice(0, 2);
+      formatted += month;
+      
+      // Add slash after month if there are more parts or if user typed it
+      if (parts.length > 1 || (value.includes('/') && month.length > 0)) {
+        formatted += '/';
+        
+        if (parts.length >= 2) {
+          // Day part
+          let day = parts[1].replace(/\D/g, '');
+          if (day.length > 2) day = day.slice(0, 2);
+          formatted += day;
+          
+          // Add slash after day if there are more parts or if user typed it
+          if (parts.length > 2 || (parts.length === 2 && value.endsWith('/') && day.length > 0)) {
+            formatted += '/';
+            
+            if (parts.length >= 3) {
+              // Year part
+              let year = parts[2].replace(/\D/g, '');
+              if (year.length > 4) year = year.slice(0, 4);
+              formatted += year;
+            }
+          }
+        }
+      } else if (month.length >= 2) {
+        // Auto-add slash after 2 digits for month
+        formatted += '/';
+      }
     }
     
-    setDateInputValue(value);
+    setDateInputValue(formatted);
     
     // Clear existing date error when user starts typing
     if (errors.leaseStartDate) {
       setErrors(prev => ({ ...prev, leaseStartDate: '' }));
     }
     
-    // Try to parse various date formats
+    // Try to parse the date
     const parseDate = (input: string): Date | null => {
-      // Remove any extra spaces and slashes for parsing
-      const cleanInput = input.replace(/[^0-9]/g, '');
+      const parts = input.split('/');
+      if (parts.length !== 3) return null;
       
-      // Need at least 6 digits for M/d/yy format
-      if (cleanInput.length < 6) return null;
+      let [month, day, year] = parts;
       
-      // Parse as MMDDYY or MMDDYYYY
-      let month, day, year;
+      // Need all parts to have content
+      if (!month || !day || !year) return null;
       
-      if (cleanInput.length === 6) {
-        // MMDDYY format
-        month = cleanInput.slice(0, 2);
-        day = cleanInput.slice(2, 4);
-        year = cleanInput.slice(4, 6);
-        
-        // Convert 2-digit year to 4-digit year
+      // Convert 2-digit year to 4-digit year
+      if (year.length === 2) {
         const currentYear = new Date().getFullYear();
         const currentCentury = Math.floor(currentYear / 100) * 100;
         const yearNum = parseInt(year);
@@ -165,13 +192,6 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
         } else {
           year = (currentCentury - 100 + yearNum).toString();
         }
-      } else if (cleanInput.length === 8) {
-        // MMDDYYYY format
-        month = cleanInput.slice(0, 2);
-        day = cleanInput.slice(2, 4);
-        year = cleanInput.slice(4, 8);
-      } else {
-        return null;
       }
       
       const parsedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
@@ -188,7 +208,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
       return null;
     };
     
-    const parsedDate = parseDate(value);
+    const parsedDate = parseDate(formatted);
     if (parsedDate) {
       setLeaseStartDate(parsedDate);
     }
