@@ -192,6 +192,14 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
               <div className="mt-3 pt-2 border-t border-gray-200">
                 <p className="text-sm font-medium">Tenant Pays (Preferential):</p>
                 <p className="text-lg font-bold text-blue-700">{formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}</p>
+                <p className="text-sm">
+                  {scenarios.oneYear?.increases.length === 1 
+                    ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} increase (+${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)})`
+                    : scenarios.oneYear?.increases.length === 2
+                    ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | +${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)} / +${formatCurrency(scenarios.oneYear.increases[1].dollarIncrease)}`
+                    : 'N/A'
+                  }
+                </p>
               </div>
             )}
           </div>
