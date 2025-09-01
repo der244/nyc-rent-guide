@@ -220,9 +220,15 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
               <div className="mt-3 pt-2 border-t border-gray-200">
                 <p className="text-sm font-medium">Tenant Pays (Preferential):</p>
                 {scenarios.twoYear?.increases.length === 2 ? (
-                  <p className="text-lg font-bold text-blue-700">
-                    {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay - (scenarios.twoYear.increases[1].newRent - scenarios.twoYear.increases[0].newRent))} / {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
-                  </p>
+                  <>
+                    <p className="text-lg font-bold text-blue-700">
+                      {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay - (scenarios.twoYear.increases[1].newRent - scenarios.twoYear.increases[0].newRent))} / {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
+                    </p>
+                    <p className="text-sm">
+                      {formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + {formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)} / +{formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}
+                    </p>
+                    <p className="text-xs text-gray-600 mt-1">Year 1 / Year 2 amounts shown above</p>
+                  </>
                 ) : (
                   <p className="text-lg font-bold text-blue-700">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
                 )}
