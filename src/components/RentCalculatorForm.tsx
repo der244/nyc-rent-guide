@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -27,6 +27,27 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
   const [unit, setUnit] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showSplash, setShowSplash] = useState<boolean>(false);
+
+  // Refs for scrolling to error fields
+  const leaseStartRef = useRef<HTMLInputElement>(null);
+  const currentRentRef = useRef<HTMLInputElement>(null);
+  const preferentialRentRef = useRef<HTMLInputElement>(null);
+
+  const scrollToFirstError = (newErrors: Record<string, string>) => {
+    const errorFields = ['leaseStartDate', 'currentRent', 'preferentialRent'];
+    const refs = [leaseStartRef, currentRentRef, preferentialRentRef];
+    
+    for (let i = 0; i < errorFields.length; i++) {
+      if (newErrors[errorFields[i]] && refs[i].current) {
+        refs[i].current?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
+        refs[i].current?.focus();
+        break;
+      }
+    }
+  };
 
   const validateAndSubmit = () => {
     const newErrors: Record<string, string> = {};
@@ -66,6 +87,9 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
           unit: unit.trim() || undefined,
         });
       }, 300);
+    } else {
+      // Scroll to first error field
+      scrollToFirstError(newErrors);
     }
   };
 
@@ -292,6 +316,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
           <div className="relative">
             <Input
               id="lease-start"
+              ref={leaseStartRef}
               type="text"
               value={dateInputValue}
               onChange={handleDateInputChange}
@@ -341,6 +366,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
             <Input
               id="current-rent"
+              ref={currentRentRef}
               value={currentRent}
               onChange={handleCurrentRentChange}
               placeholder="2,000.00"
@@ -366,6 +392,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
             <Input
               id="preferential-rent"
+              ref={preferentialRentRef}
               value={preferentialRent}
               onChange={handlePreferentialRentChange}
               placeholder="1,800.00"
