@@ -569,7 +569,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             : scenarios.oneYear?.increases.length === 2
                             ? (
                                 <div className="space-y-1">
-                                  <div>{formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + {formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | +{formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay - inputs.preferentialRent)}</div>
+                                  <div>{formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + {formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | +{formatCurrency((inputs.preferentialRent! * scenarios.oneYear.increases[0].percentIncrease / 100))} / +{formatCurrency((inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100)) * scenarios.oneYear.increases[1].percentIncrease / 100)}</div>
                                   <div className="text-xs italic">
                                     {scenarios.oneYear.increases[0].period} / {scenarios.oneYear.increases[1].period}
                                   </div>
@@ -634,7 +634,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             : scenarios.twoYear?.increases.length === 2
                             ? (
                                 <div className="space-y-1">
-                                  <div>{formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + {formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +{formatCurrency((scenarios.twoYear.preferentialResult?.newTenantPay || 0) - (inputs.preferentialRent || 0))}</div>
+                                  <div>{formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + {formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +{formatCurrency((inputs.preferentialRent! * scenarios.twoYear.increases[0].percentIncrease / 100))} / +{formatCurrency((scenarios.twoYear.preferentialResult?.year1Amount || inputs.preferentialRent!) * scenarios.twoYear.increases[1].percentIncrease / 100)}</div>
                                   <div className="text-xs italic">Year 1 / Year 2 amounts shown above</div>
                                 </div>
                               )
