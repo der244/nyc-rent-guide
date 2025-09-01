@@ -556,48 +556,6 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
       )}
 
 
-      {/* Monthly Breakdown for Split Leases - Screen only */}
-      {(result.oneYear.monthlyBreakdown || result.twoYear.monthlyBreakdown) && (
-        <Card className="shadow-lg border-0 print:hidden" style={{ boxShadow: 'var(--shadow-card)' }}>
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold">
-              Monthly Payment Schedule
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="max-h-96 overflow-y-auto">
-              <Table>
-                <TableHeader className="sticky top-0 bg-background">
-                  <TableRow>
-                    <TableHead>Month</TableHead>
-                    <TableHead>Period</TableHead>
-                    <TableHead>Legal Rent</TableHead>
-                    {inputs.preferentialRent && <TableHead>Tenant Pays</TableHead>}
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {(result.oneYear.monthlyBreakdown || result.twoYear.monthlyBreakdown)?.map((month) => (
-                    <TableRow key={month.month}>
-                      <TableCell className="font-medium">Month {month.month}</TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className="text-xs">
-                          {month.period}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="font-semibold">{formatCurrency(month.legalRent)}</TableCell>
-                      {inputs.preferentialRent && (
-                        <TableCell className="font-semibold text-calculator-info">
-                          {formatCurrency(month.tenantPay)}
-                        </TableCell>
-                      )}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Important Notice - Screen only */}
       <Card className="border-calculator-warning/50 bg-calculator-warning/5 print:hidden">
