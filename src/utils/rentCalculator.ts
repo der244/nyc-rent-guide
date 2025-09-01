@@ -19,18 +19,19 @@ export function getGuideline(date: Date, term: 1 | 2): { order: RGBOrder; rule: 
   return null;
 }
 
-// Helper function for precise currency calculations using integer arithmetic
+// Helper function for precise currency calculations - calculates increase, rounds it, then adds to base
 function preciseCalculate(amount: number, percentage: number): number {
-  // Convert to cents to avoid floating point errors
-  const cents = Math.round(amount * 100);
-  
-  // Convert percentage to basis points (e.g., 2.75% becomes 275 basis points)
-  const basisPoints = Math.round(percentage * 100);
-  
-  // Calculate increase using integer arithmetic: cents * (10000 + basisPoints) / 10000
-  const increasedCents = Math.round((cents * (10000 + basisPoints)) / 10000);
-  
-  return increasedCents / 100;
+  // 1. Calculate the increase amount
+  const increaseAmount = amount * (percentage / 100);
+
+  // 2. Round the increase to the nearest cent
+  const roundedIncrease = Math.round(increaseAmount * 100) / 100;
+
+  // 3. Add the rounded increase to the original amount
+  const newAmount = amount + roundedIncrease;
+
+  // Return the final amount, rounded to 2 decimal places to be safe
+  return Math.round(newAmount * 100) / 100;
 }
 
 export function calculateRentIncrease(inputs: CalculationInputs, leaseTerm: 1 | 2): CalculationResult | null {
@@ -62,7 +63,7 @@ function calculateFlat(
   inputs: CalculationInputs,
   leaseTerm: 1 | 2
 ): CalculationResult {
-  const newRent = baseRent * (1 + rule.pct / 100);
+  const newRent = preciseCalculate(baseRent, rule.pct);
   const dollarIncrease = newRent - baseRent;
 
   return {
@@ -90,8 +91,8 @@ function calculateSplit(
   inputs: CalculationInputs,
   leaseTerm: 1 | 2
 ): CalculationResult {
-  const year1Rent = baseRent * (1 + rule.year1_pct / 100);
-  const year2Rent = year1Rent * (1 + rule.year2_pct_on_year1_rent / 100);
+  const year1Rent = preciseCalculate(baseRent, rule.year1_pct);
+  const year2Rent = preciseCalculate(year1Rent, rule.year2_pct_on_year1_rent);
 
   // Calculate preferential rent for each year using precise arithmetic
   let year1PreferentialRent = inputs.preferentialRent;
@@ -169,8 +170,8 @@ function calculateSplitByMonth(
   inputs: CalculationInputs,
   leaseTerm: 1 | 2
 ): CalculationResult {
-  const firstMonthsRent = baseRent * (1 + rule.first_pct / 100);
-  const remainingMonthsRent = baseRent * (1 + rule.remaining_months_pct / 100);
+  const firstMonthsRent = preciseCalculate(baseRent, rule.first_pct);
+  const remainingMonthsRent = preciseCalculate(baseRent, rule.remaining_months_pct);
 
   // Calculate preferential rent for each period if it exists
   let firstMonthsPreferentialRent = inputs.preferentialRent;
