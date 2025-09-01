@@ -9,7 +9,10 @@ import { formatCurrency, formatPercent, getGuideline, calculateRentIncrease } fr
 import { useToast } from '@/hooks/use-toast';
 
 interface RentCalculatorResultsProps {
-  result: CalculationResult;
+  result: {
+    oneYear: CalculationResult;
+    twoYear: CalculationResult;
+  };
   inputs: {
     leaseStartDate: Date;
     currentRent: number;
@@ -22,24 +25,13 @@ interface RentCalculatorResultsProps {
 export default function RentCalculatorResults({ result, inputs }: RentCalculatorResultsProps) {
   const { toast } = useToast();
 
-  // Calculate both 1-year and 2-year scenarios for comparison
-  const getBothScenarios = () => {
-    const oneYearResult = calculateRentIncrease(inputs, 1);
-
-    const twoYearResult = calculateRentIncrease(inputs, 2);
-
-    // Get the guideline info from one of the results
-    const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
-    
-    return {
-      oneYear: oneYearResult,
-      twoYear: twoYearResult,
-      effectivePeriod: oneYearGuideline ? `${oneYearGuideline.order.effective_from} to ${oneYearGuideline.order.effective_to}` : '',
-      orderNumber: oneYearGuideline?.order.order || 0
-    };
+  // Use the passed-in results instead of recalculating
+  const scenarios = {
+    oneYear: result.oneYear,
+    twoYear: result.twoYear,
+    effectivePeriod: `${getGuideline(inputs.leaseStartDate, 1)?.order.effective_from} to ${getGuideline(inputs.leaseStartDate, 1)?.order.effective_to}` || '',
+    orderNumber: result.oneYear.order
   };
-
-  const scenarios = getBothScenarios();
 
   const copyToClipboard = async () => {
     const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
@@ -447,7 +439,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                       <TableCell className="text-center space-y-1">
                         <div className="font-semibold text-calculator-info">
                           {scenarios.twoYear?.preferentialResult && scenarios.twoYear.increases.length === 2
-                            ? `${formatCurrency(scenarios.oneYear?.preferentialResult ? scenarios.oneYear.preferentialResult.newTenantPay : inputs.preferentialRent!)} / ${formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}`
+                            ? `${formatCurrency(scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!)} / ${formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}`
                             : formatCurrency(scenarios.twoYear?.preferentialResult?.newTenantPay || inputs.preferentialRent!)
                           }
                         </div>
@@ -565,7 +557,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
 
 
       {/* Monthly Breakdown for Split Leases - Screen only */}
-      {result.monthlyBreakdown && (
+      {(result.oneYear.monthlyBreakdown || result.twoYear.monthlyBreakdown) && (
         <Card className="shadow-lg border-0 print:hidden" style={{ boxShadow: 'var(--shadow-card)' }}>
           <CardHeader>
             <CardTitle className="text-lg font-semibold">
@@ -584,7 +576,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {result.monthlyBreakdown.map((month) => (
+                  {(result.oneYear.monthlyBreakdown || result.twoYear.monthlyBreakdown)?.map((month) => (
                     <TableRow key={month.month}>
                       <TableCell className="font-medium">Month {month.month}</TableCell>
                       <TableCell>
