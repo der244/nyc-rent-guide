@@ -66,22 +66,6 @@ function calculateFlat(
   const newRent = preciseCalculate(baseRent, rule.pct);
   const dollarIncrease = newRent - baseRent;
 
-  // Calculate preferential rent if it exists
-  const preferentialRent = inputs.preferentialRent ? preciseCalculate(inputs.preferentialRent, rule.pct) : undefined;
-
-  // Generate monthly breakdown for flat rates
-  const monthlyBreakdown = [];
-  const totalMonths = leaseTerm === 1 ? 12 : 24;
-  
-  for (let month = 1; month <= totalMonths; month++) {
-    monthlyBreakdown.push({
-      month,
-      period: leaseTerm === 1 ? 'Year 1' : (month <= 12 ? 'Year 1' : 'Year 2'),
-      legalRent: newRent,
-      tenantPay: preferentialRent || newRent
-    });
-  }
-
   return {
     order: order.order,
     newLegalRent: newRent,
@@ -92,12 +76,11 @@ function calculateFlat(
       percentIncrease: rule.pct,
       dollarIncrease: dollarIncrease
     }],
-    monthlyBreakdown,
     preferentialResult: inputs.preferentialRent ? {
-      newTenantPay: preferentialRent!,
-      explanation: `Preferential rent increases by ${rule.pct}% for the entire ${leaseTerm}-year lease term`
+      newTenantPay: preciseCalculate(inputs.preferentialRent, rule.pct),
+      explanation: `Preferential rent increases by ${rule.pct}%`
     } : undefined,
-    appliedRule: `Order #${order.order}, Flat rate ${rule.pct}% increase applied to entire ${leaseTerm}-year lease period`
+    appliedRule: `Order #${order.order}, ${rule.pct}% increase`
   };
 }
 

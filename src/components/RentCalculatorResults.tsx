@@ -180,33 +180,26 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
           <div className="border border-gray-300 p-4">
             <h3 className="font-bold text-lg mb-3">1-Year Lease Option</h3>
             <p className="text-xl font-bold text-green-700">{formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}</p>
-            
-            <div className="mt-3">
-              <p className="text-sm font-medium">Calculation Details:</p>
-              <div className="ml-2 text-xs space-y-1">
-                <p>Base Rent: {formatCurrency(inputs.currentRent)}</p>
-                {scenarios.oneYear?.increases.map((increase, index) => (
-                  <p key={index}>
-                    {increase.period}: +{formatPercent(increase.percentIncrease)} = +{formatCurrency(increase.dollarIncrease)}
-                  </p>
-                ))}
-                <p className="font-medium border-t pt-1">Final Rent: {formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}</p>
-              </div>
-            </div>
-
+            <p className="text-sm">
+              {scenarios.oneYear?.increases.length === 1 
+                ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} increase (+${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)})`
+                : scenarios.oneYear?.increases.length === 2
+                ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} increase (+${formatCurrency(scenarios.oneYear.increases.reduce((sum, inc) => sum + inc.dollarIncrease, 0))})`
+                : 'N/A'
+              }
+            </p>
             {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && (
               <div className="mt-3 pt-2 border-t border-gray-200">
                 <p className="text-sm font-medium">Tenant Pays (Preferential):</p>
                 <p className="text-lg font-bold text-blue-700">{formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}</p>
-                <div className="ml-2 text-xs space-y-1">
-                  <p>Base Preferential: {formatCurrency(inputs.preferentialRent)}</p>
-                  {scenarios.oneYear?.increases.map((increase, index) => (
-                    <p key={index}>
-                      +{formatPercent(increase.percentIncrease)} = +{formatCurrency((inputs.preferentialRent! * increase.percentIncrease) / 100)}
-                    </p>
-                  ))}
-                  <p className="font-medium border-t pt-1">Final Amount: {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}</p>
-                </div>
+                <p className="text-sm">
+                  {scenarios.oneYear?.increases.length === 1 
+                    ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} increase (+${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)})`
+                    : scenarios.oneYear?.increases.length === 2
+                    ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | +${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)} / +${formatCurrency(scenarios.oneYear.increases[1].dollarIncrease)}`
+                    : 'N/A'
+                  }
+                </p>
               </div>
             )}
           </div>
@@ -220,20 +213,14 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
             ) : (
               <p className="text-xl font-bold text-green-700 mb-2">{formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}</p>
             )}
-            
-            <div className="mt-3">
-              <p className="text-sm font-medium">Calculation Details:</p>
-              <div className="ml-2 text-xs space-y-1">
-                <p>Base Rent: {formatCurrency(inputs.currentRent)}</p>
-                {scenarios.twoYear?.increases.map((increase, index) => (
-                  <p key={index}>
-                    {increase.period}: +{formatPercent(increase.percentIncrease)} = +{formatCurrency(increase.dollarIncrease)}
-                  </p>
-                ))}
-                <p className="font-medium border-t pt-1">Final Rent: {formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}</p>
-              </div>
-            </div>
-
+            <p className="text-sm">
+              {scenarios.twoYear?.increases.length === 1 
+                ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} increase (+${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)})`
+                : scenarios.twoYear?.increases.length === 2
+                ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)} / +${formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}`
+                : 'Split increase over 2 years'
+              }
+            </p>
             {scenarios.twoYear?.increases.length === 2 && (
               <p className="text-xs text-gray-600 mt-1">Year 1 / Year 2 amounts shown above</p>
             )}
@@ -243,103 +230,47 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                 {scenarios.twoYear?.increases.length === 2 ? (
                   <>
                     <p className="text-lg font-bold text-blue-700">
-                      {formatCurrency(scenarios.twoYear.preferentialResult.year1Amount || 0)} / {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
+                      {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay - (scenarios.twoYear.increases[1].newRent - scenarios.twoYear.increases[0].newRent))} / {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
                     </p>
-                    <div className="ml-2 text-xs space-y-1">
-                      <p>Base Preferential: {formatCurrency(inputs.preferentialRent)}</p>
-                      {scenarios.twoYear?.increases.map((increase, index) => (
-                        <p key={index}>
-                          {increase.period}: +{formatPercent(increase.percentIncrease)}
-                        </p>
-                      ))}
-                      <p className="text-xs text-gray-600 mt-1">Year 1 / Year 2 amounts shown above</p>
-                    </div>
+                    <p className="text-sm">
+                      {formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + {formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)} / +{formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}
+                    </p>
+                    <p className="text-xs text-gray-600 mt-1">Year 1 / Year 2 amounts shown above</p>
                   </>
                 ) : (
-                  <>
-                    <p className="text-lg font-bold text-blue-700">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
-                    <div className="ml-2 text-xs space-y-1">
-                      <p>Base Preferential: {formatCurrency(inputs.preferentialRent)}</p>
-                      {scenarios.twoYear?.increases.map((increase, index) => (
-                        <p key={index}>
-                          +{formatPercent(increase.percentIncrease)} = +{formatCurrency((inputs.preferentialRent! * increase.percentIncrease) / 100)}
-                        </p>
-                      ))}
-                      <p className="font-medium border-t pt-1">Final Amount: {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
-                    </div>
-                  </>
+                  <p className="text-lg font-bold text-blue-700">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
                 )}
               </div>
             )}
           </div>
         </div>
 
-        {/* Monthly Breakdown Section */}
-        {(scenarios.oneYear?.monthlyBreakdown || scenarios.twoYear?.monthlyBreakdown) && (
-          <div className="mb-6">
-            <h3 className="font-bold text-lg mb-4">Monthly Breakdown</h3>
-            <div className="grid grid-cols-2 gap-4">
-              {scenarios.oneYear?.monthlyBreakdown && (
-                <div className="border border-gray-300 p-3">
-                  <h4 className="font-medium mb-2">1-Year Lease Monthly Payments</h4>
-                  <div className="text-xs">
-                    <div className="grid grid-cols-3 gap-2 font-medium mb-2 border-b pb-1">
-                      <span>Month</span>
-                      <span>Legal Rent</span>
-                      <span>Tenant Pays</span>
-                    </div>
-                    {scenarios.oneYear.monthlyBreakdown.map((month) => (
-                      <div key={month.month} className="grid grid-cols-3 gap-2 py-0.5">
-                        <span>{month.month}</span>
-                        <span>{formatCurrency(month.legalRent)}</span>
-                        <span>{formatCurrency(month.tenantPay)}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-              
-              {scenarios.twoYear?.monthlyBreakdown && (
-                <div className="border border-gray-300 p-3">
-                  <h4 className="font-medium mb-2">2-Year Lease Monthly Payments</h4>
-                  <div className="text-xs">
-                    <div className="grid grid-cols-3 gap-2 font-medium mb-2 border-b pb-1">
-                      <span>Month</span>
-                      <span>Legal Rent</span>
-                      <span>Tenant Pays</span>
-                    </div>
-                    {scenarios.twoYear.monthlyBreakdown.map((month) => (
-                      <div key={month.month} className="grid grid-cols-3 gap-2 py-0.5">
-                        <span>{month.month}</span>
-                        <span>{formatCurrency(month.legalRent)}</span>
-                        <span>{formatCurrency(month.tenantPay)}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
         <div className="border border-gray-300 p-4 mb-4">
-          <h3 className="font-bold mb-3">Applied Rules & Methodology</h3>
-          <div className="text-sm space-y-3">
-            <div>
-              <p className="font-medium">1-Year Lease:</p>
-              <p className="ml-4 text-xs">{scenarios.oneYear?.appliedRule}</p>
-              {scenarios.oneYear?.preferentialResult && (
-                <p className="ml-4 text-xs italic text-gray-600">{scenarios.oneYear.preferentialResult.explanation}</p>
-              )}
-            </div>
-            <div>
-              <p className="font-medium">2-Year Lease:</p>
-              <p className="ml-4 text-xs">{scenarios.twoYear?.appliedRule}</p>
-              {scenarios.twoYear?.preferentialResult && (
-                <p className="ml-4 text-xs italic text-gray-600">{scenarios.twoYear.preferentialResult.explanation}</p>
-              )}
-            </div>
-          </div>
+          <h3 className="font-bold mb-2">Applied Rules</h3>
+          <p className="text-sm">
+            {(() => {
+              const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
+              const twoYearGuideline = getGuideline(inputs.leaseStartDate, 2);
+              
+              const oneYearPct = oneYearGuideline?.rule.type === 'flat' ? 
+                `${oneYearGuideline.rule.pct}%` :
+                oneYearGuideline?.rule.type === 'split' ?
+                `${oneYearGuideline.rule.year1_pct}% / ${oneYearGuideline.rule.year2_pct_on_year1_rent}%` :
+                oneYearGuideline?.rule.type === 'split_by_month' ?
+                `${oneYearGuideline.rule.first_pct}% / ${oneYearGuideline.rule.remaining_months_pct}%` :
+                'N/A';
+              
+              const twoYearPct = twoYearGuideline?.rule.type === 'flat' ? 
+                `${twoYearGuideline.rule.pct}%` :
+                twoYearGuideline?.rule.type === 'split' ?
+                `${twoYearGuideline.rule.year1_pct}% / ${twoYearGuideline.rule.year2_pct_on_year1_rent}%` :
+                twoYearGuideline?.rule.type === 'split_by_month' ?
+                `${twoYearGuideline.rule.first_pct}% / ${twoYearGuideline.rule.remaining_months_pct}%` :
+                'N/A';
+              
+              return `1-Year: ${oneYearPct} | 2-Year: ${twoYearPct}`;
+            })()}
+          </p>
         </div>
 
         <div className="border border-gray-300 p-4 text-sm">
