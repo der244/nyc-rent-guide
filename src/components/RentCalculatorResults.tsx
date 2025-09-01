@@ -682,6 +682,8 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
         </Card>
       )}
 
+
+
       {/* Important Notice - Screen only */}
       <Card className="border-calculator-warning/50 bg-calculator-warning/5 print:hidden">
         <CardContent className="p-4">
