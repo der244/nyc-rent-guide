@@ -339,13 +339,153 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
             </p>
           </CardHeader>
           <CardContent className="p-3 sm:p-6">
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-muted/50">
-                    <TableHead className="font-semibold w-[120px] sm:w-[140px] text-xs sm:text-sm">Current Rent</TableHead>
-                    <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[200px] sm:min-w-[280px]">1-Year Lease</TableHead>
-                    <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[200px] sm:min-w-[280px]">2-Year Lease</TableHead>
+            {/* Mobile Card Layout */}
+            <div className="block md:hidden space-y-4">
+              {/* Current Rent Card */}
+              <Card className="bg-muted/30">
+                <CardContent className="p-4">
+                  <h3 className="font-semibold text-sm text-muted-foreground mb-2">Current Rent</h3>
+                  <div className="space-y-1">
+                    <p className="text-xl font-bold">{formatCurrency(inputs.currentRent)}</p>
+                    <p className="text-sm text-muted-foreground">Legal Regulated Rent</p>
+                    {inputs.preferentialRent && (
+                      <>
+                        <p className="text-lg font-semibold text-primary">{formatCurrency(inputs.preferentialRent)}</p>
+                        <p className="text-sm text-muted-foreground">Tenant Currently Pays</p>
+                      </>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* 1-Year Lease Card */}
+              <Card className="bg-calculator-success/5 border-calculator-success/20">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-semibold text-calculator-success">1-Year Lease</h3>
+                    <Button
+                      onClick={() => copyLeaseAmount(scenarios.oneYear?.newLegalRent || inputs.currentRent, "1-Year")}
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0"
+                    >
+                      <Copy className="h-3 w-3" />
+                    </Button>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-2xl font-bold text-calculator-success">{formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}</p>
+                      <p className="text-sm text-muted-foreground">Legal Rent</p>
+                      {scenarios.oneYear?.increases && (
+                        <div className="mt-2 text-sm">
+                          {scenarios.oneYear.increases.length === 1 ? (
+                            <div className="space-y-1">
+                              <p className="font-medium">{formatPercent(scenarios.oneYear.increases[0].percentIncrease)} increase</p>
+                              <p className="text-muted-foreground">+{formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)}</p>
+                            </div>
+                          ) : scenarios.oneYear.increases.length === 2 ? (
+                            <div className="space-y-1">
+                              <p className="font-medium">{formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + {formatPercent(scenarios.oneYear.increases[1].percentIncrease)}</p>
+                              <p className="text-muted-foreground">+{formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)} + {formatCurrency(scenarios.oneYear.increases[1].dollarIncrease)}</p>
+                            </div>
+                          ) : null}
+                        </div>
+                      )}
+                    </div>
+                    {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && (
+                      <div className="pt-3 border-t border-calculator-success/20">
+                        <p className="text-lg font-semibold text-primary">{formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}</p>
+                        <p className="text-sm text-muted-foreground">Tenant Pays (Preferential)</p>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* 2-Year Lease Card */}
+              <Card className="bg-calculator-info/5 border-calculator-info/20">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-semibold text-calculator-info">2-Year Lease</h3>
+                    <Button
+                      onClick={() => copyLeaseAmount(scenarios.twoYear?.newLegalRent || inputs.currentRent, "2-Year")}
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0"
+                    >
+                      <Copy className="h-3 w-3" />
+                    </Button>
+                  </div>
+                  <div className="space-y-3">
+                    <div>
+                      {scenarios.twoYear?.increases.length === 2 ? (
+                        <div className="space-y-2">
+                          <div>
+                            <p className="text-lg font-bold text-calculator-info">{formatCurrency(scenarios.twoYear.increases[0].newRent)}</p>
+                            <p className="text-sm text-muted-foreground">Year 1 Legal Rent</p>
+                          </div>
+                          <div>
+                            <p className="text-2xl font-bold text-calculator-info">{formatCurrency(scenarios.twoYear.increases[1].newRent)}</p>
+                            <p className="text-sm text-muted-foreground">Year 2 Legal Rent</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <p className="text-2xl font-bold text-calculator-info">{formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}</p>
+                          <p className="text-sm text-muted-foreground">Legal Rent</p>
+                        </div>
+                      )}
+                      {scenarios.twoYear?.increases && (
+                        <div className="mt-2 text-sm">
+                          {scenarios.twoYear.increases.length === 1 ? (
+                            <div className="space-y-1">
+                              <p className="font-medium">{formatPercent(scenarios.twoYear.increases[0].percentIncrease)} increase</p>
+                              <p className="text-muted-foreground">+{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)}</p>
+                            </div>
+                          ) : scenarios.twoYear.increases.length === 2 ? (
+                            <div className="space-y-1">
+                              <p className="font-medium">{formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + {formatPercent(scenarios.twoYear.increases[1].percentIncrease)}</p>
+                              <p className="text-muted-foreground">+{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)} / +{formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}</p>
+                            </div>
+                          ) : null}
+                        </div>
+                      )}
+                    </div>
+                    {inputs.preferentialRent && scenarios.twoYear?.preferentialResult && (
+                      <div className="pt-3 border-t border-calculator-info/20">
+                        {scenarios.twoYear?.increases.length === 2 ? (
+                          <div className="space-y-2">
+                            <div>
+                              <p className="text-sm font-semibold text-primary">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay - (scenarios.twoYear.increases[1].newRent - scenarios.twoYear.increases[0].newRent))}</p>
+                              <p className="text-xs text-muted-foreground">Year 1 Tenant Pays</p>
+                            </div>
+                            <div>
+                              <p className="text-lg font-semibold text-primary">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
+                              <p className="text-xs text-muted-foreground">Year 2 Tenant Pays</p>
+                            </div>
+                          </div>
+                        ) : (
+                          <div>
+                            <p className="text-lg font-semibold text-primary">{formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}</p>
+                            <p className="text-sm text-muted-foreground">Tenant Pays (Preferential)</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Tablet & Desktop Table Layout */}
+            <div className="hidden md:block">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-muted/50">
+                      <TableHead className="font-semibold w-[120px] lg:w-[140px] text-xs sm:text-sm">Current Rent</TableHead>
+                      <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[180px] lg:min-w-[280px]">1-Year Lease</TableHead>
+                      <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[180px] lg:min-w-[280px]">2-Year Lease</TableHead>
                   </TableRow>
                   <TableRow className="bg-muted/30">
                     <TableHead className="text-muted-foreground text-xs">Starting Amount</TableHead>
@@ -638,9 +778,9 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   )}
                 </TableBody>
               </Table>
-            </div>
+              </div>
 
-            {/* Applied rule and breakdown */}
+              {/* Applied rule and breakdown */}
             <div className="mt-6">
               <div className="text-sm">
                 <span className="font-medium text-muted-foreground">Applied Rule: </span>
@@ -669,6 +809,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   })()}
                 </span>
               </div>
+            </div>
             </div>
           </CardContent>
         </Card>
