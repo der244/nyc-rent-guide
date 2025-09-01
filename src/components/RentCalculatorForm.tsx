@@ -121,7 +121,15 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
   };
 
   const handleDateInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
+    let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+    
+    // Auto-format with slashes as user types
+    if (value.length >= 2) {
+      value = value.slice(0, 2) + '/' + value.slice(2);
+    }
+    if (value.length >= 5) {
+      value = value.slice(0, 5) + '/' + value.slice(5, 9);
+    }
     
     setDateInputValue(value);
     
@@ -132,41 +140,49 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
     
     // Try to parse various date formats
     const parseDate = (input: string): Date | null => {
-      // Remove any extra spaces
-      input = input.trim();
+      // Remove any extra spaces and slashes for parsing
+      const cleanInput = input.replace(/[^0-9]/g, '');
       
-      // Handle formats like "1/1/24", "01/01/2024", etc.
-      const dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/;
-      const match = input.match(dateRegex);
+      // Need at least 6 digits for M/d/yy format
+      if (cleanInput.length < 6) return null;
       
-      if (match) {
-        let [, month, day, year] = match;
+      // Parse as MMDDYY or MMDDYYYY
+      let month, day, year;
+      
+      if (cleanInput.length === 6) {
+        // MMDDYY format
+        month = cleanInput.slice(0, 2);
+        day = cleanInput.slice(2, 4);
+        year = cleanInput.slice(4, 6);
         
         // Convert 2-digit year to 4-digit year
-        if (year.length === 2) {
-          const currentYear = new Date().getFullYear();
-          const currentCentury = Math.floor(currentYear / 100) * 100;
-          const yearNum = parseInt(year);
-          
-          // If 2-digit year is less than or equal to current year's last 2 digits, assume current century
-          // Otherwise assume previous century
-          if (yearNum <= currentYear % 100) {
-            year = (currentCentury + yearNum).toString();
-          } else {
-            year = (currentCentury - 100 + yearNum).toString();
-          }
-        }
+        const currentYear = new Date().getFullYear();
+        const currentCentury = Math.floor(currentYear / 100) * 100;
+        const yearNum = parseInt(year);
         
-        const parsedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-        
-        // Validate the date is real (e.g., not 13/32/24)
-        if (
-          parsedDate.getFullYear() == parseInt(year) &&
-          parsedDate.getMonth() == parseInt(month) - 1 &&
-          parsedDate.getDate() == parseInt(day)
-        ) {
-          return parsedDate;
+        if (yearNum <= currentYear % 100) {
+          year = (currentCentury + yearNum).toString();
+        } else {
+          year = (currentCentury - 100 + yearNum).toString();
         }
+      } else if (cleanInput.length === 8) {
+        // MMDDYYYY format
+        month = cleanInput.slice(0, 2);
+        day = cleanInput.slice(2, 4);
+        year = cleanInput.slice(4, 8);
+      } else {
+        return null;
+      }
+      
+      const parsedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+      
+      // Validate the date is real
+      if (
+        parsedDate.getFullYear() == parseInt(year) &&
+        parsedDate.getMonth() == parseInt(month) - 1 &&
+        parsedDate.getDate() == parseInt(day)
+      ) {
+        return parsedDate;
       }
       
       return null;
