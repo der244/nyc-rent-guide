@@ -422,14 +422,9 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
               type="button"
               variant="outline"
               onClick={() => setShowOptionalFields(!showOptionalFields)}
-              className="bg-background hover:bg-yellow-50 hover:border-yellow-300 hover:text-yellow-700 transition-all duration-300 ease-in-out font-medium text-base px-6 py-3 h-auto"
+              className="bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border-blue-200 hover:border-blue-300 text-blue-700 hover:text-blue-800 transition-all duration-300 ease-in-out font-medium text-base px-8 py-4 h-auto rounded-lg shadow-sm hover:shadow-md"
             >
-              Tenant Info (Optional)
-              {showOptionalFields ? (
-                <span className="ml-2 text-sm">▼</span>
-              ) : (
-                <span className="ml-2 text-sm">▶</span>
-              )}
+              {showOptionalFields ? "Hide Tenant Info" : "Tenant Info (Optional)"}
             </Button>
           </div>
 
