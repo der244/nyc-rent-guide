@@ -625,18 +625,20 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                       <TableRow className="border-b-2">
                          <TableCell className="font-bold text-base sm:text-lg">
                           <div className="space-y-2">
-                            <div className="text-left text-base sm:text-xl font-bold text-calculator-success">{formatCurrency(inputs.currentRent)}</div>
-                            <div className="text-left text-sm text-foreground/60">Legal Regulated Rent</div>
-                            <div className="flex justify-center">
-                              <Button
-                                onClick={() => copyLeaseAmount(inputs.currentRent, "Current Legal Rent")}
-                                variant="ghost"
-                                size="sm"
-                                className="h-8 w-8 p-0 text-black hover:bg-gray-100"
-                              >
-                                <Copy className="h-4 w-4" />
-                              </Button>
+                            <div>
+                              <div className="text-left text-base sm:text-xl font-bold text-calculator-success">{formatCurrency(inputs.currentRent)}</div>
+                              <div className="flex justify-center">
+                                <Button
+                                  onClick={() => copyLeaseAmount(inputs.currentRent, "Current Legal Rent")}
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-8 w-8 p-0 text-black hover:bg-gray-100"
+                                >
+                                  <Copy className="h-4 w-4" />
+                                </Button>
+                              </div>
                             </div>
+                            <div className="text-left text-sm text-foreground/60">Legal Regulated Rent</div>
                           </div>
                         </TableCell>
                         <TableCell className="text-center px-2">
