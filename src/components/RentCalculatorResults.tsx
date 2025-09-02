@@ -625,9 +625,9 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                       <TableRow className="border-b-2">
                         <TableCell className="font-bold text-base sm:text-lg text-calculator-success">
                           <div className="space-y-2">
-                            <div className="text-left text-2xl font-bold">{formatCurrency(inputs.currentRent)}</div>
-                            <div className="text-left text-sm text-foreground/60">Legal Regulated Rent</div>
-                            <div className="flex justify-start">
+                            <div className="text-center text-2xl font-bold">{formatCurrency(inputs.currentRent)}</div>
+                            <div className="text-center text-sm text-foreground/60">Legal Regulated Rent</div>
+                            <div className="flex justify-center">
                               <Button
                                 onClick={() => copyLeaseAmount(inputs.currentRent, "Current Legal Rent")}
                                 variant="ghost"
