@@ -86,11 +86,13 @@ export default function RentCalculator() {
           {/* Form and Results - Responsive Layout Based on Content Width */}
           <div className="space-y-6">
             {/* Form - Always on Top */}
-            <div>
-              <RentCalculatorForm 
-                onCalculate={handleCalculate}
-                isCalculating={isCalculating}
-              />
+            <div className="flex justify-center">
+              <div className="w-full max-w-2xl">
+                <RentCalculatorForm 
+                  onCalculate={handleCalculate}
+                  isCalculating={isCalculating}
+                />
+              </div>
             </div>
             
             {/* Results or Quick Info - Below Form to Prevent Horizontal Scroll */}
