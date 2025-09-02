@@ -605,7 +605,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         <TableHead className="text-center font-semibold text-sm sm:text-base min-w-[140px] text-foreground">2-Year Lease</TableHead>
                       </TableRow>
                       <TableRow className="bg-muted/50">
-                        <TableHead className="font-semibold text-sm sm:text-base py-4 text-foreground">Renewal Dates</TableHead>
+                        <TableHead className="font-semibold text-sm sm:text-base py-4 text-foreground">Lease end dates</TableHead>
                         <TableHead className="text-center font-semibold text-sm sm:text-base py-4 text-foreground">
                           Ends: {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
                         </TableHead>
