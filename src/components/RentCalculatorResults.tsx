@@ -436,9 +436,9 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   <Table className="w-full">
                     <TableHeader>
                       <TableRow className="bg-muted/50">
-                        <TableHead className="font-semibold text-xs sm:text-sm min-w-[120px]">Current Rent</TableHead>
-                        <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[140px]">1-Year Lease</TableHead>
-                        <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[140px]">2-Year Lease</TableHead>
+                        <TableHead className="font-semibold text-xs sm:text-sm min-w-[120px] text-foreground">Current Rent</TableHead>
+                        <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[140px] text-foreground">1-Year Lease</TableHead>
+                        <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[140px] text-foreground">2-Year Lease</TableHead>
                       </TableRow>
                       <TableRow className="bg-muted/50">
                         <TableHead className="font-semibold text-xs sm:text-sm py-4 text-foreground">Renewal Dates</TableHead>
