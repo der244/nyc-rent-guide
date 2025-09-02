@@ -330,6 +330,25 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
               <div className="block md:hidden space-y-4">
                 {/* Mobile: Vertical Cards Layout */}
                 <div className="space-y-4">
+                  {/* Renewal Dates Card */}
+                  <div className="bg-primary/5 p-4 rounded-lg border border-primary/20">
+                    <h3 className="font-semibold text-sm mb-3 text-primary">Renewal Dates</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center">
+                        <div className="text-xs text-muted-foreground mb-1">1-Year Lease Ends</div>
+                        <div className="text-sm font-semibold">
+                          {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-xs text-muted-foreground mb-1">2-Year Lease Ends</div>
+                        <div className="text-sm font-semibold">
+                          {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Current Rent Card */}
                   <div className="bg-muted/30 p-4 rounded-lg">
                     <h3 className="font-semibold text-sm mb-2">Current Rent</h3>
@@ -426,6 +445,15 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         <TableHead className="font-semibold text-xs sm:text-sm min-w-[120px]">Current Rent</TableHead>
                         <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[140px]">1-Year Lease</TableHead>
                         <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[140px]">2-Year Lease</TableHead>
+                      </TableRow>
+                      <TableRow className="bg-primary/5 border-primary/20">
+                        <TableHead className="font-medium text-primary text-xs py-4">Renewal Dates</TableHead>
+                        <TableHead className="text-center font-medium text-primary text-xs py-4">
+                          Ends: {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
+                        </TableHead>
+                        <TableHead className="text-center font-medium text-primary text-xs py-4">
+                          Ends: {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
