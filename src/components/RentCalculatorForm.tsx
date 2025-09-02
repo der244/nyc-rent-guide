@@ -25,6 +25,8 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
   const [preferentialRent, setPreferentialRent] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [unit, setUnit] = useState<string>("");
+  const [tenantName, setTenantName] = useState<string>("");
+  const [showOptionalFields, setShowOptionalFields] = useState<boolean>(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showSplash, setShowSplash] = useState<boolean>(false);
 
@@ -85,6 +87,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
           preferentialRent: prefAmount,
           address: address.trim() || undefined,
           unit: unit.trim() || undefined,
+          tenantName: tenantName.trim() || undefined,
         });
       }, 300);
     } else {
@@ -412,38 +415,78 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
            </p>
         </div>
 
-        {/* Address (Optional) */}
-        <div className="space-y-3">
-          <Label htmlFor="address" className="text-base sm:text-lg font-medium">
-            Property Address <span className="text-muted-foreground font-normal">(Optional)</span>
-          </Label>
-          <Input
-            id="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="123 Main Street, New York, NY 10001"
-            className="w-full h-12 text-base"
-          />
-          <p className="text-sm text-muted-foreground">
-            Include address for reference in printed calculations
-          </p>
-        </div>
+        {/* Optional Fields Toggle */}
+        <div className="space-y-4">
+          <div className="flex justify-center">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setShowOptionalFields(!showOptionalFields)}
+              className="bg-background hover:bg-yellow-50 hover:border-yellow-300 hover:text-yellow-700 transition-all duration-300 ease-in-out font-medium text-base px-6 py-3 h-auto"
+            >
+              Tenant Info (Optional)
+              {showOptionalFields ? (
+                <span className="ml-2 text-sm">▼</span>
+              ) : (
+                <span className="ml-2 text-sm">▶</span>
+              )}
+            </Button>
+          </div>
 
-        {/* Unit (Optional) */}
-        <div className="space-y-3">
-          <Label htmlFor="unit" className="text-base sm:text-lg font-medium">
-            Unit Number <span className="text-muted-foreground font-normal">(Optional)</span>
-          </Label>
-          <Input
-            id="unit"
-            value={unit}
-            onChange={(e) => setUnit(e.target.value)}
-            placeholder="Apt 4B"
-            className="w-full h-12 text-base"
-          />
-          <p className="text-sm text-muted-foreground">
-            Apartment or unit identifier
-          </p>
+          {showOptionalFields && (
+            <div className="space-y-6 pt-4 animate-fade-in">
+              {/* Tenant Name (Optional) */}
+              <div className="space-y-3">
+                <Label htmlFor="tenant-name" className="text-base sm:text-lg font-medium">
+                  Tenant Name <span className="text-muted-foreground font-normal">(Optional)</span>
+                </Label>
+                <Input
+                  id="tenant-name"
+                  value={tenantName}
+                  onChange={(e) => setTenantName(e.target.value)}
+                  placeholder="John Doe"
+                  className="w-full h-12 text-base"
+                />
+                <p className="text-sm text-muted-foreground">
+                  Name for reference in printed calculations
+                </p>
+              </div>
+
+              {/* Address (Optional) */}
+              <div className="space-y-3">
+                <Label htmlFor="address" className="text-base sm:text-lg font-medium">
+                  Property Address <span className="text-muted-foreground font-normal">(Optional)</span>
+                </Label>
+                <Input
+                  id="address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="123 Main Street, New York, NY 10001"
+                  className="w-full h-12 text-base"
+                />
+                <p className="text-sm text-muted-foreground">
+                  Include address for reference in printed calculations
+                </p>
+              </div>
+
+              {/* Unit (Optional) */}
+              <div className="space-y-3">
+                <Label htmlFor="unit" className="text-base sm:text-lg font-medium">
+                  Unit Number <span className="text-muted-foreground font-normal">(Optional)</span>
+                </Label>
+                <Input
+                  id="unit"
+                  value={unit}
+                  onChange={(e) => setUnit(e.target.value)}
+                  placeholder="Apt 4B"
+                  className="w-full h-12 text-base"
+                />
+                <p className="text-sm text-muted-foreground">
+                  Apartment or unit identifier
+                </p>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Calculate Button */}

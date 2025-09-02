@@ -17,6 +17,7 @@ export interface CalculationInputs {
   preferentialRent?: number;
   address?: string;
   unit?: string;
+  tenantName?: string;
   unitPaysHeat?: boolean;
 }
 
