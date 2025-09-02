@@ -540,9 +540,9 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
 
             {/* Applied rule and breakdown */}
             <div className="mt-6">
-              <div className="text-sm">
+              <div className="text-base">
                 <span className="font-medium text-muted-foreground">Applied Rule: </span>
-                <span className="font-medium">
+                <div className="mt-2 space-y-2">
                   {(() => {
                     const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
                     const twoYearGuideline = getGuideline(inputs.leaseStartDate, 2);
@@ -563,9 +563,62 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                       `${twoYearGuideline.rule.first_pct}% / ${twoYearGuideline.rule.remaining_months_pct}%` :
                       'N/A';
                     
-                    return `1-Year: ${oneYearPct} | 2-Year: ${twoYearPct}`;
+                    return (
+                      <>
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">1-Year: {oneYearPct}</span>
+                          <Button
+                            onClick={async () => {
+                              try {
+                                await navigator.clipboard.writeText(oneYearPct);
+                                toast({
+                                  title: "Copied",
+                                  description: `1-Year rate ${oneYearPct} copied to clipboard`,
+                                });
+                              } catch (err) {
+                                toast({
+                                  title: "Copy failed",
+                                  description: "Unable to copy to clipboard. Please try again.",
+                                  variant: "destructive",
+                                });
+                              }
+                            }}
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 px-2 text-xs"
+                          >
+                            <Copy className="h-3 w-3" />
+                          </Button>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">2-Year: {twoYearPct}</span>
+                          <Button
+                            onClick={async () => {
+                              try {
+                                await navigator.clipboard.writeText(twoYearPct);
+                                toast({
+                                  title: "Copied",
+                                  description: `2-Year rate ${twoYearPct} copied to clipboard`,
+                                });
+                              } catch (err) {
+                                toast({
+                                  title: "Copy failed",
+                                  description: "Unable to copy to clipboard. Please try again.",
+                                  variant: "destructive",
+                                });
+                              }
+                            }}
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 px-2 text-xs"
+                          >
+                            <Copy className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </>
+                    );
                   })()}
-                </span>
+                </div>
               </div>
             </div>
           </CardContent>
