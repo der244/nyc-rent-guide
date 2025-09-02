@@ -332,17 +332,17 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                 <div className="space-y-4">
                   {/* Renewal Dates Card */}
                   <div className="bg-muted/30 p-4 rounded-lg">
-                    <h3 className="font-semibold text-sm mb-3">Renewal Dates</h3>
+                    <h3 className="font-semibold text-sm mb-3 text-foreground">Renewal Dates</h3>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="text-center">
-                        <div className="text-xs text-muted-foreground mb-1">1-Year Lease Ends</div>
-                        <div className="text-sm font-semibold">
+                        <div className="text-xs text-foreground/80 mb-1">1-Year Lease Ends</div>
+                        <div className="text-sm font-semibold text-foreground">
                           {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
                         </div>
                       </div>
                       <div className="text-center">
-                        <div className="text-xs text-muted-foreground mb-1">2-Year Lease Ends</div>
-                        <div className="text-sm font-semibold">
+                        <div className="text-xs text-foreground/80 mb-1">2-Year Lease Ends</div>
+                        <div className="text-sm font-semibold text-foreground">
                           {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
                         </div>
                       </div>
@@ -351,13 +351,13 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
 
                   {/* Current Rent Card */}
                   <div className="bg-muted/30 p-4 rounded-lg">
-                    <h3 className="font-semibold text-sm mb-2">Current Rent</h3>
-                    <div className="text-lg font-bold">{formatCurrency(inputs.currentRent)}</div>
-                    <div className="text-xs text-muted-foreground">Legal Regulated Rent</div>
+                    <h3 className="font-semibold text-sm mb-2 text-foreground">Current Rent</h3>
+                    <div className="text-lg font-bold text-foreground">{formatCurrency(inputs.currentRent)}</div>
+                    <div className="text-xs text-foreground/80">Legal Regulated Rent</div>
                     {inputs.preferentialRent && (
                       <div className="mt-2 pt-2 border-t border-muted">
-                        <div className="text-lg font-bold">{formatCurrency(inputs.preferentialRent)}</div>
-                        <div className="text-xs text-muted-foreground">Tenant Currently Pays</div>
+                        <div className="text-lg font-bold text-foreground">{formatCurrency(inputs.preferentialRent)}</div>
+                        <div className="text-xs text-foreground/80">Tenant Currently Pays</div>
                       </div>
                     )}
                   </div>
@@ -441,11 +441,11 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         <TableHead className="text-center font-semibold text-xs sm:text-sm min-w-[140px]">2-Year Lease</TableHead>
                       </TableRow>
                       <TableRow className="bg-muted/50">
-                        <TableHead className="font-semibold text-xs sm:text-sm py-4">Renewal Dates</TableHead>
-                        <TableHead className="text-center font-semibold text-xs sm:text-sm py-4">
+                        <TableHead className="font-semibold text-xs sm:text-sm py-4 text-foreground">Renewal Dates</TableHead>
+                        <TableHead className="text-center font-semibold text-xs sm:text-sm py-4 text-foreground">
                           Ends: {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
                         </TableHead>
-                        <TableHead className="text-center font-semibold text-xs sm:text-sm py-4">
+                        <TableHead className="text-center font-semibold text-xs sm:text-sm py-4 text-foreground">
                           Ends: {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
                         </TableHead>
                       </TableRow>
@@ -453,9 +453,9 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                     <TableBody>
                       {/* Legal Rent Row */}
                       <TableRow className="border-b-2">
-                        <TableCell className="font-bold text-sm sm:text-base">
+                        <TableCell className="font-bold text-sm sm:text-base text-foreground">
                           <div>{formatCurrency(inputs.currentRent)}</div>
-                          <div className="text-xs text-muted-foreground">Legal Regulated Rent</div>
+                          <div className="text-xs text-foreground/80">Legal Regulated Rent</div>
                         </TableCell>
                         <TableCell className="text-center px-2">
                           <div className="text-sm sm:text-lg font-bold text-calculator-success break-words">
@@ -496,7 +496,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         <TableRow className="bg-calculator-info/5">
                           <TableCell className="font-semibold text-calculator-info text-sm sm:text-base">
                             <div>{formatCurrency(inputs.preferentialRent)}</div>
-                            <div className="text-xs text-muted-foreground">Preferential Rent</div>
+                            <div className="text-xs text-foreground/80">Preferential Rent</div>
                           </TableCell>
                           <TableCell className="text-center px-2">
                             <div className="font-semibold text-calculator-info text-sm sm:text-lg break-words">
