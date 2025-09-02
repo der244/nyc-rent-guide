@@ -379,9 +379,6 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             `${formatPercent(scenarios.oneYear?.increases[0]?.percentIncrease || 0)} increase`
                           }
                         </div>
-                        <div className="text-xs text-green-600 mt-1">
-                          Lease ends: {scenarios.oneYear?.increases[scenarios.oneYear.increases.length - 1]?.period || 'N/A'}
-                        </div>
                       </div>
                       
                       {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && (
