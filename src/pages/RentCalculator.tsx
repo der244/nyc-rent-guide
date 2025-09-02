@@ -119,8 +119,8 @@ export default function RentCalculator() {
                       <div>
                         <h3 className="font-medium text-calculator-header mb-2">Preferential Rent</h3>
                         <p className="text-muted-foreground text-xs sm:text-sm">
-                          If you pay less than the legal regulated rent due to a preferential rent agreement, 
-                          enter both amounts to see the legal increase and your actual payment.
+                           If the Tenant pays less than the legal regulated rent due to a preferential rent agreement, 
+                           enter both amounts to see the legal increase and your actual payment.
                         </p>
                       </div>
                       
@@ -157,7 +157,7 @@ export default function RentCalculator() {
                   <div>
                     <h3 className="font-medium text-calculator-header mb-2">Preferential Rent</h3>
                     <p className="text-muted-foreground text-xs sm:text-sm">
-                      If you pay less than the legal regulated rent due to a preferential rent agreement, 
+                      If the Tenant pays less than the legal regulated rent due to a preferential rent agreement, 
                       enter both amounts to see the legal increase and your actual payment.
                     </p>
                   </div>
