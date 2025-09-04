@@ -190,7 +190,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                 <div className="text-sm text-gray-600">Legal Regulated Rent</div>
               </td>
               <td className="text-center p-4">
-                <div className="text-2xl font-bold text-green-700">
+                <div className="text-2xl font-bold text-calculator-success">
                   {scenarios.oneYear?.increases.length === 2 ? `${formatCurrency(scenarios.oneYear.increases[0].newRent)} / ${formatCurrency(scenarios.oneYear.increases[1].newRent)}` : formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}
                 </div>
                 <div className="text-sm text-gray-600 mt-1">
@@ -198,7 +198,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                 </div>
               </td>
               <td className="text-center p-4">
-                <div className="text-2xl font-bold text-green-700">
+                <div className="text-2xl font-bold text-calculator-success">
                   {scenarios.twoYear?.increases.length === 2 ? `${formatCurrency(scenarios.twoYear.increases[0].newRent)} / ${formatCurrency(scenarios.twoYear.increases[1].newRent)}` : formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}
                 </div>
                 <div className="text-sm text-gray-600 mt-1">
@@ -215,7 +215,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                 </td>
                 <td className="text-center p-4">
                   {scenarios.oneYear?.preferentialResult && <>
-                      <div className="text-2xl font-bold text-blue-700">
+                      <div className="text-2xl font-bold text-calculator-info">
                         {scenarios.oneYear.increases.length === 2 && scenarios.oneYear.preferentialResult.year1Amount ? `${formatCurrency(scenarios.oneYear.preferentialResult.year1Amount)} / ${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}` : formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
                       </div>
                       <div className="text-sm text-gray-600 mt-1">
@@ -225,7 +225,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                 </td>
                 <td className="text-center p-4">
                   {scenarios.twoYear?.preferentialResult && <>
-                      <div className="text-2xl font-bold text-blue-700">
+                      <div className="text-2xl font-bold text-calculator-info">
                         {scenarios.twoYear.increases.length === 2 && scenarios.twoYear.preferentialResult.year1Amount ? `${formatCurrency(scenarios.twoYear.preferentialResult.year1Amount)} / ${formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}` : formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
                       </div>
                       <div className="text-sm text-gray-600 mt-1">
@@ -245,7 +245,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
       {scenarios && <Card className="shadow-lg border-0 print:hidden hidden md:block" style={{
       boxShadow: 'var(--shadow-card)'
     }}>
-          <CardHeader className="bg-gradient-to-r from-calculator-success to-calculator-success/90 text-white rounded-t-lg">
+          <CardHeader className="bg-gradient-to-r from-calculator-header to-calculator-header/90 text-white rounded-t-lg">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div>
                 <CardTitle className="text-lg sm:text-xl font-semibold flex items-center gap-2">
