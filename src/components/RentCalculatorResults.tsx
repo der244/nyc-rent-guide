@@ -184,8 +184,8 @@ export default function RentCalculatorResults({
       boxShadow: 'var(--shadow-elevated)'
     }}>
           <CardHeader className="bg-gradient-to-r from-calculator-header to-calculator-header/90 text-white rounded-t-lg">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-              <div>
+            <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+              <div className="flex-1">
                 <CardTitle className="text-lg sm:text-xl font-semibold flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />
                   RGB Order #{scenarios.orderNumber} - Renewal Calculation
@@ -196,7 +196,7 @@ export default function RentCalculatorResults({
                     {inputs.unit && <div>🏠 Unit {inputs.unit}</div>}
                   </div>}
               </div>
-              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <div className="flex justify-end xl:justify-start flex-shrink-0">
               <Button onClick={() => {
               // Set document title for meaningful filename
               const currentTitle = document.title;
