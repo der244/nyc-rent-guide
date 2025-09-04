@@ -400,7 +400,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   <TableRow className="border-b-2">
                     <TableCell className="font-bold text-base sm:text-lg">
                       <div className="flex flex-col items-center text-center">
-                        <div>{formatCurrency(inputs.currentRent)}</div>
+                        <div className="text-calculator-success">{formatCurrency(inputs.currentRent)}</div>
                         <Button
                           variant="ghost"
                           size="sm"
