@@ -376,20 +376,18 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                     {/* Legal Rent Row */}
                     <Row className="border-t pt-4">
                       <Column className="text-left">
-                        <div className="space-y-2">
+                        <div className="flex flex-col items-start space-y-2">
                           <div className="text-base sm:text-xl font-bold text-calculator-success">
                             {formatCurrency(inputs.currentRent)}
                           </div>
-                          <div className="flex justify-center">
-                            <Button
-                              onClick={() => copyLeaseAmount(inputs.currentRent, "Current Legal Rent")}
-                              variant="ghost"
-                              size="sm"
-                              className="h-8 w-8 p-0 text-black hover:bg-gray-100"
-                            >
-                              <Copy className="h-4 w-4" />
-                            </Button>
-                          </div>
+                          <Button
+                            onClick={() => copyLeaseAmount(inputs.currentRent, "Current Legal Rent")}
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 w-8 p-0 text-black hover:bg-gray-100"
+                          >
+                            <Copy className="h-4 w-4" />
+                          </Button>
                           <div className="text-sm text-foreground/60">Legal Regulated Rent</div>
                         </div>
                       </Column>
@@ -499,20 +497,18 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                     {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && scenarios.twoYear?.preferentialResult && (
                       <Row className="bg-calculator-info/5 p-4 rounded-lg">
                         <Column className="text-left">
-                          <div className="space-y-2">
+                          <div className="flex flex-col items-start space-y-2">
                             <div className="text-base sm:text-xl font-bold text-calculator-info">
                               {formatCurrency(inputs.preferentialRent)}
                             </div>
-                            <div className="flex justify-center">
-                              <Button
-                                onClick={() => copyLeaseAmount(inputs.preferentialRent!, "Current Preferential")}
-                                variant="ghost"
-                                size="sm"
-                                className="h-8 w-8 p-0 text-black hover:bg-gray-100"
-                              >
-                                <Copy className="h-4 w-4" />
-                              </Button>
-                            </div>
+                            <Button
+                              onClick={() => copyLeaseAmount(inputs.preferentialRent!, "Current Preferential")}
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 w-8 p-0 text-black hover:bg-gray-100"
+                            >
+                              <Copy className="h-4 w-4" />
+                            </Button>
                             <div className="text-sm text-foreground/60">Preferential Rent (Tenant Pays)</div>
                           </div>
                         </Column>
