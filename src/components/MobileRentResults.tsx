@@ -197,6 +197,15 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                   </Button>
                 </div>
               )}
+              
+              <div className="text-xs md:text-sm text-muted-foreground mt-2">
+                {scenarios.oneYear?.increases.length === 1 
+                  ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay - (inputs.preferentialRent || 0))}`
+                  : scenarios.oneYear?.increases.length === 2
+                  ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | +${formatCurrency((inputs.preferentialRent! * scenarios.oneYear.increases[0].percentIncrease / 100))} / +${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay - (scenarios.oneYear.preferentialResult.year1Amount || inputs.preferentialRent!))}`
+                  : 'N/A'
+                }
+              </div>
             </div>
           )}
 
@@ -410,6 +419,15 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                   </Button>
                 </div>
               )}
+              
+              <div className="text-xs md:text-sm text-muted-foreground mt-2">
+                {scenarios.twoYear?.increases.length === 1 
+                  ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} | +${formatCurrency((scenarios.twoYear?.preferentialResult?.newTenantPay || 0) - (inputs.preferentialRent || 0))}`
+                  : scenarios.twoYear?.increases.length === 2
+                  ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | +${formatCurrency(inputs.preferentialRent! * scenarios.twoYear.increases[0].percentIncrease / 100)} / +${formatCurrency((scenarios.twoYear?.preferentialResult?.newTenantPay || 0) - (scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!))}`
+                  : 'N/A'
+                }
+              </div>
             </div>
           )}
 
