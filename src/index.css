@@ -141,56 +141,41 @@ All colors MUST be HSL.
     width: 100%;
   }
   
-  /* General print formatting - COMPACT to fit 1 page */
+  /* General print formatting */
   body {
     @apply bg-white text-black;
     margin: 0;
-    padding: 10px;
-    font-size: 9pt;
-    line-height: 1.1;
+    padding: 20px;
+    font-size: 12pt;
+    line-height: 1.4;
   }
   
-  h1 { font-size: 12pt; margin-bottom: 3pt; }
-  h2 { font-size: 10pt; margin-bottom: 2pt; }  
-  h3 { font-size: 9pt; margin-bottom: 2pt; }
+  h1 { font-size: 18pt; margin-bottom: 10pt; }
+  h2 { font-size: 16pt; margin-bottom: 8pt; }
+  h3 { font-size: 14pt; margin-bottom: 6pt; }
   
-  /* Super compact spacing */
-  .print-only .text-center { margin-bottom: 6px !important; }
-  .print-only .border { padding: 6px !important; margin-bottom: 6px !important; }
-  .print-only table { font-size: 8pt !important; }
-  .print-only td, .print-only th { padding: 3px !important; }
-  .print-only .text-2xl { font-size: 10pt !important; }
-  .print-only .text-xl { font-size: 9pt !important; }
-  .print-only .text-base { font-size: 8pt !important; }
-  .print-only .text-sm { font-size: 7pt !important; }
+  .grid {
+    display: table;
+    width: 100%;
+  }
+  
+  .grid > div {
+    display: table-cell;
+    width: 50%;
+    padding: 10pt;
+    vertical-align: top;
+  }
+  
+  /* Force page breaks */
+  .page-break {
+    page-break-before: always;
+  }
   
   /* Remove shadows and unnecessary styling */
   * {
     box-shadow: none !important;
     text-shadow: none !important;
     color: black !important;
-    page-break-inside: avoid !important;
-  }
-  
-  /* Prevent page breaks in content */
-  .print-only * {
-    page-break-before: avoid !important;
-    page-break-after: avoid !important;
-    page-break-inside: avoid !important;
-  }
-  
-  /* Compact print layout */
-  .print-only > * {
-    margin-bottom: 4pt !important;
-  }
-  
-  .print-only table {
-    page-break-inside: avoid !important;
-  }
-  
-  .print-only .border {
-    margin-bottom: 2pt !important;
-    padding: 2pt !important;
   }
   
   /* Force all text colors to black for printing */
