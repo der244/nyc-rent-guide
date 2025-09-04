@@ -154,10 +154,10 @@ export default function RentCalculator() {
                   
                   <div>
                     <h3 className="font-medium text-calculator-header mb-2">Preferential Rent</h3>
-                    <p className="text-muted-foreground text-xs sm:text-sm">
-                      If you pay less than the legal regulated rent due to a preferential rent agreement, 
-                      enter both amounts to see the legal increase and your actual payment.
-                    </p>
+                      <p className="text-muted-foreground text-xs sm:text-sm">
+                        If Tenant Pays less than the legal regulated rent due to a preferential rent agreement, 
+                        enter both amounts to see the legal increase and their actual payment.
+                      </p>
                   </div>
                   
                   <div className="sm:col-span-2 md:col-span-1">
