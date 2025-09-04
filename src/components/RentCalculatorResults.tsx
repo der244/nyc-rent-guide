@@ -575,7 +575,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   </TableRow>
 
                   {/* Preferential rent row if applicable */}
-                  {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && scenarios.twoYear?.preferentialResult && <TableRow className="bg-calculator-info/10 border-b-2 border-calculator-info/20">
+                  {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && scenarios.twoYear?.preferentialResult && <TableRow className="bg-secondary/50 border-b-2 border-secondary">
                       <TableCell className="font-semibold text-secondary-foreground">
         <div className="flex items-center justify-center gap-2">
           <div className="text-xl font-bold text-secondary-foreground">{formatCurrency(inputs.preferentialRent)}</div>
