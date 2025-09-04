@@ -94,7 +94,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
       <Card className="shadow-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg text-center">1-Year Lease Option</CardTitle>
-          <div className="text-xs md:text-sm text-center text-muted-foreground">
+          <div className="text-xs md:text-sm text-center text-muted-foreground py-2">
             Lease End: {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
           </div>
         </CardHeader>
@@ -324,7 +324,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
       <Card className="shadow-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg text-center">2-Year Lease Option</CardTitle>
-          <div className="text-xs md:text-sm text-center text-muted-foreground">
+          <div className="text-xs md:text-sm text-center text-muted-foreground py-2">
             Lease End: {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
           </div>
         </CardHeader>

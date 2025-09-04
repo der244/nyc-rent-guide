@@ -292,8 +292,8 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   </TableRow>
                   
                   <TableRow className="bg-muted/20">
-                    <TableHead className="text-muted-foreground text-sm md:text-base">Lease End Date</TableHead>
-                    <TableHead className="text-center text-muted-foreground text-sm md:text-base px-1">
+                    <TableHead className="text-muted-foreground text-sm md:text-base py-4">Lease End Date</TableHead>
+                    <TableHead className="text-center text-muted-foreground text-sm md:text-base px-1 py-4">
                       <div className="flex flex-col items-center gap-1">
                         <div>
                           {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", {
@@ -311,7 +311,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         </Button>
                       </div>
                     </TableHead>
-                    <TableHead className="text-center text-muted-foreground text-sm md:text-base px-1">
+                    <TableHead className="text-center text-muted-foreground text-sm md:text-base px-1 py-4">
                       <div className="flex flex-col items-center gap-1">
                         <div>
                           {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", {
