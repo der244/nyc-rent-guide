@@ -54,7 +54,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
             <div className="text-2xl font-bold text-foreground">
               {formatCurrency(inputs.currentRent)}
             </div>
-            <div className="text-sm text-muted-foreground">Legal Regulated Rent</div>
+            <div className="text-xs md:text-sm text-muted-foreground">Legal Regulated Rent</div>
           </div>
           
           {inputs.preferentialRent && (
@@ -62,7 +62,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               <div className="text-xl font-semibold text-calculator-info">
                 {formatCurrency(inputs.preferentialRent)}
               </div>
-              <div className="text-sm text-muted-foreground">Preferential Rent (Tenant Pays)</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Preferential Rent (Tenant Pays)</div>
             </div>
           )}
         </CardContent>
@@ -72,14 +72,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
       <Card className="shadow-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg text-center">1-Year Lease Option</CardTitle>
-          <div className="text-xs text-center text-muted-foreground">
+          <div className="text-xs md:text-sm text-center text-muted-foreground">
             Lease End: {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Legal Rent */}
           <div className="text-center">
-            <div className="text-xs font-medium text-muted-foreground mb-2">Legal Regulated Rent</div>
+            <div className="text-xs md:text-sm font-medium text-muted-foreground mb-2">Legal Regulated Rent</div>
             {scenarios.oneYear?.increases.length === 2 ? (
               <div className="flex items-center justify-center gap-3">
                 <div className="flex flex-col items-center">
@@ -129,7 +129,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               </div>
             )}
             
-            <div className="text-sm text-muted-foreground mt-2">
+            <div className="text-xs md:text-sm text-muted-foreground mt-2">
               {scenarios.oneYear?.increases.length === 1 
                 ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)}`
                 : scenarios.oneYear?.increases.length === 2
@@ -139,7 +139,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
             </div>
             
             {scenarios.oneYear?.increases.length === 2 && (
-              <div className="text-xs text-muted-foreground italic mt-1">
+              <div className="text-xs md:text-sm text-muted-foreground italic mt-1">
                 {scenarios.oneYear.increases[0].period} / {scenarios.oneYear.increases[1].period}
               </div>
             )}
@@ -148,7 +148,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
           {/* Preferential Rent if applicable */}
           {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && (
             <div className="text-center pt-3 border-t">
-              <div className="text-xs font-medium text-muted-foreground mb-2">Tenant Pays (Preferential)</div>
+              <div className="text-xs md:text-sm font-medium text-muted-foreground mb-2">Tenant Pays (Preferential)</div>
               {scenarios.oneYear.increases.length === 2 ? (
                 <div className="flex items-center justify-center gap-3">
                   <div className="flex flex-col items-center">
@@ -202,8 +202,8 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
 
           {/* Applied Rule */}
           <div className="text-center pt-3 border-t">
-            <div className="text-xs font-medium text-muted-foreground">Applied Rule</div>
-            <div className="text-sm font-semibold mt-1">{getAppliedRule(oneYearGuideline)}</div>
+            <div className="text-xs md:text-sm font-medium text-muted-foreground">Applied Rule</div>
+            <div className="text-xs md:text-sm font-semibold mt-1">{getAppliedRule(oneYearGuideline)}</div>
           </div>
         </CardContent>
       </Card>
@@ -212,14 +212,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
       <Card className="shadow-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg text-center">2-Year Lease Option</CardTitle>
-          <div className="text-xs text-center text-muted-foreground">
+          <div className="text-xs md:text-sm text-center text-muted-foreground">
             Lease End: {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Legal Rent */}
           <div className="text-center">
-            <div className="text-xs font-medium text-muted-foreground mb-2">Legal Regulated Rent</div>
+            <div className="text-xs md:text-sm font-medium text-muted-foreground mb-2">Legal Regulated Rent</div>
             {scenarios.twoYear?.increases.length === 2 ? (
               <div className="flex items-center justify-center gap-3">
                 <div className="flex flex-col items-center">
@@ -269,7 +269,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               </div>
             )}
             
-            <div className="text-sm text-muted-foreground mt-2">
+            <div className="text-xs md:text-sm text-muted-foreground mt-2">
               {scenarios.twoYear?.increases.length === 1 
                 ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)}`
                 : scenarios.twoYear?.increases.length === 2
@@ -279,14 +279,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
             </div>
             
             {scenarios.twoYear?.increases.length === 2 && (
-              <div className="text-xs text-muted-foreground italic mt-1">Year 1 / Year 2 amounts shown above</div>
+              <div className="text-xs md:text-sm text-muted-foreground italic mt-1">Year 1 / Year 2 amounts shown above</div>
             )}
           </div>
 
           {/* Preferential Rent if applicable */}
           {inputs.preferentialRent && scenarios.twoYear?.preferentialResult && (
             <div className="text-center pt-3 border-t">
-              <div className="text-xs font-medium text-muted-foreground mb-2">Tenant Pays (Preferential)</div>
+              <div className="text-xs md:text-sm font-medium text-muted-foreground mb-2">Tenant Pays (Preferential)</div>
               {scenarios.twoYear.increases.length === 2 ? (
                 <div className="flex items-center justify-center gap-3">
                   <div className="flex flex-col items-center">
@@ -340,8 +340,8 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
 
           {/* Applied Rule */}
           <div className="text-center pt-3 border-t">
-            <div className="text-xs font-medium text-muted-foreground">Applied Rule</div>
-            <div className="text-sm font-semibold mt-1">{getAppliedRule(twoYearGuideline)}</div>
+            <div className="text-xs md:text-sm font-medium text-muted-foreground">Applied Rule</div>
+            <div className="text-xs md:text-sm font-semibold mt-1">{getAppliedRule(twoYearGuideline)}</div>
           </div>
         </CardContent>
       </Card>
