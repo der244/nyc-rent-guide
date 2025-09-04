@@ -367,7 +367,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   <TableRow className="border-b-2">
                     <TableCell className="font-bold text-base sm:text-lg">
                       {formatCurrency(inputs.currentRent)}
-                      <div className="text-xs text-muted-foreground">Legal Regulated Rent</div>
+                      <div className="text-xs md:text-sm text-muted-foreground">Legal Regulated Rent</div>
                     </TableCell>
                     <TableCell className="text-center space-y-1 px-2 sm:px-4">
                       <div className="flex flex-col items-center justify-center gap-1">
@@ -420,7 +420,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           </div>
                         )}
                       </div>
-                      <div className="text-xs text-muted-foreground leading-tight whitespace-nowrap">
+                      <div className="text-xs md:text-sm text-muted-foreground leading-tight whitespace-nowrap">
                         {scenarios.oneYear?.increases.length === 1 
                           ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)}`
                           : scenarios.oneYear?.increases.length === 2
@@ -429,7 +429,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         }
                       </div>
                       {scenarios.oneYear?.increases.length === 2 && (
-                        <div className="text-xs text-muted-foreground italic">
+                        <div className="text-xs md:text-sm text-muted-foreground italic">
                           {scenarios.oneYear.increases[0].period} / {scenarios.oneYear.increases[1].period}
                         </div>
                       )}
@@ -485,7 +485,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           </div>
                         )}
                       </div>
-                      <div className="text-xs text-muted-foreground leading-tight whitespace-nowrap">
+                      <div className="text-xs md:text-sm text-muted-foreground leading-tight whitespace-nowrap">
                         {scenarios.twoYear?.increases.length === 1 
                           ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)}`
                           : scenarios.twoYear?.increases.length === 2
@@ -494,7 +494,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         }
                       </div>
                       {scenarios.twoYear?.increases.length === 2 && (
-                        <div className="text-xs text-muted-foreground italic">Year 1 / Year 2 amounts shown above</div>
+                        <div className="text-xs md:text-sm text-muted-foreground italic">Year 1 / Year 2 amounts shown above</div>
                       )}
                     </TableCell>
                   </TableRow>
@@ -504,7 +504,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                     <TableRow className="bg-calculator-info/5">
                       <TableCell className="font-semibold text-calculator-info">
                         {formatCurrency(inputs.preferentialRent)}
-                        <div className="text-xs text-muted-foreground">Preferential Rent (Tenant Pays)</div>
+                        <div className="text-xs md:text-sm text-muted-foreground">Preferential Rent (Tenant Pays)</div>
                       </TableCell>
                       <TableCell className="text-center space-y-1 px-2 sm:px-4">
                         {scenarios.oneYear?.increases.length === 2 ? (
@@ -555,7 +555,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             </Button>
                           </div>
                         )}
-                        <div className="text-sm text-muted-foreground whitespace-nowrap">
+                        <div className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">
                           {scenarios.oneYear?.increases.length === 1 
                             ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} | +${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay - inputs.preferentialRent)}`
                             : scenarios.oneYear?.increases.length === 2
@@ -564,7 +564,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           }
                         </div>
                         {scenarios.oneYear?.increases.length === 2 && (
-                          <div className="text-xs text-muted-foreground italic">
+                          <div className="text-xs md:text-sm text-muted-foreground italic">
                             {scenarios.oneYear.increases[0].period} / {scenarios.oneYear.increases[1].period}
                           </div>
                         )}
@@ -618,7 +618,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             </Button>
                           </div>
                         )}
-                        <div className="text-sm text-muted-foreground whitespace-nowrap">
+                        <div className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">
                           {scenarios.twoYear?.increases.length === 1 
                             ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} | +${formatCurrency((scenarios.twoYear.preferentialResult?.newTenantPay || 0) - (inputs.preferentialRent || 0))}`
                             : scenarios.twoYear?.increases.length === 2
@@ -627,7 +627,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           }
                         </div>
                         {scenarios.twoYear?.increases.length === 2 && (
-                          <div className="text-xs text-muted-foreground italic">Year 1 / Year 2 amounts shown above</div>
+                          <div className="text-xs md:text-sm text-muted-foreground italic">Year 1 / Year 2 amounts shown above</div>
                         )}
                       </TableCell>
                     </TableRow>
