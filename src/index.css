@@ -123,7 +123,7 @@ All colors MUST be HSL.
   }
 }
 
-/* Print-friendly styles */
+/* CORRECTED Print-friendly styles */
 @media print {
   /* STRICT PAGE CONTROL */
   @page {
@@ -148,52 +148,59 @@ All colors MUST be HSL.
     page-break-inside: avoid !important;
   }
 
-  /* DISPLAY APPROACH - Hide everything except print-only content */
+  /* GO BACK TO VISIBILITY METHOD - More reliable for your case */
   body * {
-    display: none !important;
+    visibility: hidden !important;
   }
   
-  /* CRITICAL: Force print-only content to display with higher specificity */
+  /* Show only print content with higher specificity */
   body .print-only,
-  body .print-only.hidden {
-    display: block !important;
-    position: static !important;
-    left: auto !important;
-    top: auto !important;
-    width: 100% !important;
-  }
-  
-  .print-only * {
+  body .print-only * {
+    visibility: visible !important;
     display: block !important;
   }
   
   /* Specific display rules for table elements */
-  .print-only table {
+  body .print-only table {
     display: table !important;
+    visibility: visible !important;
   }
   
-  .print-only thead {
+  body .print-only thead {
     display: table-header-group !important;
+    visibility: visible !important;
   }
   
-  .print-only tbody {
+  body .print-only tbody {
     display: table-row-group !important;
+    visibility: visible !important;
   }
   
-  .print-only tr {
+  body .print-only tr {
     display: table-row !important;
+    visibility: visible !important;
   }
   
-  .print-only td,
-  .print-only th {
+  body .print-only td,
+  body .print-only th {
     display: table-cell !important;
+    visibility: visible !important;
   }
   
   /* Inline elements */
-  .print-only span,
-  .print-only strong,
-  .print-only em {
+  body .print-only span,
+  body .print-only strong,
+  body .print-only em {
     display: inline !important;
+    visibility: visible !important;
+  }
+  
+  /* Position fix */
+  body .print-only {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
   }
   
   /* General print formatting - PRESERVE EXISTING STYLES */
