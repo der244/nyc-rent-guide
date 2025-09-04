@@ -161,6 +161,11 @@ All colors MUST be HSL.
     width: 100% !important;
   }
   
+  /* CRITICAL: Override hidden class for print-only content */
+  .print-only.hidden {
+    display: block !important;
+  }
+  
   .print-only * {
     display: block !important;
   }
