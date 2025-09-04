@@ -124,6 +124,11 @@ All colors MUST be HSL.
 }
 
 /* Print-friendly styles */
+@page {
+  size: A4;
+  margin: 0.5in;
+}
+
 @media print {
   /* Hide everything except the print-only content */
   body * {
@@ -135,10 +140,11 @@ All colors MUST be HSL.
   }
   
   .print-only {
-    position: absolute;
-    left: 0;
-    top: 0;
+    position: static;
     width: 100%;
+    height: auto;
+    max-height: 100vh;
+    overflow: hidden;
   }
   
   /* General print formatting */
@@ -148,6 +154,8 @@ All colors MUST be HSL.
     padding: 20px;
     font-size: 12pt;
     line-height: 1.4;
+    overflow: hidden;
+    height: 100vh;
   }
   
   h1 { font-size: 18pt; margin-bottom: 10pt; }
@@ -164,11 +172,6 @@ All colors MUST be HSL.
     width: 50%;
     padding: 10pt;
     vertical-align: top;
-  }
-  
-  /* Force page breaks */
-  .page-break {
-    page-break-before: always;
   }
   
   /* Remove shadows and unnecessary styling */
