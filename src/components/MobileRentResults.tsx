@@ -71,7 +71,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
           {inputs.preferentialRent && (
             <div className="text-center pt-2 border-t">
               <div className="flex flex-col items-center">
-                <div className="text-xl font-semibold text-calculator-info">
+                <div className="text-2xl font-bold text-calculator-info">
                   {formatCurrency(inputs.preferentialRent)}
                 </div>
                 <Button
@@ -174,7 +174,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               {scenarios.oneYear.increases.length === 2 ? (
                 <div className="flex items-center justify-center gap-3">
                   <div className="flex flex-col items-center">
-                    <div className="text-lg font-semibold text-calculator-info">
+                    <div className="text-xl font-bold text-calculator-info">
                       {formatCurrency(scenarios.oneYear.increases[0].newRent === inputs.preferentialRent ? inputs.preferentialRent! : (inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100)))}
                     </div>
                     <Button
@@ -187,9 +187,9 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                       <Copy className="h-3 w-3" />
                     </Button>
                   </div>
-                  <div className="text-lg font-semibold text-calculator-info">/</div>
+                  <div className="text-xl font-bold text-calculator-info">/</div>
                   <div className="flex flex-col items-center">
-                    <div className="text-lg font-semibold text-calculator-info">
+                    <div className="text-xl font-bold text-calculator-info">
                       {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
                     </div>
                     <Button
@@ -205,7 +205,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 </div>
               ) : (
                 <div className="flex flex-col items-center">
-                  <div className="text-xl font-semibold text-calculator-info">
+                  <div className="text-2xl font-bold text-calculator-info">
                     {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
                   </div>
                   <Button
@@ -404,7 +404,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               {scenarios.twoYear.increases.length === 2 ? (
                 <div className="flex items-center justify-center gap-3">
                   <div className="flex flex-col items-center">
-                    <div className="text-lg font-semibold text-calculator-info">
+                    <div className="text-xl font-bold text-calculator-info">
                       {formatCurrency(scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!)}
                     </div>
                     <Button
@@ -417,9 +417,9 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                       <Copy className="h-3 w-3" />
                     </Button>
                   </div>
-                  <div className="text-lg font-semibold text-calculator-info">/</div>
+                  <div className="text-xl font-bold text-calculator-info">/</div>
                   <div className="flex flex-col items-center">
-                    <div className="text-lg font-semibold text-calculator-info">
+                    <div className="text-xl font-bold text-calculator-info">
                       {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
                     </div>
                     <Button
@@ -435,7 +435,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 </div>
               ) : (
                 <div className="flex flex-col items-center">
-                  <div className="text-xl font-semibold text-calculator-info">
+                  <div className="text-2xl font-bold text-calculator-info">
                     {formatCurrency(scenarios.twoYear?.preferentialResult?.newTenantPay || inputs.preferentialRent!)}
                   </div>
                   <Button
