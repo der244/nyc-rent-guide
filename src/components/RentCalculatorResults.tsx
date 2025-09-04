@@ -184,20 +184,15 @@ export default function RentCalculatorResults({
       boxShadow: 'var(--shadow-elevated)'
     }}>
           <CardHeader className="bg-gradient-to-r from-calculator-header to-calculator-header/90 text-white rounded-t-lg">
-            <div className="flex items-start lg:items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <CardTitle className="text-lg sm:text-xl font-semibold flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />
                   RGB Order #{scenarios.orderNumber} - Renewal Calculation
                 </CardTitle>
-                {(inputs.tenantName || inputs.address || inputs.unit) && <div className="mt-2 text-sm text-white/90 space-y-1">
-                    {inputs.tenantName && <div>👤 {inputs.tenantName}</div>}
-                    {inputs.address && <div>📍 {inputs.address}</div>}
-                    {inputs.unit && <div>🏠 Unit {inputs.unit}</div>}
-                  </div>}
               </div>
               <div className="flex-shrink-0">
-              <Button onClick={() => {
+                <Button onClick={() => {
               // Set document title for meaningful filename
               const currentTitle = document.title;
               const generatedDate = new Date().toLocaleDateString('en-US', {
@@ -231,6 +226,11 @@ export default function RentCalculatorResults({
                 </Button>
               </div>
             </div>
+            {(inputs.tenantName || inputs.address || inputs.unit) && <div className="mt-3 text-sm text-white/90 space-y-1">
+                {inputs.tenantName && <div>👤 {inputs.tenantName}</div>}
+                {inputs.address && <div>📍 {inputs.address}</div>}
+                {inputs.unit && <div>🏠 Unit {inputs.unit}</div>}
+              </div>}
             <p className="text-white/90 text-xs sm:text-sm mt-2 leading-relaxed">
               Effective Period: {new Date(scenarios.effectivePeriod.split(' to ')[0]).toLocaleDateString('en-US', {
             year: 'numeric',
