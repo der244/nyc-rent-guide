@@ -206,6 +206,12 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                   : 'N/A'
                 }
               </div>
+              
+              {scenarios.oneYear?.increases.length === 2 && (
+                <div className="text-xs md:text-sm text-muted-foreground italic mt-1">
+                  {scenarios.oneYear.increases[0].period} / {scenarios.oneYear.increases[1].period}
+                </div>
+              )}
             </div>
           )}
 
@@ -363,7 +369,9 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
             </div>
             
             {scenarios.twoYear?.increases.length === 2 && (
-              <div className="text-xs md:text-sm text-muted-foreground italic mt-1">Year 1 / Year 2 amounts shown above</div>
+              <div className="text-xs md:text-sm text-muted-foreground italic mt-1">
+                {scenarios.twoYear.increases[0].period} / {scenarios.twoYear.increases[1].period}
+              </div>
             )}
           </div>
 
@@ -428,6 +436,12 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                   : 'N/A'
                 }
               </div>
+              
+              {scenarios.twoYear?.increases.length === 2 && (
+                <div className="text-xs md:text-sm text-muted-foreground italic mt-1">
+                  {scenarios.twoYear.increases[0].period} / {scenarios.twoYear.increases[1].period}
+                </div>
+              )}
             </div>
           )}
 
