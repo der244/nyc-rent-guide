@@ -124,54 +124,46 @@ All colors MUST be HSL.
 }
 
 /* Print-friendly styles */
-@page {
-  size: A4;
-  margin: 0.5in;
-}
-
 @media print {
   /* Hide everything except the print-only content */
-  body * {
-    visibility: hidden;
-  }
-  
-  .print-only, .print-only * {
-    visibility: visible;
+  body > * {
+    display: none !important;
   }
   
   .print-only {
-    position: static;
-    width: 100%;
-    height: auto;
-    max-height: 100vh;
-    overflow: hidden;
+    display: block !important;
+    position: static !important;
+    visibility: visible !important;
   }
   
   /* General print formatting */
   body {
     @apply bg-white text-black;
     margin: 0;
-    padding: 20px;
-    font-size: 12pt;
-    line-height: 1.4;
-    overflow: hidden;
-    height: 100vh;
+    padding: 15px;
+    font-size: 10pt;
+    line-height: 1.2;
   }
   
-  h1 { font-size: 18pt; margin-bottom: 10pt; }
-  h2 { font-size: 16pt; margin-bottom: 8pt; }
-  h3 { font-size: 14pt; margin-bottom: 6pt; }
+  h1 { font-size: 14pt; margin: 4pt 0; }
+  h2 { font-size: 12pt; margin: 3pt 0; }
+  h3 { font-size: 11pt; margin: 2pt 0; }
   
-  .grid {
-    display: table;
+  /* Compact everything for print */
+  .print-only * {
+    margin-bottom: 2pt !important;
+    margin-top: 2pt !important;
+    page-break-inside: avoid;
+  }
+  
+  .print-only table {
     width: 100%;
+    margin: 4pt 0;
   }
   
-  .grid > div {
-    display: table-cell;
-    width: 50%;
-    padding: 10pt;
-    vertical-align: top;
+  .print-only .border {
+    padding: 4pt;
+    margin: 2pt 0;
   }
   
   /* Remove shadows and unnecessary styling */
@@ -179,6 +171,28 @@ All colors MUST be HSL.
     box-shadow: none !important;
     text-shadow: none !important;
     color: black !important;
+    page-break-inside: avoid !important;
+  }
+  
+  /* Prevent page breaks in content */
+  .print-only * {
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  
+  /* Compact print layout */
+  .print-only > * {
+    margin-bottom: 4pt !important;
+  }
+  
+  .print-only table {
+    page-break-inside: avoid !important;
+  }
+  
+  .print-only .border {
+    margin-bottom: 2pt !important;
+    padding: 2pt !important;
   }
   
   /* Force all text colors to black for printing */
