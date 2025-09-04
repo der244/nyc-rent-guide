@@ -468,7 +468,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         {scenarios.oneYear?.increases.length === 1 
                           ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} | ${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)}`
                           : scenarios.oneYear?.increases.length === 2
-                          ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | ${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)} / ${formatCurrency(scenarios.oneYear.increases[1].dollarIncrease)}`
+                          ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} / ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | ${formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)} / ${formatCurrency(scenarios.oneYear.increases[1].dollarIncrease)}`
                           : 'N/A'
                         }
                       </div>
@@ -533,7 +533,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         {scenarios.twoYear?.increases.length === 1 
                           ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} | ${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)}`
                           : scenarios.twoYear?.increases.length === 2
-                          ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | ${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)} / ${formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}`
+                          ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} / ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | ${formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)} / ${formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}`
                           : 'Split increase'
                         }
                       </div>
@@ -614,7 +614,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           {scenarios.oneYear?.increases.length === 1 
                             ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} | ${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay - inputs.preferentialRent)}`
                             : scenarios.oneYear?.increases.length === 2
-                            ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | ${formatCurrency((inputs.preferentialRent! * scenarios.oneYear.increases[0].percentIncrease / 100))} / ${formatCurrency((inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100)) * scenarios.oneYear.increases[1].percentIncrease / 100)}`
+                            ? `${formatPercent(scenarios.oneYear.increases[0].percentIncrease)} / ${formatPercent(scenarios.oneYear.increases[1].percentIncrease)} | ${formatCurrency((inputs.preferentialRent! * scenarios.oneYear.increases[0].percentIncrease / 100))} / ${formatCurrency((inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100)) * scenarios.oneYear.increases[1].percentIncrease / 100)}`
                             : 'N/A'
                           }
                         </div>
@@ -677,7 +677,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           {scenarios.twoYear?.increases.length === 1 
                             ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} | ${formatCurrency((scenarios.twoYear.preferentialResult?.newTenantPay || 0) - (inputs.preferentialRent || 0))}`
                             : scenarios.twoYear?.increases.length === 2
-                            ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} + ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | ${formatCurrency((inputs.preferentialRent! * scenarios.twoYear.increases[0].percentIncrease / 100))} / ${formatCurrency((scenarios.twoYear.preferentialResult?.year1Amount || inputs.preferentialRent!) * scenarios.twoYear.increases[1].percentIncrease / 100)}`
+                            ? `${formatPercent(scenarios.twoYear.increases[0].percentIncrease)} / ${formatPercent(scenarios.twoYear.increases[1].percentIncrease)} | ${formatCurrency((inputs.preferentialRent! * scenarios.twoYear.increases[0].percentIncrease / 100))} / ${formatCurrency((scenarios.twoYear.preferentialResult?.year1Amount || inputs.preferentialRent!) * scenarios.twoYear.increases[1].percentIncrease / 100)}`
                             : 'Split increase'
                           }
                         </div>
