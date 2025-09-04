@@ -197,17 +197,24 @@ export default function RentCalculatorResults({
                   </div>}
               </div>
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                <Button onClick={() => {
+              <Button onClick={() => {
               // Set document title for meaningful filename
               const currentTitle = document.title;
-              const date = new Date().toLocaleDateString('en-US', {
+              const generatedDate = new Date().toLocaleDateString('en-US', {
                 month: '2-digit',
                 day: '2-digit',
                 year: 'numeric'
               }).replace(/\//g, '-');
+              const leaseStartFormatted = inputs.leaseStartDate.toLocaleDateString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric'
+              }).replace(/\//g, '-');
+              const tenantPart = inputs.tenantName ? `-${inputs.tenantName.replace(/\s/g, '-').replace(/[^a-zA-Z0-9-]/g, '')}` : '';
               const addressPart = inputs.address ? `-${inputs.address.split(',')[0].replace(/\s/g, '-').replace(/[^a-zA-Z0-9-]/g, '')}` : '';
-              const unitPart = inputs.unit ? `-${inputs.unit.replace(/\s/g, '')}` : '';
-              document.title = `NYC-Rent-Calculation-${date}${addressPart}${unitPart}-RGB${scenarios.orderNumber}`;
+              const unitPart = inputs.unit ? `-Unit${inputs.unit.replace(/\s/g, '')}` : '';
+              const currentRentPart = `-${inputs.currentRent.toFixed(0)}`;
+              document.title = `NYC-Rent-Calc${tenantPart}${addressPart}${unitPart}${currentRentPart}-LeaseStart${leaseStartFormatted}-RGB${scenarios.orderNumber}-Generated${generatedDate}`;
               window.print();
 
               // Restore original title after print
