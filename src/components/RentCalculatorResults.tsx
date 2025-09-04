@@ -158,6 +158,24 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
           </p>
         </div>
 
+        <div className="border border-gray-300 p-4 mb-4">
+          <h3 className="font-bold text-lg mb-3">Lease End Dates</h3>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="text-center">
+              <p className="text-lg font-bold mb-1">
+                {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
+              </p>
+              <p className="text-sm text-gray-600">1-Year Lease End</p>
+            </div>
+            <div className="text-center">
+              <p className="text-lg font-bold mb-1">
+                {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
+              </p>
+              <p className="text-sm text-gray-600">2-Year Lease End</p>
+            </div>
+          </div>
+        </div>
+
         <table className="w-full border border-gray-300 mb-6">
           <thead>
             <tr className="border-b border-gray-300">
