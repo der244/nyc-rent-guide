@@ -1,5 +1,5 @@
 import React from 'react';
-import { Copy, FileText, CheckCircle, AlertCircle, Calculator } from 'lucide-react';
+import { Copy, FileText, CheckCircle, AlertCircle, Calculator, Clipboard } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -122,12 +122,13 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
     }
   };
 
-  const copyDate = async (dateText: string) => {
+  const copyDate = async (date: Date) => {
     try {
-      await navigator.clipboard.writeText(dateText);
+      const formattedDate = date.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
+      await navigator.clipboard.writeText(formattedDate);
       toast({
         title: "Date copied",
-        description: `${dateText} copied to clipboard`,
+        description: `${formattedDate} copied to clipboard`,
       });
     } catch (err) {
       toast({
@@ -383,12 +384,12 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             Ends: {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
                           </span>
                           <Button
-                            onClick={() => copyDate(`Ends: ${new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}`)}
+                            onClick={() => copyDate(new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1))}
                             variant="ghost"
                             size="sm"
                             className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                           >
-                            <Copy className="h-4 w-4" />
+                            <Clipboard className="h-4 w-4" />
                           </Button>
                         </div>
                       </Column>
@@ -398,12 +399,12 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             Ends: {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
                           </span>
                           <Button
-                            onClick={() => copyDate(`Ends: ${new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}`)}
+                            onClick={() => copyDate(new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1))}
                             variant="ghost"
                             size="sm"
                             className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                           >
-                            <Copy className="h-4 w-4" />
+                            <Clipboard className="h-4 w-4" />
                           </Button>
                         </div>
                       </Column>
@@ -412,7 +413,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                     {/* Legal Rent Row */}
                     <Row className="border-t pt-6">
                       <Column className="text-center">
-                        <div className="flex flex-col items-center space-y-1">
+                        <div className="flex flex-col items-center space-y-1 min-h-[120px] justify-center">
                           <div className="text-base sm:text-xl font-bold text-calculator-success">
                             {formatCurrency(inputs.currentRent)}
                           </div>
@@ -422,7 +423,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             size="sm"
                             className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                           >
-                            <Copy className="h-4 w-4" />
+                            <Clipboard className="h-4 w-4" />
                           </Button>
                           <div className="text-base font-bold text-foreground/80">Legal Regulated Rent</div>
                           <div className="text-base font-bold text-muted-foreground">
@@ -447,7 +448,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                                   size="sm"
                                   className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                                 >
-                                  <Copy className="h-4 w-4" />
+                                  <Clipboard className="h-4 w-4" />
                                 </Button>
                                 <Button
                                   onClick={() => copyLeaseAmount(scenarios.oneYear.increases[1].newRent, "1-Year (Year 2)")}
@@ -455,7 +456,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                                   size="sm"
                                   className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                                 >
-                                  <Copy className="h-4 w-4" />
+                                  <Clipboard className="h-4 w-4" />
                                 </Button>
                               </>
                             ) : (
@@ -465,7 +466,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                                 size="sm"
                                 className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                               >
-                                <Copy className="h-4 w-4" />
+                                <Clipboard className="h-4 w-4" />
                               </Button>
                             )}
                           </div>
@@ -497,7 +498,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                                   size="sm"
                                   className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                                 >
-                                  <Copy className="h-4 w-4" />
+                                  <Clipboard className="h-4 w-4" />
                                 </Button>
                                 <Button
                                   onClick={() => copyLeaseAmount(scenarios.twoYear.increases[1].newRent, "2-Year (Year 2)")}
@@ -505,7 +506,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                                   size="sm"
                                   className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                                 >
-                                  <Copy className="h-4 w-4" />
+                                  <Clipboard className="h-4 w-4" />
                                 </Button>
                               </>
                             ) : (
@@ -515,7 +516,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                                 size="sm"
                                 className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                               >
-                                <Copy className="h-4 w-4" />
+                                <Clipboard className="h-4 w-4" />
                               </Button>
                             )}
                           </div>
@@ -536,7 +537,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                     {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && scenarios.twoYear?.preferentialResult && (
                       <Row className="bg-calculator-info/5 p-6 rounded-lg">
                         <Column className="text-center">
-                            <div className="flex flex-col items-center space-y-1">
+                            <div className="flex flex-col items-center space-y-1 min-h-[120px] justify-center">
                             <div className="text-base sm:text-xl font-bold text-calculator-info">
                               {formatCurrency(inputs.preferentialRent)}
                             </div>
@@ -546,7 +547,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                               size="sm"
                               className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                             >
-                              <Copy className="h-4 w-4" />
+                              <Clipboard className="h-4 w-4" />
                             </Button>
                             <div className="text-base font-bold text-foreground/80">Preferential Rent (Tenant Pays)</div>
                             <div className="text-base font-bold text-muted-foreground">
@@ -571,7 +572,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                                     size="sm"
                                     className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                                   >
-                                    <Copy className="h-4 w-4" />
+                                    <Clipboard className="h-4 w-4" />
                                   </Button>
                                   <Button
                                     onClick={() => copyLeaseAmount(scenarios.oneYear.preferentialResult.newTenantPay, "1-Year Preferential (Year 2)")}
@@ -579,7 +580,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                                     size="sm"
                                     className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                                   >
-                                    <Copy className="h-4 w-4" />
+                                    <Clipboard className="h-4 w-4" />
                                   </Button>
                                 </>
                               ) : (
@@ -589,7 +590,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                                   size="sm"
                                   className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                                 >
-                                  <Copy className="h-4 w-4" />
+                                  <Clipboard className="h-4 w-4" />
                                 </Button>
                               )}
                             </div>
@@ -621,7 +622,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                                     size="sm"
                                     className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                                   >
-                                    <Copy className="h-4 w-4" />
+                                     <Clipboard className="h-4 w-4" />
                                   </Button>
                                   <Button
                                     onClick={() => copyLeaseAmount(scenarios.twoYear.preferentialResult.newTenantPay, "2-Year Preferential (Year 2)")}
@@ -629,7 +630,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                                     size="sm"
                                     className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                                   >
-                                    <Copy className="h-4 w-4" />
+                                     <Clipboard className="h-4 w-4" />
                                   </Button>
                                 </>
                               ) : (
@@ -639,7 +640,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                                   size="sm"
                                   className="h-8 w-8 p-0 text-black hover:bg-gray-100"
                                 >
-                                  <Copy className="h-4 w-4" />
+                                  <Clipboard className="h-4 w-4" />
                                 </Button>
                               )}
                             </div>
@@ -710,7 +711,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             size="sm"
                             className="h-6 px-2 text-xs"
                           >
-                            <Copy className="h-3 w-3" />
+                             <Clipboard className="h-3 w-3" />
                           </Button>
                         </div>
                         <div className="flex justify-center items-center gap-2">
@@ -735,7 +736,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             size="sm"
                             className="h-6 px-2 text-xs"
                           >
-                            <Copy className="h-3 w-3" />
+                            <Clipboard className="h-3 w-3" />
                           </Button>
                         </div>
                       </>
