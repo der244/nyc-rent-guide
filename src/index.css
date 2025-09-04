@@ -141,56 +141,41 @@ All colors MUST be HSL.
     width: 100%;
   }
   
-  /* General print formatting - compact layout */
+  /* General print formatting */
   body {
     @apply bg-white text-black;
     margin: 0;
-    padding: 10px;
-    font-size: 10pt;
-    line-height: 1.2;
+    padding: 20px;
+    font-size: 12pt;
+    line-height: 1.4;
   }
   
-  /* Compact headers */
-  h1 { font-size: 14pt; margin-bottom: 4pt; }
-  h2 { font-size: 12pt; margin-bottom: 3pt; }
-  h3 { font-size: 11pt; margin-bottom: 3pt; }
+  h1 { font-size: 18pt; margin-bottom: 10pt; }
+  h2 { font-size: 16pt; margin-bottom: 8pt; }
+  h3 { font-size: 14pt; margin-bottom: 6pt; }
   
-  /* Compact spacing */
-  .print\:space-y-4 > * + * { margin-top: 6pt !important; }
-  .mb-6 { margin-bottom: 8pt !important; }
-  .mb-4 { margin-bottom: 4pt !important; }
-  .mb-3 { margin-bottom: 3pt !important; }
-  .mb-2 { margin-bottom: 2pt !important; }
-  .mt-2 { margin-top: 2pt !important; }
-  .space-y-2 > * + * { margin-top: 2pt !important; }
-  
-  /* Compact padding */
-  .p-4 { padding: 4pt !important; }
-  
-  /* Compact table styling */
-  table { font-size: 9pt; }
-  table th, table td { 
-    padding: 3pt !important; 
-    border: 1pt solid black !important;
+  .grid {
+    display: table;
+    width: 100%;
   }
   
-  /* Compact text sizes */
-  .text-2xl { font-size: 12pt !important; }
-  .text-xl { font-size: 11pt !important; }
-  .text-lg { font-size: 10pt !important; }
-  .text-base { font-size: 9pt !important; }
-  .text-sm { font-size: 8pt !important; }
+  .grid > div {
+    display: table-cell;
+    width: 50%;
+    padding: 10pt;
+    vertical-align: top;
+  }
+  
+  /* Force page breaks */
+  .page-break {
+    page-break-before: always;
+  }
   
   /* Remove shadows and unnecessary styling */
   * {
     box-shadow: none !important;
     text-shadow: none !important;
     color: black !important;
-  }
-  
-  /* Ensure all borders are visible */
-  .border, .border-gray-300 {
-    border: 1pt solid black !important;
   }
   
   /* Force all text colors to black for printing */
@@ -200,9 +185,7 @@ All colors MUST be HSL.
   .text-calculator-info,
   .text-secondary-foreground,
   .text-slate-700,
-  .text-foreground,
-  .text-gray-600,
-  .text-gray-700 {
+  .text-foreground {
     color: black !important;
   }
 }
