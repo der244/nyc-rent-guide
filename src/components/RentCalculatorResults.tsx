@@ -671,30 +671,155 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
 
             {/* Applied rule and breakdown */}
             <div className="mt-6">
-              <div className="text-sm">
+              <div className="text-sm md:text-base">
                 <span className="font-medium text-muted-foreground">Applied Rule: </span>
                 <span className="font-medium">
                   {(() => {
                     const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
                     const twoYearGuideline = getGuideline(inputs.leaseStartDate, 2);
                     
-                    const oneYearPct = oneYearGuideline?.rule.type === 'flat' ? 
-                      `${oneYearGuideline.rule.pct}%` :
-                      oneYearGuideline?.rule.type === 'split' ?
-                      `${oneYearGuideline.rule.year1_pct}% / ${oneYearGuideline.rule.year2_pct_on_year1_rent}%` :
-                      oneYearGuideline?.rule.type === 'split_by_month' ?
-                      `${oneYearGuideline.rule.first_pct}% / ${oneYearGuideline.rule.remaining_months_pct}%` :
-                      'N/A';
+                    const oneYearRule = oneYearGuideline?.rule;
+                    const twoYearRule = twoYearGuideline?.rule;
                     
-                    const twoYearPct = twoYearGuideline?.rule.type === 'flat' ? 
-                      `${twoYearGuideline.rule.pct}%` :
-                      twoYearGuideline?.rule.type === 'split' ?
-                      `${twoYearGuideline.rule.year1_pct}% / ${twoYearGuideline.rule.year2_pct_on_year1_rent}%` :
-                      twoYearGuideline?.rule.type === 'split_by_month' ?
-                      `${twoYearGuideline.rule.first_pct}% / ${twoYearGuideline.rule.remaining_months_pct}%` :
-                      'N/A';
-                    
-                    return `1-Year: ${oneYearPct} | 2-Year: ${twoYearPct}`;
+                    return (
+                      <span className="inline-flex flex-wrap items-center gap-2">
+                        <span>1-Year:</span>
+                        {oneYearRule?.type === 'flat' && (
+                          <span className="inline-flex items-center gap-1">
+                            {oneYearRule.pct}%
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                              onClick={() => copyLeaseAmount(`${oneYearRule.pct}%`, '1-year rate')}
+                              title="Copy 1-year rate"
+                            >
+                              <Copy className="h-2.5 w-2.5" />
+                            </Button>
+                          </span>
+                        )}
+                        {oneYearRule?.type === 'split' && (
+                          <span className="inline-flex items-center gap-1">
+                            {oneYearRule.year1_pct}%
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                              onClick={() => copyLeaseAmount(`${oneYearRule.year1_pct}%`, '1-year year 1 rate')}
+                              title="Copy 1-year year 1 rate"
+                            >
+                              <Copy className="h-2.5 w-2.5" />
+                            </Button>
+                            <span>/</span>
+                            {oneYearRule.year2_pct_on_year1_rent}%
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                              onClick={() => copyLeaseAmount(`${oneYearRule.year2_pct_on_year1_rent}%`, '1-year year 2 rate')}
+                              title="Copy 1-year year 2 rate"
+                            >
+                              <Copy className="h-2.5 w-2.5" />
+                            </Button>
+                          </span>
+                        )}
+                        {oneYearRule?.type === 'split_by_month' && (
+                          <span className="inline-flex items-center gap-1">
+                            {oneYearRule.first_pct}%
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                              onClick={() => copyLeaseAmount(`${oneYearRule.first_pct}%`, '1-year first period rate')}
+                              title="Copy 1-year first period rate"
+                            >
+                              <Copy className="h-2.5 w-2.5" />
+                            </Button>
+                            <span>/</span>
+                            {oneYearRule.remaining_months_pct}%
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                              onClick={() => copyLeaseAmount(`${oneYearRule.remaining_months_pct}%`, '1-year remaining period rate')}
+                              title="Copy 1-year remaining period rate"
+                            >
+                              <Copy className="h-2.5 w-2.5" />
+                            </Button>
+                          </span>
+                        )}
+                        {!oneYearRule && <span>N/A</span>}
+                        
+                        <span className="mx-2">|</span>
+                        
+                        <span>2-Year:</span>
+                        {twoYearRule?.type === 'flat' && (
+                          <span className="inline-flex items-center gap-1">
+                            {twoYearRule.pct}%
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                              onClick={() => copyLeaseAmount(`${twoYearRule.pct}%`, '2-year rate')}
+                              title="Copy 2-year rate"
+                            >
+                              <Copy className="h-2.5 w-2.5" />
+                            </Button>
+                          </span>
+                        )}
+                        {twoYearRule?.type === 'split' && (
+                          <span className="inline-flex items-center gap-1">
+                            {twoYearRule.year1_pct}%
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                              onClick={() => copyLeaseAmount(`${twoYearRule.year1_pct}%`, '2-year year 1 rate')}
+                              title="Copy 2-year year 1 rate"
+                            >
+                              <Copy className="h-2.5 w-2.5" />
+                            </Button>
+                            <span>/</span>
+                            {twoYearRule.year2_pct_on_year1_rent}%
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                              onClick={() => copyLeaseAmount(`${twoYearRule.year2_pct_on_year1_rent}%`, '2-year year 2 rate')}
+                              title="Copy 2-year year 2 rate"
+                            >
+                              <Copy className="h-2.5 w-2.5" />
+                            </Button>
+                          </span>
+                        )}
+                        {twoYearRule?.type === 'split_by_month' && (
+                          <span className="inline-flex items-center gap-1">
+                            {twoYearRule.first_pct}%
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                              onClick={() => copyLeaseAmount(`${twoYearRule.first_pct}%`, '2-year first period rate')}
+                              title="Copy 2-year first period rate"
+                            >
+                              <Copy className="h-2.5 w-2.5" />
+                            </Button>
+                            <span>/</span>
+                            {twoYearRule.remaining_months_pct}%
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                              onClick={() => copyLeaseAmount(`${twoYearRule.remaining_months_pct}%`, '2-year remaining period rate')}
+                              title="Copy 2-year remaining period rate"
+                            >
+                              <Copy className="h-2.5 w-2.5" />
+                            </Button>
+                          </span>
+                        )}
+                        {!twoYearRule && <span>N/A</span>}
+                      </span>
+                    );
                   })()}
                 </span>
               </div>
