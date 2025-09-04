@@ -94,10 +94,12 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
         <CardHeader className="pb-3">
           <CardTitle className="text-lg text-center">Current Rent</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-4">
+          {/* Legal Rent */}
           <div className="text-center">
+            <div className="text-xs md:text-sm font-medium text-foreground mb-2">Legal Regulated Rent</div>
             <div className="flex items-center justify-center gap-2">
-              <div className="text-2xl font-bold text-foreground">
+              <div className="text-2xl font-semibold text-primary">
                 {formatCurrency(inputs.currentRent)}
               </div>
               <Button
@@ -110,13 +112,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 <Copy className="h-3 w-3" />
               </Button>
             </div>
-            <div className="text-xs md:text-sm text-muted-foreground">Legal Regulated Rent</div>
           </div>
           
+          {/* Preferential Rent if applicable */}
           {inputs.preferentialRent && (
-            <div className="text-center pt-2 border-t">
+            <div className="text-center pt-3 border-t bg-slate-50 rounded-lg p-4 mt-4">
+              <div className="text-xs md:text-sm font-medium text-slate-600 mb-2">Tenant Currently Pays (Preferential)</div>
               <div className="flex items-center justify-center gap-2">
-                <div className="text-2xl font-bold text-calculator-info">
+                <div className="text-2xl font-medium text-slate-700">
                   {formatCurrency(inputs.preferentialRent)}
                 </div>
                 <Button
@@ -129,7 +132,6 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                   <Copy className="h-3 w-3" />
                 </Button>
               </div>
-              <div className="text-xs md:text-sm text-muted-foreground">Tenant Currently Pays (Preferential)</div>
             </div>
           )}
         </CardContent>
