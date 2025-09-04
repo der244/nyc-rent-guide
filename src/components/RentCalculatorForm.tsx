@@ -298,19 +298,19 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
   };
 
   return (
-    <>
+    <div className="max-w-2xl mx-auto">
       <DollarSplash 
         isVisible={showSplash} 
         onComplete={() => setShowSplash(false)} 
       />
       <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
         <CardHeader className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
-          <CardTitle className="text-lg sm:text-xl font-semibold">Lease Information</CardTitle>
+          <CardTitle className="text-2xl sm:text-3xl font-semibold">Lease Information</CardTitle>
         </CardHeader>
-      <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
+      <CardContent className="space-y-6 sm:space-y-8 p-6 sm:p-8">
         {/* Lease Start Date */}
-        <div className="space-y-2">
-          <Label htmlFor="lease-start" className="text-sm font-medium">
+        <div className="space-y-3">
+          <Label htmlFor="lease-start" className="text-lg font-medium">
             Lease Start Date
           </Label>
           <div className="relative">
@@ -349,21 +349,21 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
             </Popover>
           </div>
           {errors.leaseStartDate && (
-            <p className="text-sm text-destructive">{errors.leaseStartDate}</p>
+            <p className="text-base text-destructive">{errors.leaseStartDate}</p>
           )}
-           <p className="text-xs text-muted-foreground">
+           <p className="text-sm text-muted-foreground">
              Enter date manually (1/1/24 or mm/dd/yyyy) or click the calendar icon.
            </p>
         </div>
 
 
         {/* Current Legal Regulated Rent */}
-        <div className="space-y-2">
-          <Label htmlFor="current-rent" className="text-sm font-medium">
+        <div className="space-y-3">
+          <Label htmlFor="current-rent" className="text-lg font-medium">
             Current Legal Regulated Rent
           </Label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-lg">$</span>
             <Input
               id="current-rent"
               ref={currentRentRef}
@@ -373,23 +373,23 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
               inputMode="decimal"
               pattern="[0-9]*"
               className={cn(
-                "pl-8",
+                "pl-8 text-lg",
                 errors.currentRent && "border-destructive"
               )}
             />
           </div>
           {errors.currentRent && (
-            <p className="text-sm text-destructive">{errors.currentRent}</p>
+            <p className="text-base text-destructive">{errors.currentRent}</p>
           )}
         </div>
 
         {/* Preferential Rent (Optional) */}
-        <div className="space-y-2">
-          <Label htmlFor="preferential-rent" className="text-sm font-medium">
+        <div className="space-y-3">
+          <Label htmlFor="preferential-rent" className="text-lg font-medium">
             Preferential Rent <span className="text-muted-foreground font-normal">(Optional)</span>
           </Label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-lg">$</span>
             <Input
               id="preferential-rent"
               ref={preferentialRentRef}
@@ -399,22 +399,22 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
               inputMode="decimal"
               pattern="[0-9]*"
               className={cn(
-                "pl-8",
+                "pl-8 text-lg",
                 errors.preferentialRent && "border-destructive"
               )}
             />
           </div>
           {errors.preferentialRent && (
-            <p className="text-sm text-destructive">{errors.preferentialRent}</p>
+            <p className="text-base text-destructive">{errors.preferentialRent}</p>
           )}
-                <p className="text-xs text-muted-foreground">
+                <p className="text-sm text-muted-foreground">
                   If Tenant Pays less than the legal regulated rent due to a preferential rent agreement
                 </p>
         </div>
 
         {/* Address (Optional) */}
-        <div className="space-y-2">
-          <Label htmlFor="address" className="text-sm font-medium">
+        <div className="space-y-3">
+          <Label htmlFor="address" className="text-lg font-medium">
             Property Address <span className="text-muted-foreground font-normal">(Optional)</span>
           </Label>
           <Input
@@ -422,16 +422,16 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             placeholder="123 Main Street, New York, NY 10001"
-            className="w-full"
+            className="w-full text-lg"
           />
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             Include address for reference in printed calculations
           </p>
         </div>
 
         {/* Unit (Optional) */}
-        <div className="space-y-2">
-          <Label htmlFor="unit" className="text-sm font-medium">
+        <div className="space-y-3">
+          <Label htmlFor="unit" className="text-lg font-medium">
             Unit Number <span className="text-muted-foreground font-normal">(Optional)</span>
           </Label>
           <Input
@@ -439,9 +439,9 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
             value={unit}
             onChange={(e) => setUnit(e.target.value)}
             placeholder="Apt 4B"
-            className="w-full"
+            className="w-full text-lg"
           />
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             Apartment or unit identifier
           </p>
         </div>
@@ -450,13 +450,13 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
         <Button 
           onClick={validateAndSubmit}
           disabled={isCalculating}
-          className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary font-medium text-sm sm:text-base"
+          className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary font-medium text-lg sm:text-xl"
           size="lg"
         >
           {isCalculating ? 'Calculating...' : 'Calculate Rent Increase'}
         </Button>
       </CardContent>
     </Card>
-    </>
+    </div>
   );
 }
