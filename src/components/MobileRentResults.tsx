@@ -1,5 +1,5 @@
 import React from 'react';
-import { Copy } from 'lucide-react';
+import { Copy, FileText } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CalculationResult } from '../types/rgb';
@@ -910,6 +910,37 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               })()}
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Print Action */}
+      <Card className="shadow-sm">
+        <CardContent className="p-4">
+          <Button 
+            onClick={() => {
+              // Set document title for meaningful filename
+              const currentTitle = document.title;
+              const date = new Date().toLocaleDateString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric'
+              }).replace(/\//g, '-');
+              const addressPart = inputs.address ? `-${inputs.address.split(',')[0].replace(/\s/g, '-').replace(/[^a-zA-Z0-9-]/g, '')}` : '';
+              const unitPart = inputs.unit ? `-${inputs.unit.replace(/\s/g, '')}` : '';
+              document.title = `NYC-Rent-Calculation-${date}${addressPart}${unitPart}-RGB${result.oneYear.order}`;
+              window.print();
+
+              // Restore original title after print
+              setTimeout(() => {
+                document.title = currentTitle;
+              }, 1000);
+            }} 
+            variant="outline" 
+            className="w-full bg-white border-primary text-primary hover:bg-primary hover:text-white"
+          >
+            <FileText className="h-4 w-4 mr-2" />
+            Print Results
+          </Button>
         </CardContent>
       </Card>
     </div>
