@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, User } from 'lucide-react';
 import { format } from 'date-fns';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -27,6 +27,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
   const [unit, setUnit] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showSplash, setShowSplash] = useState<boolean>(false);
+  const [showTenantInfo, setShowTenantInfo] = useState<boolean>(false);
 
   // Refs for scrolling to error fields
   const leaseStartRef = useRef<HTMLInputElement>(null);
@@ -412,39 +413,57 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
                 </p>
         </div>
 
-        {/* Address (Optional) */}
-        <div className="space-y-3">
-          <Label htmlFor="address" className="text-lg font-medium">
-            Property Address <span className="text-muted-foreground font-normal">(Optional)</span>
-          </Label>
-          <Input
-            id="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="123 Main Street, New York, NY 10001"
-            className="w-full text-lg"
-          />
-          <p className="text-sm text-muted-foreground">
-            Include address for reference in printed calculations
-          </p>
+        {/* Tenant Info Toggle Button */}
+        <div className="flex justify-center">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setShowTenantInfo(!showTenantInfo)}
+            className="flex items-center gap-2 hover:bg-muted/80 hover:border-primary/50 transition-all duration-200 text-base px-6 py-3"
+          >
+            <User className="h-4 w-4" />
+            {showTenantInfo ? 'Hide Tenant Info' : 'Tenant Info'}
+          </Button>
         </div>
 
-        {/* Unit (Optional) */}
-        <div className="space-y-3">
-          <Label htmlFor="unit" className="text-lg font-medium">
-            Unit Number <span className="text-muted-foreground font-normal">(Optional)</span>
-          </Label>
-          <Input
-            id="unit"
-            value={unit}
-            onChange={(e) => setUnit(e.target.value)}
-            placeholder="Apt 4B"
-            className="w-full text-lg"
-          />
-          <p className="text-sm text-muted-foreground">
-            Apartment or unit identifier
-          </p>
-        </div>
+        {/* Tenant Info Section - Conditionally Rendered */}
+        {showTenantInfo && (
+          <>
+            {/* Address (Optional) */}
+            <div className="space-y-3">
+              <Label htmlFor="address" className="text-lg font-medium">
+                Property Address <span className="text-muted-foreground font-normal">(Optional)</span>
+              </Label>
+              <Input
+                id="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="123 Main Street, New York, NY 10001"
+                className="w-full text-lg"
+              />
+              <p className="text-sm text-muted-foreground">
+                Include address for reference in printed calculations
+              </p>
+            </div>
+
+            {/* Unit (Optional) */}
+            <div className="space-y-3">
+              <Label htmlFor="unit" className="text-lg font-medium">
+                Unit Number <span className="text-muted-foreground font-normal">(Optional)</span>
+              </Label>
+              <Input
+                id="unit"
+                value={unit}
+                onChange={(e) => setUnit(e.target.value)}
+                placeholder="Apt 4B"
+                className="w-full text-lg"
+              />
+              <p className="text-sm text-muted-foreground">
+                Apartment or unit identifier
+              </p>
+            </div>
+          </>
+        )}
 
         {/* Calculate Button */}
         <Button 
