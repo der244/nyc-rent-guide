@@ -294,7 +294,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   <TableRow className="bg-muted/20">
                     <TableHead className="text-muted-foreground text-sm md:text-base py-4">Lease End Date</TableHead>
                     <TableHead className="text-center text-muted-foreground text-sm md:text-base px-1 py-4">
-                      <div className="flex flex-col items-center gap-1">
+                      <div className="flex items-center justify-center gap-2">
                         <div>
                           {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", {
                         month: "2-digit",
@@ -312,7 +312,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                       </div>
                     </TableHead>
                     <TableHead className="text-center text-muted-foreground text-sm md:text-base px-1 py-4">
-                      <div className="flex flex-col items-center gap-1">
+                      <div className="flex items-center justify-center gap-2">
                         <div>
                           {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", {
                         month: "2-digit",
@@ -363,7 +363,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                 <Copy className="h-2 w-2" />
               </Button>
             </div>
-                          </div> : <div className="flex flex-col items-center">
+                          </div> : <div className="flex items-center justify-center gap-2">
                             <div className="text-sm sm:text-lg font-bold text-calculator-success break-words">
                               {formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}
                             </div>
@@ -470,7 +470,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                 <Copy className="h-2 w-2" />
               </Button>
             </div>
-                          </div> : <div className="flex flex-col items-center">
+                          </div> : <div className="flex items-center justify-center gap-2">
                             <div className="text-sm sm:text-lg font-bold text-calculator-success break-words">
                               {formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}
                             </div>
@@ -579,15 +579,15 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
               </Button>
             </div>
                             <div className="text-sm sm:text-lg font-bold text-calculator-info">/</div>
-                            <div className="flex flex-col items-center">
-                              <div className="text-sm sm:text-lg font-bold text-calculator-info">
-                                {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
-                              </div>
-                              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.oneYear.preferentialResult.newTenantPay, '1-year preferential final')} title="Copy final preferential amount">
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
-                          </div> : <div className="flex flex-col items-center">
+            <div className="flex items-center justify-center gap-2">
+              <div className="text-sm sm:text-lg font-bold text-calculator-info">
+                {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
+              </div>
+              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.oneYear.preferentialResult.newTenantPay, '1-year preferential final')} title="Copy final preferential amount">
+                <Copy className="h-2 w-2" />
+              </Button>
+            </div>
+                          </div> : <div className="flex items-center justify-center gap-2">
                             <div className="text-sm sm:text-lg font-bold text-calculator-info">
                               {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
                             </div>
@@ -692,7 +692,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                 <Copy className="h-2 w-2" />
               </Button>
             </div>
-                          </div> : <div className="flex flex-col items-center">
+                          </div> : <div className="flex items-center justify-center gap-2">
                             <div className="text-sm sm:text-lg font-bold text-calculator-info">
                               {formatCurrency(scenarios.twoYear?.preferentialResult?.newTenantPay || inputs.preferentialRent!)}
                             </div>
