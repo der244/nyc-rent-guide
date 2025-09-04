@@ -51,16 +51,38 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="text-center">
-            <div className="text-2xl font-bold text-foreground">
-              {formatCurrency(inputs.currentRent)}
+            <div className="flex flex-col items-center">
+              <div className="text-2xl font-bold text-foreground">
+                {formatCurrency(inputs.currentRent)}
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-2"
+                onClick={() => onCopyAmount(inputs.currentRent, 'current legal rent')}
+                title="Copy current legal rent"
+              >
+                <Copy className="h-3 w-3" />
+              </Button>
             </div>
             <div className="text-xs md:text-sm text-muted-foreground">Legal Regulated Rent</div>
           </div>
           
           {inputs.preferentialRent && (
             <div className="text-center pt-2 border-t">
-              <div className="text-xl font-semibold text-calculator-info">
-                {formatCurrency(inputs.preferentialRent)}
+              <div className="flex flex-col items-center">
+                <div className="text-xl font-semibold text-calculator-info">
+                  {formatCurrency(inputs.preferentialRent)}
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-2"
+                  onClick={() => onCopyAmount(inputs.preferentialRent!, 'current preferential rent')}
+                  title="Copy current preferential rent"
+                >
+                  <Copy className="h-3 w-3" />
+                </Button>
               </div>
               <div className="text-xs md:text-sm text-muted-foreground">Tenant Currently Pays (Preferential)</div>
             </div>
