@@ -407,9 +407,9 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
           {errors.preferentialRent && (
             <p className="text-sm text-destructive">{errors.preferentialRent}</p>
           )}
-          <p className="text-xs text-muted-foreground">
-            If you pay less than the legal regulated rent due to a preferential rent agreement
-          </p>
+                <p className="text-xs text-muted-foreground">
+                  If Tenant Pays less than the legal regulated rent due to a preferential rent agreement
+                </p>
         </div>
 
         {/* Address (Optional) */}
