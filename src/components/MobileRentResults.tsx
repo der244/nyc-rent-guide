@@ -147,7 +147,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
             {scenarios.oneYear?.increases.length === 2 ? (
               <div className="flex items-center justify-center gap-3">
                 <div className="flex items-center justify-center gap-2">
-                  <div className="text-xl font-extrabold text-primary">
+                  <div className="text-xl font-semibold text-primary">
                     {formatCurrency(scenarios.oneYear.increases[0].newRent)}
                   </div>
                   <Button
@@ -162,7 +162,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 </div>
                 <div className="text-xl font-bold text-primary">/</div>
                 <div className="flex items-center justify-center gap-2">
-                  <div className="text-xl font-extrabold text-primary">
+                  <div className="text-xl font-semibold text-primary">
                     {formatCurrency(scenarios.oneYear.newLegalRent)}
                   </div>
                   <Button
@@ -178,7 +178,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               </div>
             ) : (
               <div className="flex items-center justify-center gap-2">
-                <div className="text-2xl font-extrabold text-primary">
+                <div className="text-2xl font-semibold text-primary">
                   {formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}
                 </div>
                 <Button
@@ -282,7 +282,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               {scenarios.oneYear.increases.length === 2 ? (
                 <div className="flex items-center justify-center gap-3">
                   <div className="flex items-center justify-center gap-2">
-                    <div className="text-xl font-bold text-slate-700">
+                    <div className="text-xl font-medium text-slate-700">
                       {formatCurrency(scenarios.oneYear.increases[0].newRent === inputs.preferentialRent ? inputs.preferentialRent! : (inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100)))}
                     </div>
                     <Button
@@ -297,7 +297,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                   </div>
                   <div className="text-xl font-bold text-slate-700">/</div>
                   <div className="flex items-center justify-center gap-2">
-                    <div className="text-xl font-bold text-slate-700">
+                    <div className="text-xl font-medium text-slate-700">
                       {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
                     </div>
                     <Button
@@ -313,7 +313,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 </div>
               ) : (
                 <div className="flex items-center justify-center gap-2">
-                  <div className="text-2xl font-bold text-slate-700">
+                  <div className="text-2xl font-medium text-slate-700">
                     {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
                   </div>
                   <Button
@@ -506,7 +506,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
             {scenarios.twoYear?.increases.length === 2 ? (
               <div className="flex items-center justify-center gap-3">
                 <div className="flex items-center justify-center gap-2">
-                  <div className="text-xl font-extrabold text-primary">
+                  <div className="text-xl font-semibold text-primary">
                     {formatCurrency(scenarios.twoYear.increases[0].newRent)}
                   </div>
                   <Button
@@ -521,7 +521,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 </div>
                 <div className="text-xl font-bold text-primary">/</div>
                 <div className="flex items-center justify-center gap-2">
-                  <div className="text-xl font-extrabold text-primary">
+                  <div className="text-xl font-semibold text-primary">
                     {formatCurrency(scenarios.twoYear.newLegalRent)}
                   </div>
                   <Button
@@ -537,7 +537,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               </div>
             ) : (
               <div className="flex items-center justify-center gap-2">
-                <div className="text-2xl font-extrabold text-primary">
+                <div className="text-2xl font-semibold text-primary">
                   {formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}
                 </div>
                 <Button
@@ -641,7 +641,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               {scenarios.twoYear.increases.length === 2 ? (
                 <div className="flex items-center justify-center gap-3">
                   <div className="flex items-center justify-center gap-2">
-                    <div className="text-xl font-bold text-slate-700">
+                    <div className="text-xl font-medium text-slate-700">
                       {formatCurrency(scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!)}
                     </div>
                     <Button
@@ -656,7 +656,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                   </div>
                   <div className="text-xl font-bold text-slate-700">/</div>
                   <div className="flex items-center justify-center gap-2">
-                    <div className="text-xl font-bold text-slate-700">
+                    <div className="text-xl font-medium text-slate-700">
                       {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
                     </div>
                     <Button
@@ -672,7 +672,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 </div>
               ) : (
                 <div className="flex items-center justify-center gap-2">
-                  <div className="text-2xl font-bold text-slate-700">
+                  <div className="text-2xl font-medium text-slate-700">
                     {formatCurrency(scenarios.twoYear?.preferentialResult?.newTenantPay || inputs.preferentialRent!)}
                   </div>
                   <Button
