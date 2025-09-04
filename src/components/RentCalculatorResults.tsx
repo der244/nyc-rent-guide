@@ -375,8 +375,8 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
 
                     {/* Legal Rent Row */}
                     <Row className="border-t pt-4">
-                      <Column className="text-left">
-                        <div className="flex flex-col items-start space-y-2">
+                      <Column className="text-center">
+                        <div className="flex flex-col items-center space-y-2">
                           <div className="text-base sm:text-xl font-bold text-calculator-success">
                             {formatCurrency(inputs.currentRent)}
                           </div>
@@ -496,8 +496,8 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                     {/* Preferential Rent Row (Conditional) */}
                     {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && scenarios.twoYear?.preferentialResult && (
                       <Row className="bg-calculator-info/5 p-4 rounded-lg">
-                        <Column className="text-left">
-                          <div className="flex flex-col items-start space-y-2">
+                        <Column className="text-center">
+                          <div className="flex flex-col items-center space-y-2">
                             <div className="text-base sm:text-xl font-bold text-calculator-info">
                               {formatCurrency(inputs.preferentialRent)}
                             </div>
