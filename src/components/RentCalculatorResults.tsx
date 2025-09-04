@@ -215,7 +215,11 @@ export default function RentCalculatorResults({
               const unitPart = inputs.unit ? `-Unit${inputs.unit.replace(/\s/g, '')}` : '';
               const currentRentPart = `-${inputs.currentRent.toFixed(0)}`;
               document.title = `NYC-Rent-Calc${tenantPart}${addressPart}${unitPart}${currentRentPart}-LeaseStart${leaseStartFormatted}-RGB${scenarios.orderNumber}-Generated${generatedDate}`;
-              window.print();
+              
+              // Small delay to ensure title change takes effect before print dialog
+              setTimeout(() => {
+                window.print();
+              }, 100);
 
               // Restore original title after print
               setTimeout(() => {
