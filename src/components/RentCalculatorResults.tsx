@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { CalculationResult } from '../types/rgb';
 import { formatCurrency, formatPercent, getGuideline, calculateRentIncrease } from '../utils/rentCalculator';
 import { useToast } from '@/hooks/use-toast';
+import MobileRentResults from './MobileRentResults';
 
 interface RentCalculatorResultsProps {
   result: {
@@ -270,9 +271,16 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
         </table>
       </div>
 
-      {/* Screen-only detailed view */}
+      {/* Mobile Layout */}
+      <MobileRentResults 
+        result={result} 
+        inputs={inputs} 
+        onCopyAmount={copyLeaseAmount}
+      />
+
+      {/* Desktop/Tablet Table Layout */}
       {scenarios && (
-        <Card className="shadow-lg border-0 print:hidden" style={{ boxShadow: 'var(--shadow-card)' }}>
+        <Card className="shadow-lg border-0 print:hidden hidden md:block" style={{ boxShadow: 'var(--shadow-card)' }}>
           <CardHeader className="bg-gradient-to-r from-calculator-success to-calculator-success/90 text-white rounded-t-lg">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div>
