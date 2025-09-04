@@ -153,17 +153,14 @@ All colors MUST be HSL.
     display: none !important;
   }
   
-  .print-only {
+  /* CRITICAL: Force print-only content to display with higher specificity */
+  body .print-only,
+  body .print-only.hidden {
     display: block !important;
     position: static !important;
     left: auto !important;
     top: auto !important;
     width: 100% !important;
-  }
-  
-  /* CRITICAL: Override hidden class for print-only content */
-  .print-only.hidden {
-    display: block !important;
   }
   
   .print-only * {
