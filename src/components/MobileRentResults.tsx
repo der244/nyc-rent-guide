@@ -502,11 +502,11 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
         <CardContent className="space-y-4">
           {/* Legal Rent */}
           <div className="text-center">
-            <div className="text-xs md:text-sm font-medium text-muted-foreground mb-2">Legal Regulated Rent</div>
+            <div className="text-xs md:text-sm font-medium text-foreground mb-2">Legal Regulated Rent</div>
             {scenarios.twoYear?.increases.length === 2 ? (
               <div className="flex items-center justify-center gap-3">
                 <div className="flex items-center justify-center gap-2">
-                  <div className="text-xl font-bold text-calculator-success">
+                  <div className="text-xl font-extrabold text-primary">
                     {formatCurrency(scenarios.twoYear.increases[0].newRent)}
                   </div>
                   <Button
@@ -519,9 +519,9 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                     <Copy className="h-3 w-3" />
                   </Button>
                 </div>
-                <div className="text-xl font-bold text-calculator-success">/</div>
+                <div className="text-xl font-bold text-primary">/</div>
                 <div className="flex items-center justify-center gap-2">
-                  <div className="text-xl font-bold text-calculator-success">
+                  <div className="text-xl font-extrabold text-primary">
                     {formatCurrency(scenarios.twoYear.newLegalRent)}
                   </div>
                   <Button
@@ -537,7 +537,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               </div>
             ) : (
               <div className="flex items-center justify-center gap-2">
-                <div className="text-2xl font-bold text-calculator-success">
+                <div className="text-2xl font-extrabold text-primary">
                   {formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}
                 </div>
                 <Button
@@ -552,7 +552,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               </div>
             )}
             
-            <div className="text-sm md:text-base text-muted-foreground mt-2">
+            <div className="text-sm md:text-base text-foreground mt-2">
               {scenarios.twoYear?.increases.length === 1 
                 ? (
                   <span className="inline-flex items-center gap-1">
@@ -628,7 +628,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
             </div>
             
             {scenarios.twoYear?.increases.length === 2 && (
-              <div className="text-xs md:text-sm text-muted-foreground italic mt-1">
+              <div className="text-xs md:text-sm text-foreground italic mt-1">
                 {scenarios.twoYear.increases[0].period} / {scenarios.twoYear.increases[1].period}
               </div>
             )}
@@ -636,12 +636,12 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
 
           {/* Preferential Rent if applicable */}
           {inputs.preferentialRent && scenarios.twoYear?.preferentialResult && (
-            <div className="text-center pt-3 border-t">
-              <div className="text-xs md:text-sm font-medium text-muted-foreground mb-2">Tenant Pays (Preferential)</div>
+            <div className="text-center pt-3 border-t bg-slate-50 rounded-lg p-4 mt-4">
+              <div className="text-xs md:text-sm font-medium text-slate-600 mb-2">Tenant Pays (Preferential)</div>
               {scenarios.twoYear.increases.length === 2 ? (
                 <div className="flex items-center justify-center gap-3">
                   <div className="flex items-center justify-center gap-2">
-                    <div className="text-xl font-bold text-calculator-info">
+                    <div className="text-xl font-bold text-slate-700">
                       {formatCurrency(scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!)}
                     </div>
                     <Button
@@ -654,9 +654,9 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                       <Copy className="h-3 w-3" />
                     </Button>
                   </div>
-                  <div className="text-xl font-bold text-calculator-info">/</div>
+                  <div className="text-xl font-bold text-slate-700">/</div>
                   <div className="flex items-center justify-center gap-2">
-                    <div className="text-xl font-bold text-calculator-info">
+                    <div className="text-xl font-bold text-slate-700">
                       {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
                     </div>
                     <Button
@@ -672,7 +672,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 </div>
               ) : (
                 <div className="flex items-center justify-center gap-2">
-                  <div className="text-2xl font-bold text-calculator-info">
+                  <div className="text-2xl font-bold text-slate-700">
                     {formatCurrency(scenarios.twoYear?.preferentialResult?.newTenantPay || inputs.preferentialRent!)}
                   </div>
                   <Button
@@ -687,7 +687,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 </div>
               )}
               
-              <div className="text-sm md:text-base text-muted-foreground mt-2">
+              <div className="text-sm md:text-base text-slate-600 mt-2">
                 {scenarios.twoYear?.increases.length === 1 
                   ? (
                     <span className="inline-flex items-center gap-1">
@@ -763,7 +763,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               </div>
               
               {scenarios.twoYear?.increases.length === 2 && (
-                <div className="text-xs md:text-sm text-muted-foreground italic mt-1">
+                <div className="text-xs md:text-sm text-slate-600 italic mt-1">
                   {scenarios.twoYear.increases[0].period} / {scenarios.twoYear.increases[1].period}
                 </div>
               )}
