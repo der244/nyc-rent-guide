@@ -422,7 +422,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
             className="flex items-center gap-2 hover:bg-muted/80 hover:border-primary/50 transition-all duration-200 text-base px-6 py-3"
           >
             <User className="h-4 w-4" />
-            {showTenantInfo ? 'Hide Tenant Info' : 'Tenant Info'}
+            {showTenantInfo ? "Hide Tenant Info" : "Tenant Info (Optional)"}
           </Button>
         </div>
 
