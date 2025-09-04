@@ -412,7 +412,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                     {/* Legal Rent Row */}
                     <Row className="border-t pt-6">
                       <Column className="text-center">
-                        <div className="flex flex-col items-center space-y-3">
+                        <div className="flex flex-col items-center space-y-1">
                           <div className="text-base sm:text-xl font-bold text-calculator-success">
                             {formatCurrency(inputs.currentRent)}
                           </div>
@@ -431,7 +431,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         </div>
                       </Column>
                       <Column className="text-center">
-                        <div className="space-y-3">
+                        <div className="space-y-1">
                           <div className="text-base sm:text-xl font-bold text-calculator-success break-words">
                             {scenarios.oneYear?.increases.length === 2 ? 
                               `${formatCurrency(scenarios.oneYear.increases[0].newRent)} / ${formatCurrency(scenarios.oneYear.increases[1].newRent)}` :
@@ -481,7 +481,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                         </div>
                       </Column>
                       <Column className="text-center">
-                        <div className="space-y-3">
+                        <div className="space-y-1">
                           <div className="text-base sm:text-xl font-bold text-calculator-success break-words">
                             {scenarios.twoYear?.increases.length === 2 ? 
                               `${formatCurrency(scenarios.twoYear.increases[0].newRent)} / ${formatCurrency(scenarios.twoYear.increases[1].newRent)}` :
@@ -536,7 +536,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                     {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && scenarios.twoYear?.preferentialResult && (
                       <Row className="bg-calculator-info/5 p-6 rounded-lg">
                         <Column className="text-center">
-                          <div className="flex flex-col items-center space-y-3">
+                            <div className="flex flex-col items-center space-y-1">
                             <div className="text-base sm:text-xl font-bold text-calculator-info">
                               {formatCurrency(inputs.preferentialRent)}
                             </div>
@@ -555,7 +555,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           </div>
                         </Column>
                         <Column className="text-center">
-                          <div className="space-y-3">
+                          <div className="space-y-1">
                             <div className="text-base sm:text-xl font-bold text-calculator-info break-words">
                               {scenarios.oneYear.increases.length === 2 && scenarios.oneYear.preferentialResult.year1Amount ? 
                                 `${formatCurrency(scenarios.oneYear.preferentialResult.year1Amount)} / ${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}` :
@@ -605,7 +605,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           </div>
                         </Column>
                         <Column className="text-center">
-                          <div className="space-y-3">
+                          <div className="space-y-1">
                             <div className="text-base sm:text-xl font-bold text-calculator-info break-words">
                               {scenarios.twoYear?.preferentialResult && scenarios.twoYear.increases.length === 2 && scenarios.twoYear.preferentialResult.year1Amount ? 
                                 `${formatCurrency(scenarios.twoYear.preferentialResult.year1Amount)} / ${formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}` :
