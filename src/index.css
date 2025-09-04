@@ -125,6 +125,12 @@ All colors MUST be HSL.
 
 /* Print-friendly styles */
 @media print {
+  /* Force single page layout */
+  @page {
+    size: letter;
+    margin: 0.4in;
+  }
+  
   /* Hide everything except the print-only content */
   body * {
     visibility: hidden;
@@ -139,53 +145,118 @@ All colors MUST be HSL.
     left: 0;
     top: 0;
     width: 100%;
+    page-break-inside: avoid;
+    height: auto;
   }
   
-  /* General print formatting */
+  /* Compact print formatting */
   body {
     @apply bg-white text-black;
     margin: 0;
-    padding: 20px;
-    font-size: 12pt;
-    line-height: 1.4;
+    padding: 0;
+    font-size: 9pt;
+    line-height: 1.2;
+    font-family: Arial, sans-serif;
   }
   
-  h1 { font-size: 18pt; margin-bottom: 10pt; }
-  h2 { font-size: 16pt; margin-bottom: 8pt; }
-  h3 { font-size: 14pt; margin-bottom: 6pt; }
+  /* Compact headers */
+  h1 { 
+    font-size: 14pt; 
+    margin: 0 0 8pt 0; 
+    page-break-inside: avoid;
+  }
+  h2 { 
+    font-size: 12pt; 
+    margin: 0 0 6pt 0; 
+    page-break-inside: avoid;
+  }
+  h3 { 
+    font-size: 10pt; 
+    margin: 0 0 4pt 0; 
+    page-break-inside: avoid;
+  }
   
-  .grid {
-    display: table;
+  /* Compact table styling */
+  table {
     width: 100%;
+    border-collapse: collapse;
+    margin: 6pt 0;
+    page-break-inside: avoid;
+    font-size: 8pt;
   }
   
-  .grid > div {
-    display: table-cell;
-    width: 50%;
-    padding: 10pt;
+  table th,
+  table td {
+    padding: 4pt 6pt;
+    border: 1px solid #333;
     vertical-align: top;
+    line-height: 1.1;
   }
   
-  /* Force page breaks */
-  .page-break {
-    page-break-before: always;
+  table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    text-align: center;
   }
   
-  /* Remove shadows and unnecessary styling */
+  /* Prevent page breaks within content blocks */
+  .print-section {
+    page-break-inside: avoid;
+    margin: 6pt 0;
+  }
+  
+  .print-info-box {
+    border: 1px solid #333;
+    padding: 6pt;
+    margin: 4pt 0;
+    page-break-inside: avoid;
+    font-size: 8pt;
+  }
+  
+  /* Remove all shadows, backgrounds, and colors */
   * {
     box-shadow: none !important;
     text-shadow: none !important;
+    background: transparent !important;
     color: black !important;
   }
   
-  /* Force all text colors to black for printing */
-  .text-primary,
-  .text-calculator-success,
-  .text-calculator-warning,
-  .text-calculator-info,
-  .text-secondary-foreground,
-  .text-slate-700,
-  .text-foreground {
-    color: black !important;
+  /* Compact spacing */
+  .print-header {
+    text-align: center;
+    margin-bottom: 8pt;
+    page-break-inside: avoid;
+  }
+  
+  .print-tenant-info {
+    margin: 4pt 0;
+    font-size: 8pt;
+    line-height: 1.1;
+  }
+  
+  /* Force compact table layout */
+  .print-table {
+    font-size: 7pt;
+    line-height: 1;
+  }
+  
+  .print-table th {
+    padding: 3pt;
+    font-size: 8pt;
+  }
+  
+  .print-table td {
+    padding: 3pt;
+  }
+  
+  /* Amount styling in print */
+  .print-amount {
+    font-weight: bold;
+    font-size: 9pt;
+  }
+  
+  .print-calculation {
+    font-size: 7pt;
+    font-style: italic;
   }
 }
