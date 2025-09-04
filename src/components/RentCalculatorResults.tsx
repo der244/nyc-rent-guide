@@ -107,12 +107,13 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
     }
   };
 
-  const copyLeaseAmount = async (amount: number, leaseType: string) => {
+  const copyLeaseAmount = async (amount: number | string, leaseType: string) => {
     try {
-      await navigator.clipboard.writeText(formatCurrency(amount));
+      const textToCopy = typeof amount === 'number' ? formatCurrency(amount) : amount.toString();
+      await navigator.clipboard.writeText(textToCopy);
       toast({
         title: "Amount copied",
-        description: `${leaseType} lease amount ${formatCurrency(amount)} copied to clipboard`,
+        description: `${leaseType} ${typeof amount === 'number' ? formatCurrency(amount) : amount} copied to clipboard`,
       });
     } catch (err) {
       toast({
@@ -337,28 +338,60 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
               <Table className="w-full table-fixed">
                 <TableHeader>
                   <TableRow className="bg-muted/50">
-                    <TableHead className="font-semibold w-[25%] text-xs sm:text-sm">Current Rent</TableHead>
-                    <TableHead className="text-center font-semibold text-xs sm:text-sm w-[37.5%]">1-Year Lease</TableHead>
-                    <TableHead className="text-center font-semibold text-xs sm:text-sm w-[37.5%]">2-Year Lease</TableHead>
+                    <TableHead className="font-semibold w-[25%] text-sm md:text-base">Current Rent</TableHead>
+                    <TableHead className="text-center font-semibold text-sm md:text-base w-[37.5%]">1-Year Lease</TableHead>
+                    <TableHead className="text-center font-semibold text-sm md:text-base w-[37.5%]">2-Year Lease</TableHead>
                   </TableRow>
                   <TableRow className="bg-muted/30">
-                    <TableHead className="text-muted-foreground text-xs">Starting Amount</TableHead>
-                    <TableHead className="text-center text-muted-foreground text-xs px-1">
+                    <TableHead className="text-muted-foreground text-sm md:text-base">Starting Amount</TableHead>
+                    <TableHead className="text-center text-muted-foreground text-sm md:text-base px-1">
                       <span className="hidden sm:inline">New Amount | % Increase | $ Increase</span>
                       <span className="sm:hidden">New | % | $</span>
                     </TableHead>
-                    <TableHead className="text-center text-muted-foreground text-xs px-1">
+                    <TableHead className="text-center text-muted-foreground text-sm md:text-base px-1">
                       <span className="hidden sm:inline">New Amount | % Increase | $ Increase</span>
                       <span className="sm:hidden">New | % | $</span>
                     </TableHead>
                   </TableRow>
                   <TableRow className="bg-muted/20">
-                    <TableHead className="text-muted-foreground text-xs">Lease End Date</TableHead>
-                    <TableHead className="text-center text-muted-foreground text-xs px-1">
-                      {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
+                    <TableHead className="text-muted-foreground text-sm md:text-base">Lease End Date</TableHead>
+                    <TableHead className="text-center text-muted-foreground text-sm md:text-base px-1">
+                      <div className="flex flex-col items-center gap-1">
+                        <div>
+                          {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                          onClick={() => copyLeaseAmount(
+                            new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" }),
+                            '1-year lease end date'
+                          )}
+                          title="Copy lease end date"
+                        >
+                          <Copy className="h-2.5 w-2.5" />
+                        </Button>
+                      </div>
                     </TableHead>
-                    <TableHead className="text-center text-muted-foreground text-xs px-1">
-                      {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
+                    <TableHead className="text-center text-muted-foreground text-sm md:text-base px-1">
+                      <div className="flex flex-col items-center gap-1">
+                        <div>
+                          {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                          onClick={() => copyLeaseAmount(
+                            new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" }),
+                            '2-year lease end date'
+                          )}
+                          title="Copy lease end date"
+                        >
+                          <Copy className="h-2.5 w-2.5" />
+                        </Button>
+                      </div>
                     </TableHead>
                   </TableRow>
                 </TableHeader>
