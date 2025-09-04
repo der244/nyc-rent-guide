@@ -175,5 +175,17 @@ All colors MUST be HSL.
   * {
     box-shadow: none !important;
     text-shadow: none !important;
+    color: black !important;
+  }
+  
+  /* Force all text colors to black for printing */
+  .text-primary,
+  .text-calculator-success,
+  .text-calculator-warning,
+  .text-calculator-info,
+  .text-secondary-foreground,
+  .text-slate-700,
+  .text-foreground {
+    color: black !important;
   }
 }
