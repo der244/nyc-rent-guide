@@ -125,6 +125,12 @@ All colors MUST be HSL.
 
 /* Print-friendly styles */
 @media print {
+  /* STRICT PAGE CONTROL */
+  @page {
+    margin: 0.5in;
+    size: letter;
+  }
+  
   /* CRITICAL HEIGHT FIX - Prevent extra pages */
   html, body {
     height: auto !important;
@@ -137,25 +143,55 @@ All colors MUST be HSL.
   /* BOX SIZING FIX */
   * {
     box-sizing: border-box !important;
-    page-break-after: auto !important;
-    page-break-before: auto !important;
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
+    page-break-inside: avoid !important;
   }
 
-  /* Hide everything except the print-only content */
+  /* DISPLAY APPROACH - Hide everything except print-only content */
   body * {
-    visibility: hidden;
+    display: none !important;
   }
   
-  .print-only, .print-only * {
-    visibility: visible;
-  }
-  
-  /* POSITIONING FIX - Remove absolute positioning */
   .print-only {
+    display: block !important;
     position: static !important;
     left: auto !important;
     top: auto !important;
-    width: 100%;
+    width: 100% !important;
+  }
+  
+  .print-only * {
+    display: block !important;
+  }
+  
+  /* Specific display rules for table elements */
+  .print-only table {
+    display: table !important;
+  }
+  
+  .print-only thead {
+    display: table-header-group !important;
+  }
+  
+  .print-only tbody {
+    display: table-row-group !important;
+  }
+  
+  .print-only tr {
+    display: table-row !important;
+  }
+  
+  .print-only td,
+  .print-only th {
+    display: table-cell !important;
+  }
+  
+  /* Inline elements */
+  .print-only span,
+  .print-only strong,
+  .print-only em {
+    display: inline !important;
   }
   
   /* General print formatting - PRESERVE EXISTING STYLES */
