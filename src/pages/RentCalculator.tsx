@@ -67,30 +67,30 @@ export default function RentCalculator() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20">
-      {/* Logo Header */}
-      <div className="bg-white py-8 sm:py-12 border-b border-border/20">
-        <div className="container mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex justify-center items-center">
-            <img 
-              src="/lovable-uploads/9e2195e0-6e83-40de-9b1b-aa6ee8ef1e34.png" 
-              alt="NYC Landlords & Managers" 
-              className="h-20 sm:h-28 md:h-32 lg:h-36 w-auto object-contain"
-            />
-          </div>
-        </div>
-      </div>
-
       {/* Header */}
       <header className="bg-gradient-to-r from-calculator-header to-calculator-header/90 text-white">
         <div className="container mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <Building2 className="h-6 w-6 sm:h-8 sm:w-8" />
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold leading-tight">NYC Stabilized Rent Calculator</h1>
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex-1">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <Building2 className="h-6 w-6 sm:h-8 sm:w-8" />
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold leading-tight">NYC Stabilized Rent Calculator</h1>
+              </div>
+              <p className="text-base sm:text-lg lg:text-xl text-white/90 max-w-3xl leading-relaxed">
+                Calculate rent-stabilized renewal increases for NYC apartments based on official 
+                Rent Guidelines Board (RGB) orders from the last 10 years.
+              </p>
+            </div>
+            <div className="flex-shrink-0">
+              <div className="bg-white rounded-full p-2 shadow-lg">
+                <img 
+                  src="/lovable-uploads/9e2195e0-6e83-40de-9b1b-aa6ee8ef1e34.png" 
+                  alt="NYC Landlords & Managers" 
+                  className="h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 object-contain rounded-full"
+                />
+              </div>
+            </div>
           </div>
-          <p className="text-base sm:text-lg lg:text-xl text-white/90 max-w-3xl leading-relaxed">
-            Calculate rent-stabilized renewal increases for NYC apartments based on official 
-            Rent Guidelines Board (RGB) orders from the last 10 years.
-          </p>
         </div>
       </header>
 
