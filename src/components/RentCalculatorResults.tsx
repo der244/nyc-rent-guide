@@ -144,10 +144,14 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
 
   const copyRule = async (rule: string, leaseType: string) => {
     try {
-      await navigator.clipboard.writeText(rule);
+      // Extract just the percentage from the rule (e.g., "3%" from "3% increase")
+      const percentageMatch = rule.match(/(\d+(?:\.\d+)?%)/);
+      const percentageValue = percentageMatch ? percentageMatch[1] : rule;
+      
+      await navigator.clipboard.writeText(percentageValue);
       toast({
-        title: "Rule copied",
-        description: `${leaseType} rule "${rule}" copied to clipboard`,
+        title: "Rate copied",
+        description: `${leaseType} rate "${percentageValue}" copied to clipboard`,
       });
     } catch (err) {
       toast({
@@ -234,7 +238,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-base font-medium">
-                  <span className="font-semibold">1-Year:</span> {scenarios.oneYear.appliedRule}
+                  <span className="font-semibold">1-Year:</span> Order #{scenarios.orderNumber}, {scenarios.oneYear.appliedRule}
                 </span>
                 <Button
                   size="sm"
@@ -247,7 +251,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-base font-medium">
-                  <span className="font-semibold">2-Year:</span> {scenarios.twoYear.appliedRule}
+                  <span className="font-semibold">2-Year:</span> Order #{scenarios.orderNumber}, {scenarios.twoYear.appliedRule}
                 </span>
                 <Button
                   size="sm"
