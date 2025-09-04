@@ -125,6 +125,22 @@ All colors MUST be HSL.
 
 /* Print-friendly styles */
 @media print {
+  /* CRITICAL HEIGHT FIX - Prevent extra pages */
+  html, body {
+    height: auto !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+  
+  /* BOX SIZING FIX */
+  * {
+    box-sizing: border-box !important;
+    page-break-after: auto !important;
+    page-break-before: auto !important;
+  }
+
   /* Hide everything except the print-only content */
   body * {
     visibility: hidden;
@@ -134,17 +150,17 @@ All colors MUST be HSL.
     visibility: visible;
   }
   
+  /* POSITIONING FIX - Remove absolute positioning */
   .print-only {
-    position: absolute;
-    left: 0;
-    top: 0;
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
     width: 100%;
   }
   
-  /* General print formatting */
+  /* General print formatting - PRESERVE EXISTING STYLES */
   body {
     @apply bg-white text-black;
-    margin: 0;
     padding: 20px;
     font-size: 12pt;
     line-height: 1.4;
@@ -166,9 +182,9 @@ All colors MUST be HSL.
     vertical-align: top;
   }
   
-  /* Force page breaks */
+  /* REMOVE PAGE BREAKS - This was causing blank pages */
   .page-break {
-    page-break-before: always;
+    page-break-before: auto !important;
   }
   
   /* Remove shadows and unnecessary styling */
