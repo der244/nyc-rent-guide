@@ -123,89 +123,28 @@ All colors MUST be HSL.
   }
 }
 
-/* CORRECTED Print-friendly styles */
+/* Print-friendly styles */
 @media print {
-  /* STRICT PAGE CONTROL */
-  @page {
-    margin: 0.5in;
-    size: letter;
-  }
-  
-  /* CRITICAL HEIGHT FIX - Prevent extra pages */
-  html, body {
-    height: auto !important;
-    min-height: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-  }
-  
-  /* BOX SIZING FIX */
-  * {
-    box-sizing: border-box !important;
-    page-break-after: avoid !important;
-    page-break-before: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-  /* GO BACK TO VISIBILITY METHOD - More reliable for your case */
+  /* Hide everything except the print-only content */
   body * {
-    visibility: hidden !important;
+    visibility: hidden;
   }
   
-  /* Show only print content with higher specificity */
-  body .print-only,
-  body .print-only * {
-    visibility: visible !important;
-    display: block !important;
+  .print-only, .print-only * {
+    visibility: visible;
   }
   
-  /* Specific display rules for table elements */
-  body .print-only table {
-    display: table !important;
-    visibility: visible !important;
+  .print-only {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
   }
   
-  body .print-only thead {
-    display: table-header-group !important;
-    visibility: visible !important;
-  }
-  
-  body .print-only tbody {
-    display: table-row-group !important;
-    visibility: visible !important;
-  }
-  
-  body .print-only tr {
-    display: table-row !important;
-    visibility: visible !important;
-  }
-  
-  body .print-only td,
-  body .print-only th {
-    display: table-cell !important;
-    visibility: visible !important;
-  }
-  
-  /* Inline elements */
-  body .print-only span,
-  body .print-only strong,
-  body .print-only em {
-    display: inline !important;
-    visibility: visible !important;
-  }
-  
-  /* Position fix */
-  body .print-only {
-    position: static !important;
-    left: auto !important;
-    top: auto !important;
-    width: 100% !important;
-  }
-  
-  /* General print formatting - PRESERVE EXISTING STYLES */
+  /* General print formatting */
   body {
     @apply bg-white text-black;
+    margin: 0;
     padding: 20px;
     font-size: 12pt;
     line-height: 1.4;
@@ -227,9 +166,9 @@ All colors MUST be HSL.
     vertical-align: top;
   }
   
-  /* REMOVE PAGE BREAKS - This was causing blank pages */
+  /* Force page breaks */
   .page-break {
-    page-break-before: auto !important;
+    page-break-before: always;
   }
   
   /* Remove shadows and unnecessary styling */
