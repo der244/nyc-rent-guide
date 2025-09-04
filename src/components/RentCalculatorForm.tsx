@@ -25,6 +25,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
   const [preferentialRent, setPreferentialRent] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [unit, setUnit] = useState<string>("");
+  const [tenantName, setTenantName] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showSplash, setShowSplash] = useState<boolean>(false);
   const [showTenantInfo, setShowTenantInfo] = useState<boolean>(false);
@@ -86,6 +87,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
           preferentialRent: prefAmount,
           address: address.trim() || undefined,
           unit: unit.trim() || undefined,
+          tenantName: tenantName.trim() || undefined,
         });
       }, 300);
     } else {
@@ -429,6 +431,23 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
         {/* Tenant Info Section - Conditionally Rendered */}
         {showTenantInfo && (
           <>
+            {/* Tenant Name (Optional) */}
+            <div className="space-y-3">
+              <Label htmlFor="tenant-name" className="text-lg font-medium">
+                Tenant Name <span className="text-muted-foreground font-normal">(Optional)</span>
+              </Label>
+              <Input
+                id="tenant-name"
+                value={tenantName}
+                onChange={(e) => setTenantName(e.target.value)}
+                placeholder="John Smith"
+                className="w-full text-lg"
+              />
+              <p className="text-sm text-muted-foreground">
+                Include tenant name for reference in printed calculations
+              </p>
+            </div>
+
             {/* Address (Optional) */}
             <div className="space-y-3">
               <Label htmlFor="address" className="text-lg font-medium">

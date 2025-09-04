@@ -16,6 +16,7 @@ interface MobileRentResultsProps {
     preferentialRent?: number;
     address?: string;
     unit?: string;
+    tenantName?: string;
   };
   onCopyAmount: (amount: number | string, leaseType: string) => void;
 }

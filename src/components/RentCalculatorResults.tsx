@@ -19,6 +19,7 @@ interface RentCalculatorResultsProps {
     preferentialRent?: number;
     address?: string;
     unit?: string;
+    tenantName?: string;
   };
 }
 export default function RentCalculatorResults({
@@ -59,9 +60,9 @@ export default function RentCalculatorResults({
       }
       return 'N/A';
     };
-    const readableText = `NYC RENT STABILIZED RENEWAL CALCULATION
+const readableText = `NYC RENT STABILIZED RENEWAL CALCULATION
 RGB Order #${scenarios.orderNumber}
-${inputs.address ? `\nPROPERTY: ${inputs.address}` : ''}${inputs.unit ? `\nUNIT: ${inputs.unit}` : ''}
+${inputs.tenantName ? `\nTENANT: ${inputs.tenantName}` : ''}${inputs.address ? `\nPROPERTY: ${inputs.address}` : ''}${inputs.unit ? `\nUNIT: ${inputs.unit}` : ''}
 
 CURRENT RENT: ${formatCurrency(inputs.currentRent)}${inputs.preferentialRent ? ` (Tenant Pays: ${formatCurrency(inputs.preferentialRent)})` : ''}
 LEASE START: ${inputs.leaseStartDate.toLocaleDateString('en-US', {
@@ -121,6 +122,9 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
         <div className="text-center mb-6">
           <h1 className="text-2xl font-bold">NYC Rent Stabilized Renewal Calculation</h1>
           <h2 className="text-lg text-gray-700">RGB Order #{scenarios.orderNumber}</h2>
+          {inputs.tenantName && <p className="text-sm font-medium mt-2">
+              <strong>Tenant:</strong> {inputs.tenantName}
+            </p>}
           {inputs.address && <p className="text-sm font-medium mt-2">
               <strong>Property:</strong> {inputs.address}
             </p>}
@@ -248,7 +252,8 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />
                   RGB Order #{scenarios.orderNumber} - Renewal Calculation
                 </CardTitle>
-                {(inputs.address || inputs.unit) && <div className="mt-2 text-sm text-white/90 space-y-1">
+                {(inputs.tenantName || inputs.address || inputs.unit) && <div className="mt-2 text-sm text-white/90 space-y-1">
+                    {inputs.tenantName && <div>👤 {inputs.tenantName}</div>}
                     {inputs.address && <div>📍 {inputs.address}</div>}
                     {inputs.unit && <div>🏠 Unit {inputs.unit}</div>}
                   </div>}
