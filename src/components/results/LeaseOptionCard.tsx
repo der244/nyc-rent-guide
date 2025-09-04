@@ -1,7 +1,6 @@
 import React from 'react';
 import { Clipboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { CalculationResult } from '@/types/rgb';
 import { formatCurrency, formatPercent } from '@/utils/rentCalculator';
 
@@ -24,71 +23,54 @@ export default function LeaseOptionCard({
   const finalRent = scenario.newLegalRent;
   const finalTenantPay = scenario.preferentialResult?.newTenantPay;
 
+  // Always show as # / # format, using the same number twice if only one increase
+  const legalRentDisplay = hasMultipleIncreases ? 
+    `${formatCurrency(scenario.increases[0].newRent)} / ${formatCurrency(finalRent)}` :
+    `${formatCurrency(finalRent)} / ${formatCurrency(finalRent)}`;
+
+  const tenantPayDisplay = preferentialRent && finalTenantPay ? (
+    hasMultipleIncreases && scenario.preferentialResult?.year1Amount ? 
+      `${formatCurrency(scenario.preferentialResult.year1Amount)} / ${formatCurrency(finalTenantPay)}` :
+      `${formatCurrency(finalTenantPay)} / ${formatCurrency(finalTenantPay)}`
+  ) : null;
+
   return (
     <div className="bg-gradient-to-br from-calculator-success/5 to-calculator-primary/5 rounded-lg p-4 sm:p-6 border border-calculator-success/20 min-h-[120px] flex flex-col justify-center">
-      <div className="text-center mb-4">
+      <div className="text-center">
         <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-calculator-success mb-2">
-          {hasMultipleIncreases ? 
-            `${formatCurrency(scenario.increases[0].newRent)} / ${formatCurrency(finalRent)}` :
-            formatCurrency(finalRent)
-          }
+          {legalRentDisplay}
         </div>
-        <div className="text-sm sm:text-base text-muted-foreground mb-3">
-          {hasMultipleIncreases ? 
-            `${formatPercent(scenario.increases[0].percentIncrease)} / ${formatPercent(scenario.increases[1].percentIncrease)} | ${formatCurrency(scenario.increases[0].dollarIncrease)} / ${formatCurrency(scenario.increases[1].dollarIncrease)}` :
-            `${formatPercent(scenario.increases[0].percentIncrease)} | ${formatCurrency(scenario.increases[0].dollarIncrease)}`
-          }
+        <div className="flex justify-center mb-3">
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => onCopyAmount(finalRent, `${title} Legal Rent`)}
+            className="p-1 h-8 w-8"
+          >
+            <Clipboard className="h-4 w-4" />
+          </Button>
         </div>
         
-        {preferentialRent && finalTenantPay && (
+        {tenantPayDisplay && (
           <>
             <div className="text-xl sm:text-2xl font-bold text-calculator-primary mb-2">
-              {hasMultipleIncreases && scenario.preferentialResult?.year1Amount ? 
-                `${formatCurrency(scenario.preferentialResult.year1Amount)} / ${formatCurrency(finalTenantPay)}` :
-                formatCurrency(finalTenantPay)
-              }
+              {tenantPayDisplay}
             </div>
-            <div className="text-sm text-muted-foreground mb-3">
+            <div className="text-sm text-muted-foreground mb-2">
               Tenant Pays (Preferential)
+            </div>
+            <div className="flex justify-center mb-3">
+              <Button
+                size="sm" 
+                variant="ghost"
+                onClick={() => onCopyAmount(finalTenantPay, `${title} Tenant Pay`)}
+                className="p-1 h-8 w-8"
+              >
+                <Clipboard className="h-4 w-4" />
+              </Button>
             </div>
           </>
         )}
-
-        <div className="flex flex-wrap justify-center gap-2 mb-4">
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={() => onCopyAmount(finalRent, `${title} Legal Rent`)}
-            className="text-xs"
-          >
-            <Clipboard className="h-3 w-3 mr-1" />
-            Legal: {formatCurrency(finalRent)}
-          </Button>
-          
-          {preferentialRent && finalTenantPay && (
-            <Button
-              size="sm" 
-              variant="outline"
-              onClick={() => onCopyAmount(finalTenantPay, `${title} Tenant Pay`)}
-              className="text-xs"
-            >
-              <Clipboard className="h-3 w-3 mr-1" />
-              Tenant: {formatCurrency(finalTenantPay)}
-            </Button>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <Badge variant="secondary" className="text-xs px-2 py-1">
-            Starts: {scenario.increases[0].period}
-          </Badge>
-          
-          {hasMultipleIncreases && (
-            <Badge variant="secondary" className="text-xs px-2 py-1 ml-2">
-              Then: {scenario.increases[1].period}
-            </Badge>
-          )}
-        </div>
       </div>
     </div>
   );
