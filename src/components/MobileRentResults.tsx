@@ -62,7 +62,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               <div className="text-xl font-semibold text-calculator-info">
                 {formatCurrency(inputs.preferentialRent)}
               </div>
-              <div className="text-xs md:text-sm text-muted-foreground">Preferential Rent (Tenant Pays)</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Tenant Currently Pays (Preferential)</div>
             </div>
           )}
         </CardContent>
