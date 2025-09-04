@@ -44,6 +44,50 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
 
   return (
     <div className="block md:hidden space-y-4">
+      {/* Lease End Dates Section */}
+      <Card className="shadow-sm">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg text-center">Lease End Dates</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-2">
+              <div className="text-lg font-semibold text-foreground">
+                {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                onClick={() => onCopyAmount(new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" }), '1-year lease end date')}
+                title="Copy 1-year lease end date"
+              >
+                <Copy className="h-3 w-3" />
+              </Button>
+            </div>
+            <div className="text-xs md:text-sm text-muted-foreground">1-Year Lease End</div>
+          </div>
+          
+          <div className="text-center pt-2 border-t">
+            <div className="flex items-center justify-center gap-2">
+              <div className="text-lg font-semibold text-foreground">
+                {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                onClick={() => onCopyAmount(new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" }), '2-year lease end date')}
+                title="Copy 2-year lease end date"
+              >
+                <Copy className="h-3 w-3" />
+              </Button>
+            </div>
+            <div className="text-xs md:text-sm text-muted-foreground">2-Year Lease End</div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Current Rent Section */}
       <Card className="shadow-sm">
         <CardHeader className="pb-3">
@@ -94,9 +138,6 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
       <Card className="shadow-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg text-center">1-Year Lease Option</CardTitle>
-          <div className="text-xs md:text-sm text-center text-muted-foreground py-2">
-            Lease End: {new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
-          </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Legal Rent */}
@@ -456,9 +497,6 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
       <Card className="shadow-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg text-center">2-Year Lease Option</CardTitle>
-          <div className="text-xs md:text-sm text-center text-muted-foreground py-2">
-            Lease End: {new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })}
-          </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Legal Rent */}
