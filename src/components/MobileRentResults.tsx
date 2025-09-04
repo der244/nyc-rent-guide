@@ -17,7 +17,7 @@ interface MobileRentResultsProps {
     address?: string;
     unit?: string;
   };
-  onCopyAmount: (amount: number, leaseType: string) => void;
+  onCopyAmount: (amount: number | string, leaseType: string) => void;
 }
 
 export default function MobileRentResults({ result, inputs, onCopyAmount }: MobileRentResultsProps) {
@@ -202,8 +202,83 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
 
           {/* Applied Rule */}
           <div className="text-center pt-3 border-t">
-            <div className="text-xs md:text-sm font-medium text-muted-foreground">Applied Rule</div>
-            <div className="text-xs md:text-sm font-semibold mt-1">{getAppliedRule(oneYearGuideline)}</div>
+            <div className="text-xs md:text-sm font-medium text-muted-foreground mb-2">Applied Rule</div>
+            <div className="inline-flex flex-wrap items-center justify-center gap-2">
+              {(() => {
+                const rule = oneYearGuideline?.rule;
+                if (!rule) return <span className="text-xs md:text-sm font-semibold">N/A</span>;
+                
+                if (rule.type === 'flat') {
+                  return (
+                    <span className="inline-flex items-center gap-1">
+                      <span className="text-xs md:text-sm font-semibold">{rule.pct}%</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                        onClick={() => onCopyAmount(`${rule.pct}%`, '1-year rate')}
+                        title="Copy 1-year rate"
+                      >
+                        <Copy className="h-2.5 w-2.5" />
+                      </Button>
+                    </span>
+                  );
+                } else if (rule.type === 'split') {
+                  return (
+                    <span className="inline-flex items-center gap-1">
+                      <span className="text-xs md:text-sm font-semibold">{rule.year1_pct}%</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                        onClick={() => onCopyAmount(`${rule.year1_pct}%`, '1-year year 1 rate')}
+                        title="Copy year 1 rate"
+                      >
+                        <Copy className="h-2.5 w-2.5" />
+                      </Button>
+                      <span className="text-xs md:text-sm font-semibold">/</span>
+                      <span className="text-xs md:text-sm font-semibold">{rule.year2_pct_on_year1_rent}%</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                        onClick={() => onCopyAmount(`${rule.year2_pct_on_year1_rent}%`, '1-year year 2 rate')}
+                        title="Copy year 2 rate"
+                      >
+                        <Copy className="h-2.5 w-2.5" />
+                      </Button>
+                    </span>
+                  );
+                } else if (rule.type === 'split_by_month') {
+                  return (
+                    <span className="inline-flex items-center gap-1">
+                      <span className="text-xs md:text-sm font-semibold">{rule.first_pct}%</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                        onClick={() => onCopyAmount(`${rule.first_pct}%`, '1-year first period rate')}
+                        title="Copy first period rate"
+                      >
+                        <Copy className="h-2.5 w-2.5" />
+                      </Button>
+                      <span className="text-xs md:text-sm font-semibold">/</span>
+                      <span className="text-xs md:text-sm font-semibold">{rule.remaining_months_pct}%</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                        onClick={() => onCopyAmount(`${rule.remaining_months_pct}%`, '1-year remaining period rate')}
+                        title="Copy remaining period rate"
+                      >
+                        <Copy className="h-2.5 w-2.5" />
+                      </Button>
+                    </span>
+                  );
+                }
+                return <span className="text-xs md:text-sm font-semibold">N/A</span>;
+              })()}
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -340,8 +415,83 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
 
           {/* Applied Rule */}
           <div className="text-center pt-3 border-t">
-            <div className="text-xs md:text-sm font-medium text-muted-foreground">Applied Rule</div>
-            <div className="text-xs md:text-sm font-semibold mt-1">{getAppliedRule(twoYearGuideline)}</div>
+            <div className="text-xs md:text-sm font-medium text-muted-foreground mb-2">Applied Rule</div>
+            <div className="inline-flex flex-wrap items-center justify-center gap-2">
+              {(() => {
+                const rule = twoYearGuideline?.rule;
+                if (!rule) return <span className="text-xs md:text-sm font-semibold">N/A</span>;
+                
+                if (rule.type === 'flat') {
+                  return (
+                    <span className="inline-flex items-center gap-1">
+                      <span className="text-xs md:text-sm font-semibold">{rule.pct}%</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                        onClick={() => onCopyAmount(`${rule.pct}%`, '2-year rate')}
+                        title="Copy 2-year rate"
+                      >
+                        <Copy className="h-2.5 w-2.5" />
+                      </Button>
+                    </span>
+                  );
+                } else if (rule.type === 'split') {
+                  return (
+                    <span className="inline-flex items-center gap-1">
+                      <span className="text-xs md:text-sm font-semibold">{rule.year1_pct}%</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                        onClick={() => onCopyAmount(`${rule.year1_pct}%`, '2-year year 1 rate')}
+                        title="Copy year 1 rate"
+                      >
+                        <Copy className="h-2.5 w-2.5" />
+                      </Button>
+                      <span className="text-xs md:text-sm font-semibold">/</span>
+                      <span className="text-xs md:text-sm font-semibold">{rule.year2_pct_on_year1_rent}%</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                        onClick={() => onCopyAmount(`${rule.year2_pct_on_year1_rent}%`, '2-year year 2 rate')}
+                        title="Copy year 2 rate"
+                      >
+                        <Copy className="h-2.5 w-2.5" />
+                      </Button>
+                    </span>
+                  );
+                } else if (rule.type === 'split_by_month') {
+                  return (
+                    <span className="inline-flex items-center gap-1">
+                      <span className="text-xs md:text-sm font-semibold">{rule.first_pct}%</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                        onClick={() => onCopyAmount(`${rule.first_pct}%`, '2-year first period rate')}
+                        title="Copy first period rate"
+                      >
+                        <Copy className="h-2.5 w-2.5" />
+                      </Button>
+                      <span className="text-xs md:text-sm font-semibold">/</span>
+                      <span className="text-xs md:text-sm font-semibold">{rule.remaining_months_pct}%</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                        onClick={() => onCopyAmount(`${rule.remaining_months_pct}%`, '2-year remaining period rate')}
+                        title="Copy remaining period rate"
+                      >
+                        <Copy className="h-2.5 w-2.5" />
+                      </Button>
+                    </span>
+                  );
+                }
+                return <span className="text-xs md:text-sm font-semibold">N/A</span>;
+              })()}
+            </div>
           </div>
         </CardContent>
       </Card>
