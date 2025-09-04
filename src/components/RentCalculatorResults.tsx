@@ -1,5 +1,7 @@
 import React from 'react';
+import { Clipboard } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { CalculationResult } from '../types/rgb';
 import { formatCurrency, formatPercent, getGuideline } from '../utils/rentCalculator';
 import { useToast } from '@/hooks/use-toast';
@@ -140,6 +142,22 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
     }
   };
 
+  const copyRule = async (rule: string, leaseType: string) => {
+    try {
+      await navigator.clipboard.writeText(rule);
+      toast({
+        title: "Rule copied",
+        description: `${leaseType} rule "${rule}" copied to clipboard`,
+      });
+    } catch (err) {
+      toast({
+        title: "Copy failed",
+        description: "Unable to copy to clipboard. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const handlePrint = () => {
     const currentTitle = document.title;
     const date = new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }).replace(/\//g, '-');
@@ -212,13 +230,33 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
           </div>
 
           <div className="mt-8 p-4 bg-muted/30 rounded-lg border border-muted-foreground/20">
-            <h4 className="font-semibold text-base mb-2">Applied Rent Increase Rules</h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-              <div>
-                <span className="font-medium">1-Year:</span> {scenarios.oneYear.appliedRule}
+            <h4 className="font-semibold text-lg mb-4">Applied Rule:</h4>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-base font-medium">
+                  <span className="font-semibold">1-Year:</span> {scenarios.oneYear.appliedRule}
+                </span>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => copyRule(scenarios.oneYear.appliedRule, "1-Year")}
+                  className="ml-2"
+                >
+                  <Clipboard className="h-4 w-4" />
+                </Button>
               </div>
-              <div>
-                <span className="font-medium">2-Year:</span> {scenarios.twoYear.appliedRule}
+              <div className="flex items-center justify-between">
+                <span className="text-base font-medium">
+                  <span className="font-semibold">2-Year:</span> {scenarios.twoYear.appliedRule}
+                </span>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => copyRule(scenarios.twoYear.appliedRule, "2-Year")}
+                  className="ml-2"
+                >
+                  <Clipboard className="h-4 w-4" />
+                </Button>
               </div>
             </div>
           </div>
