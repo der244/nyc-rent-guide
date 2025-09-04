@@ -151,7 +151,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               </div>
             )}
             
-            <div className="text-xs md:text-sm text-muted-foreground mt-2">
+            <div className="text-sm md:text-base text-muted-foreground mt-2">
               {scenarios.oneYear?.increases.length === 1 
                 ? (
                   <span className="inline-flex items-center gap-1">
@@ -286,7 +286,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 </div>
               )}
               
-              <div className="text-xs md:text-sm text-muted-foreground mt-2">
+              <div className="text-sm md:text-base text-muted-foreground mt-2">
                 {scenarios.oneYear?.increases.length === 1 
                   ? (
                     <span className="inline-flex items-center gap-1">
@@ -513,7 +513,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               </div>
             )}
             
-            <div className="text-xs md:text-sm text-muted-foreground mt-2">
+            <div className="text-sm md:text-base text-muted-foreground mt-2">
               {scenarios.twoYear?.increases.length === 1 
                 ? (
                   <span className="inline-flex items-center gap-1">
@@ -648,7 +648,7 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 </div>
               )}
               
-              <div className="text-xs md:text-sm text-muted-foreground mt-2">
+              <div className="text-sm md:text-base text-muted-foreground mt-2">
                 {scenarios.twoYear?.increases.length === 1 
                   ? (
                     <span className="inline-flex items-center gap-1">

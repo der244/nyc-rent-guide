@@ -372,7 +372,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             </Button>
                           </div>}
                       </div>
-                      <div className="text-xs md:text-sm text-muted-foreground leading-tight whitespace-nowrap">
+                      <div className="text-sm md:text-base text-muted-foreground leading-tight whitespace-nowrap">
                         {scenarios.oneYear?.increases.length === 1 
                           ? (
                             <span className="inline-flex items-center gap-1">
@@ -479,7 +479,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             </Button>
                           </div>}
                       </div>
-                      <div className="text-xs md:text-sm text-muted-foreground leading-tight whitespace-nowrap">
+                      <div className="text-sm md:text-base text-muted-foreground leading-tight whitespace-nowrap">
                         {scenarios.twoYear?.increases.length === 1 
                           ? (
                             <span className="inline-flex items-center gap-1">
@@ -595,7 +595,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                               <Copy className="h-2 w-2" />
                             </Button>
                           </div>}
-                        <div className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">
+                        <div className="text-sm md:text-base text-muted-foreground whitespace-nowrap">
                           {scenarios.oneYear?.increases.length === 1 
                             ? (
                               <span className="inline-flex items-center gap-1">
@@ -700,7 +700,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                               <Copy className="h-2 w-2" />
                             </Button>
                           </div>}
-                        <div className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">
+                        <div className="text-sm md:text-base text-muted-foreground whitespace-nowrap">
                           {scenarios.twoYear?.increases.length === 1 
                             ? (
                               <span className="inline-flex items-center gap-1">
