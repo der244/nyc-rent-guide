@@ -399,21 +399,19 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   {/* Main rent calculation row */}
                   <TableRow className="border-b-2">
                     <TableCell className="font-bold text-base sm:text-lg">
-                      <div className="flex flex-col items-start">
-                        {formatCurrency(inputs.currentRent)}
-                        <div className="flex items-center gap-1 mt-1">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                            onClick={() => copyLeaseAmount(inputs.currentRent, 'current legal rent')}
-                            title="Copy current legal rent"
-                          >
-                            <Copy className="h-2 w-2" />
-                          </Button>
-                        </div>
+                      <div className="flex flex-col items-center text-center">
+                        <div>{formatCurrency(inputs.currentRent)}</div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-1"
+                          onClick={() => copyLeaseAmount(inputs.currentRent, 'current legal rent')}
+                          title="Copy current legal rent"
+                        >
+                          <Copy className="h-2 w-2" />
+                        </Button>
                       </div>
-                      <div className="text-xs md:text-sm text-muted-foreground">Legal Regulated Rent</div>
+                      <div className="text-xs md:text-sm text-muted-foreground text-center">Legal Regulated Rent</div>
                     </TableCell>
                     <TableCell className="text-center space-y-1 px-2 sm:px-4">
                       <div className="flex flex-col items-center justify-center gap-1">
@@ -549,21 +547,19 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && scenarios.twoYear?.preferentialResult && (
                     <TableRow className="bg-calculator-info/5">
                       <TableCell className="font-semibold text-calculator-info">
-                        <div className="flex flex-col items-start">
-                          {formatCurrency(inputs.preferentialRent)}
-                          <div className="flex items-center gap-1 mt-1">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                              onClick={() => copyLeaseAmount(inputs.preferentialRent!, 'current preferential rent')}
-                              title="Copy current preferential rent"
-                            >
-                              <Copy className="h-2 w-2" />
-                            </Button>
-                          </div>
+                        <div className="flex flex-col items-center text-center">
+                          <div>{formatCurrency(inputs.preferentialRent)}</div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-1"
+                            onClick={() => copyLeaseAmount(inputs.preferentialRent!, 'current preferential rent')}
+                            title="Copy current preferential rent"
+                          >
+                            <Copy className="h-2 w-2" />
+                          </Button>
                         </div>
-                        <div className="text-xs md:text-sm text-muted-foreground">Preferential Rent (Tenant Pays)</div>
+                        <div className="text-xs md:text-sm text-muted-foreground text-center">Preferential Rent (Tenant Pays)</div>
                       </TableCell>
                       <TableCell className="text-center space-y-1 px-2 sm:px-4">
                         {scenarios.oneYear?.increases.length === 2 ? (
