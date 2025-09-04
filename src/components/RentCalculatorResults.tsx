@@ -37,69 +37,7 @@ export default function RentCalculatorResults({
     effectivePeriod: `${getGuideline(inputs.leaseStartDate, 1)?.order.effective_from} to ${getGuideline(inputs.leaseStartDate, 1)?.order.effective_to}` || '',
     orderNumber: result.oneYear.order
   };
-  const copyToClipboard = async () => {
-    const oneYearGuideline = getGuideline(inputs.leaseStartDate, 1);
-    const twoYearGuideline = getGuideline(inputs.leaseStartDate, 2);
-    const getOneYearDetails = () => {
-      if (!scenarios.oneYear) return 'N/A';
-      const increases = scenarios.oneYear.increases;
-      if (increases.length === 1) {
-        return `${formatPercent(increases[0].percentIncrease)} → ${formatCurrency(scenarios.oneYear.newLegalRent)}`;
-      } else if (increases.length === 2) {
-        return `${formatPercent(increases[0].percentIncrease)} + ${formatPercent(increases[1].percentIncrease)} → ${formatCurrency(scenarios.oneYear.newLegalRent)}`;
-      }
-      return 'N/A';
-    };
-    const getTwoYearDetails = () => {
-      if (!scenarios.twoYear) return 'N/A';
-      const increases = scenarios.twoYear.increases;
-      if (increases.length === 1) {
-        return `${formatPercent(increases[0].percentIncrease)} → ${formatCurrency(scenarios.twoYear.newLegalRent)}`;
-      } else if (increases.length === 2) {
-        return `Year 1: ${formatPercent(increases[0].percentIncrease)} → ${formatCurrency(increases[0].newRent)} | Year 2: ${formatPercent(increases[1].percentIncrease)} → ${formatCurrency(increases[1].newRent)}`;
-      }
-      return 'N/A';
-    };
-const readableText = `NYC RENT STABILIZED RENEWAL CALCULATION
-RGB Order #${scenarios.orderNumber}
-${inputs.tenantName ? `\nTENANT: ${inputs.tenantName}` : ''}${inputs.address ? `\nPROPERTY: ${inputs.address}` : ''}${inputs.unit ? `\nUNIT: ${inputs.unit}` : ''}
-
-CURRENT RENT: ${formatCurrency(inputs.currentRent)}${inputs.preferentialRent ? ` (Tenant Pays: ${formatCurrency(inputs.preferentialRent)})` : ''}
-LEASE START: ${inputs.leaseStartDate.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    })}
-
-1-YEAR LEASE:
-• Legal Rent: ${getOneYearDetails()}${inputs.preferentialRent && scenarios.oneYear?.preferentialResult ? `\n• Tenant Pays: ${formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}` : ''}
-
-2-YEAR LEASE:
-• Legal Rent: ${getTwoYearDetails()}${inputs.preferentialRent && scenarios.twoYear?.preferentialResult ? `\n• Tenant Pays: ${formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}` : ''}
-
-APPLIED RATES:
-• 1-Year: ${oneYearGuideline?.rule.type === 'flat' ? `${oneYearGuideline.rule.pct}%` : oneYearGuideline?.rule.type === 'split' ? `${oneYearGuideline.rule.year1_pct}% / ${oneYearGuideline.rule.year2_pct_on_year1_rent}%` : oneYearGuideline?.rule.type === 'split_by_month' ? `${oneYearGuideline.rule.first_pct}% / ${oneYearGuideline.rule.remaining_months_pct}%` : 'N/A'}
-• 2-Year: ${twoYearGuideline?.rule.type === 'flat' ? `${twoYearGuideline.rule.pct}%` : twoYearGuideline?.rule.type === 'split' ? `${twoYearGuideline.rule.year1_pct}% / ${twoYearGuideline.rule.year2_pct_on_year1_rent}%` : twoYearGuideline?.rule.type === 'split_by_month' ? `${twoYearGuideline.rule.first_pct}% / ${twoYearGuideline.rule.remaining_months_pct}%` : 'N/A'}
-
-Calculated: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit'
-    })}
-NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
-    try {
-      await navigator.clipboard.writeText(readableText);
-      toast({
-        title: "Results copied to clipboard",
-        description: "Clear calculation summary with all lease options and rates copied."
-      });
-    } catch (err) {
-      toast({
-        title: "Copy failed",
-        description: "Unable to copy to clipboard. Please try again.",
-        variant: "destructive"
-      });
-    }
-  };
+  
   const copyLeaseAmount = async (amount: number | string, leaseType: string) => {
     try {
       const textToCopy = typeof amount === 'number' ? formatCurrency(amount) : amount.toString();
@@ -259,10 +197,6 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   </div>}
               </div>
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                <Button onClick={copyToClipboard} variant="outline" size="sm" className="bg-white/20 text-white border-white/30 hover:bg-white/30 text-xs sm:text-sm">
-                  <Copy className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                  Copy Results
-                </Button>
                 <Button onClick={() => {
               // Set document title for meaningful filename
               const currentTitle = document.title;
