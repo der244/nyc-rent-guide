@@ -193,86 +193,106 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               </div>
             )}
             
-            <div className="text-sm md:text-base text-foreground mt-2">
+            <div className="text-sm text-foreground mt-3 space-y-2">
               {scenarios.oneYear?.increases.length === 1 
                 ? (
-                  <span className="inline-flex items-center gap-1">
-                    {formatPercent(scenarios.oneYear.increases[0].percentIncrease)}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                      onClick={() => onCopyAmount(`${scenarios.oneYear.increases[0].percentIncrease}%`, '1-year percentage increase')}
-                      title="Copy percentage increase"
-                    >
-                      <Copy className="h-2.5 w-2.5" />
-                    </Button>
-                    | {formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                      onClick={() => onCopyAmount(scenarios.oneYear.increases[0].dollarIncrease, '1-year dollar increase')}
-                      title="Copy dollar increase"
-                    >
-                      <Copy className="h-2.5 w-2.5" />
-                    </Button>
-                  </span>
+                  <div className="bg-muted/30 rounded-lg p-3 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Rate:</span>
+                      <div className="flex items-center gap-1">
+                        <span className="font-medium">{formatPercent(scenarios.oneYear.increases[0].percentIncrease)}</span>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                          onClick={() => onCopyAmount(`${scenarios.oneYear.increases[0].percentIncrease}%`, '1-year percentage increase')}
+                          title="Copy rate"
+                        >
+                          <Copy className="h-2.5 w-2.5" />
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Increase:</span>
+                      <div className="flex items-center gap-1">
+                        <span className="font-medium">{formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)}</span>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                          onClick={() => onCopyAmount(scenarios.oneYear.increases[0].dollarIncrease, '1-year dollar increase')}
+                          title="Copy increase"
+                        >
+                          <Copy className="h-2.5 w-2.5" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
                 )
                 : scenarios.oneYear?.increases.length === 2
                 ? (
-                  <span className="inline-flex items-center gap-1">
-                    {formatPercent(scenarios.oneYear.increases[0].percentIncrease)}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                      onClick={() => onCopyAmount(`${scenarios.oneYear.increases[0].percentIncrease}%`, '1-year year 1 percentage increase')}
-                      title="Copy year 1 percentage increase"
-                    >
-                      <Copy className="h-2.5 w-2.5" />
-                    </Button>
-                    / {formatPercent(scenarios.oneYear.increases[1].percentIncrease)}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                      onClick={() => onCopyAmount(`${scenarios.oneYear.increases[1].percentIncrease}%`, '1-year year 2 percentage increase')}
-                      title="Copy year 2 percentage increase"
-                    >
-                      <Copy className="h-2.5 w-2.5" />
-                    </Button>
-                    | {formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                      onClick={() => onCopyAmount(scenarios.oneYear.increases[0].dollarIncrease, '1-year year 1 dollar increase')}
-                      title="Copy year 1 dollar increase"
-                    >
-                      <Copy className="h-2.5 w-2.5" />
-                    </Button>
-                    / {formatCurrency(scenarios.oneYear.increases[1].dollarIncrease)}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                      onClick={() => onCopyAmount(scenarios.oneYear.increases[1].dollarIncrease, '1-year year 2 dollar increase')}
-                      title="Copy year 2 dollar increase"
-                    >
-                      <Copy className="h-2.5 w-2.5" />
-                    </Button>
-                  </span>
+                  <div className="bg-muted/30 rounded-lg p-3">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center">
+                        <div className="text-xs text-muted-foreground mb-2">{scenarios.oneYear.increases[0].period}</div>
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-center gap-1">
+                            <span className="text-sm font-medium">{formatPercent(scenarios.oneYear.increases[0].percentIncrease)}</span>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-3 w-3 p-0"
+                              onClick={() => onCopyAmount(`${scenarios.oneYear.increases[0].percentIncrease}%`, 'year 1 rate')}
+                            >
+                              <Copy className="h-2 w-2" />
+                            </Button>
+                          </div>
+                          <div className="flex items-center justify-center gap-1">
+                            <span className="text-xs text-muted-foreground">{formatCurrency(scenarios.oneYear.increases[0].dollarIncrease)}</span>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-3 w-3 p-0"
+                              onClick={() => onCopyAmount(scenarios.oneYear.increases[0].dollarIncrease, 'year 1 increase')}
+                            >
+                              <Copy className="h-2 w-2" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-xs text-muted-foreground mb-2">{scenarios.oneYear.increases[1].period}</div>
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-center gap-1">
+                            <span className="text-sm font-medium">{formatPercent(scenarios.oneYear.increases[1].percentIncrease)}</span>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-3 w-3 p-0"
+                              onClick={() => onCopyAmount(`${scenarios.oneYear.increases[1].percentIncrease}%`, 'year 2 rate')}
+                            >
+                              <Copy className="h-2 w-2" />
+                            </Button>
+                          </div>
+                          <div className="flex items-center justify-center gap-1">
+                            <span className="text-xs text-muted-foreground">{formatCurrency(scenarios.oneYear.increases[1].dollarIncrease)}</span>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-3 w-3 p-0"
+                              onClick={() => onCopyAmount(scenarios.oneYear.increases[1].dollarIncrease, 'year 2 increase')}
+                            >
+                              <Copy className="h-2 w-2" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 )
                 : 'N/A'
               }
             </div>
-            
-            {scenarios.oneYear?.increases.length === 2 && (
-              <div className="text-xs md:text-sm text-foreground italic mt-1">
-                {scenarios.oneYear.increases[0].period} / {scenarios.oneYear.increases[1].period}
-              </div>
-            )}
           </div>
 
           {/* Preferential Rent if applicable */}
@@ -552,86 +572,106 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               </div>
             )}
             
-            <div className="text-sm md:text-base text-foreground mt-2">
+            <div className="text-sm text-foreground mt-3 space-y-2">
               {scenarios.twoYear?.increases.length === 1 
                 ? (
-                  <span className="inline-flex items-center gap-1">
-                    {formatPercent(scenarios.twoYear.increases[0].percentIncrease)}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                      onClick={() => onCopyAmount(`${scenarios.twoYear.increases[0].percentIncrease}%`, '2-year percentage increase')}
-                      title="Copy percentage increase"
-                    >
-                      <Copy className="h-2.5 w-2.5" />
-                    </Button>
-                    | {formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                      onClick={() => onCopyAmount(scenarios.twoYear.increases[0].dollarIncrease, '2-year dollar increase')}
-                      title="Copy dollar increase"
-                    >
-                      <Copy className="h-2.5 w-2.5" />
-                    </Button>
-                  </span>
+                  <div className="bg-muted/30 rounded-lg p-3 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Rate:</span>
+                      <div className="flex items-center gap-1">
+                        <span className="font-medium">{formatPercent(scenarios.twoYear.increases[0].percentIncrease)}</span>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                          onClick={() => onCopyAmount(`${scenarios.twoYear.increases[0].percentIncrease}%`, '2-year percentage increase')}
+                          title="Copy rate"
+                        >
+                          <Copy className="h-2.5 w-2.5" />
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Increase:</span>
+                      <div className="flex items-center gap-1">
+                        <span className="font-medium">{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)}</span>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                          onClick={() => onCopyAmount(scenarios.twoYear.increases[0].dollarIncrease, '2-year dollar increase')}
+                          title="Copy increase"
+                        >
+                          <Copy className="h-2.5 w-2.5" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
                 )
                 : scenarios.twoYear?.increases.length === 2
                 ? (
-                  <span className="inline-flex items-center gap-1">
-                    {formatPercent(scenarios.twoYear.increases[0].percentIncrease)}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                      onClick={() => onCopyAmount(`${scenarios.twoYear.increases[0].percentIncrease}%`, '2-year year 1 percentage increase')}
-                      title="Copy year 1 percentage increase"
-                    >
-                      <Copy className="h-2.5 w-2.5" />
-                    </Button>
-                    / {formatPercent(scenarios.twoYear.increases[1].percentIncrease)}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                      onClick={() => onCopyAmount(`${scenarios.twoYear.increases[1].percentIncrease}%`, '2-year year 2 percentage increase')}
-                      title="Copy year 2 percentage increase"
-                    >
-                      <Copy className="h-2.5 w-2.5" />
-                    </Button>
-                    | {formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                      onClick={() => onCopyAmount(scenarios.twoYear.increases[0].dollarIncrease, '2-year year 1 dollar increase')}
-                      title="Copy year 1 dollar increase"
-                    >
-                      <Copy className="h-2.5 w-2.5" />
-                    </Button>
-                    / {formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                      onClick={() => onCopyAmount(scenarios.twoYear.increases[1].dollarIncrease, '2-year year 2 dollar increase')}
-                      title="Copy year 2 dollar increase"
-                    >
-                      <Copy className="h-2.5 w-2.5" />
-                    </Button>
-                  </span>
+                  <div className="bg-muted/30 rounded-lg p-3">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center">
+                        <div className="text-xs text-muted-foreground mb-2">{scenarios.twoYear.increases[0].period}</div>
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-center gap-1">
+                            <span className="text-sm font-medium">{formatPercent(scenarios.twoYear.increases[0].percentIncrease)}</span>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-3 w-3 p-0"
+                              onClick={() => onCopyAmount(`${scenarios.twoYear.increases[0].percentIncrease}%`, '2-year year 1 rate')}
+                            >
+                              <Copy className="h-2 w-2" />
+                            </Button>
+                          </div>
+                          <div className="flex items-center justify-center gap-1">
+                            <span className="text-xs text-muted-foreground">{formatCurrency(scenarios.twoYear.increases[0].dollarIncrease)}</span>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-3 w-3 p-0"
+                              onClick={() => onCopyAmount(scenarios.twoYear.increases[0].dollarIncrease, '2-year year 1 increase')}
+                            >
+                              <Copy className="h-2 w-2" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-xs text-muted-foreground mb-2">{scenarios.twoYear.increases[1].period}</div>
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-center gap-1">
+                            <span className="text-sm font-medium">{formatPercent(scenarios.twoYear.increases[1].percentIncrease)}</span>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-3 w-3 p-0"
+                              onClick={() => onCopyAmount(`${scenarios.twoYear.increases[1].percentIncrease}%`, '2-year year 2 rate')}
+                            >
+                              <Copy className="h-2 w-2" />
+                            </Button>
+                          </div>
+                          <div className="flex items-center justify-center gap-1">
+                            <span className="text-xs text-muted-foreground">{formatCurrency(scenarios.twoYear.increases[1].dollarIncrease)}</span>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-3 w-3 p-0"
+                              onClick={() => onCopyAmount(scenarios.twoYear.increases[1].dollarIncrease, '2-year year 2 increase')}
+                            >
+                              <Copy className="h-2 w-2" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 )
-                : 'Split increase'
+                : 'N/A'
               }
             </div>
-            
-            {scenarios.twoYear?.increases.length === 2 && (
-              <div className="text-xs md:text-sm text-foreground italic mt-1">
-                {scenarios.twoYear.increases[0].period} / {scenarios.twoYear.increases[1].period}
-              </div>
-            )}
           </div>
 
           {/* Preferential Rent if applicable */}
@@ -687,86 +727,106 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 </div>
               )}
               
-              <div className="text-sm md:text-base text-slate-600 mt-2">
+              <div className="text-sm text-slate-600 mt-3 space-y-2">
                 {scenarios.twoYear?.increases.length === 1 
                   ? (
-                    <span className="inline-flex items-center gap-1">
-                      {formatPercent(scenarios.twoYear.increases[0].percentIncrease)}
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                        onClick={() => onCopyAmount(`${scenarios.twoYear.increases[0].percentIncrease}%`, '2-year preferential percentage increase')}
-                        title="Copy percentage increase"
-                      >
-                        <Copy className="h-2.5 w-2.5" />
-                      </Button>
-                      | {formatCurrency((scenarios.twoYear?.preferentialResult?.newTenantPay || 0) - (inputs.preferentialRent || 0))}
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                        onClick={() => onCopyAmount((scenarios.twoYear?.preferentialResult?.newTenantPay || 0) - (inputs.preferentialRent || 0), '2-year preferential dollar increase')}
-                        title="Copy preferential dollar increase"
-                      >
-                        <Copy className="h-2.5 w-2.5" />
-                      </Button>
-                    </span>
+                    <div className="bg-slate-100/50 rounded-lg p-3 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-500">Rate:</span>
+                        <div className="flex items-center gap-1">
+                          <span className="font-medium">{formatPercent(scenarios.twoYear.increases[0].percentIncrease)}</span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                            onClick={() => onCopyAmount(`${scenarios.twoYear.increases[0].percentIncrease}%`, '2-year preferential percentage increase')}
+                            title="Copy rate"
+                          >
+                            <Copy className="h-2.5 w-2.5" />
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-500">Increase:</span>
+                        <div className="flex items-center gap-1">
+                          <span className="font-medium">{formatCurrency((scenarios.twoYear?.preferentialResult?.newTenantPay || 0) - (inputs.preferentialRent || 0))}</span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
+                            onClick={() => onCopyAmount((scenarios.twoYear?.preferentialResult?.newTenantPay || 0) - (inputs.preferentialRent || 0), '2-year preferential dollar increase')}
+                            title="Copy increase"
+                          >
+                            <Copy className="h-2.5 w-2.5" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
                   )
                   : scenarios.twoYear?.increases.length === 2
                   ? (
-                    <span className="inline-flex items-center gap-1">
-                      {formatPercent(scenarios.twoYear.increases[0].percentIncrease)}
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                        onClick={() => onCopyAmount(`${scenarios.twoYear.increases[0].percentIncrease}%`, '2-year preferential year 1 percentage increase')}
-                        title="Copy year 1 percentage increase"
-                      >
-                        <Copy className="h-2.5 w-2.5" />
-                      </Button>
-                      / {formatPercent(scenarios.twoYear.increases[1].percentIncrease)}
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                        onClick={() => onCopyAmount(`${scenarios.twoYear.increases[1].percentIncrease}%`, '2-year preferential year 2 percentage increase')}
-                        title="Copy year 2 percentage increase"
-                      >
-                        <Copy className="h-2.5 w-2.5" />
-                      </Button>
-                      | {formatCurrency(inputs.preferentialRent! * scenarios.twoYear.increases[0].percentIncrease / 100)}
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                        onClick={() => onCopyAmount(inputs.preferentialRent! * scenarios.twoYear.increases[0].percentIncrease / 100, '2-year preferential year 1 dollar increase')}
-                        title="Copy year 1 preferential dollar increase"
-                      >
-                        <Copy className="h-2.5 w-2.5" />
-                      </Button>
-                      / {formatCurrency((scenarios.twoYear?.preferentialResult?.newTenantPay || 0) - (scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!))}
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                        onClick={() => onCopyAmount((scenarios.twoYear?.preferentialResult?.newTenantPay || 0) - (scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!), '2-year preferential year 2 dollar increase')}
-                        title="Copy year 2 preferential dollar increase"
-                      >
-                        <Copy className="h-2.5 w-2.5" />
-                      </Button>
-                    </span>
+                    <div className="bg-slate-100/50 rounded-lg p-3">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="text-center">
+                          <div className="text-xs text-slate-500 mb-2">{scenarios.twoYear.increases[0].period}</div>
+                          <div className="space-y-1">
+                            <div className="flex items-center justify-center gap-1">
+                              <span className="text-sm font-medium">{formatPercent(scenarios.twoYear.increases[0].percentIncrease)}</span>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-3 w-3 p-0"
+                                onClick={() => onCopyAmount(`${scenarios.twoYear.increases[0].percentIncrease}%`, '2-year preferential year 1 rate')}
+                              >
+                                <Copy className="h-2 w-2" />
+                              </Button>
+                            </div>
+                            <div className="flex items-center justify-center gap-1">
+                              <span className="text-xs text-slate-500">{formatCurrency(inputs.preferentialRent! * scenarios.twoYear.increases[0].percentIncrease / 100)}</span>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-3 w-3 p-0"
+                                onClick={() => onCopyAmount(inputs.preferentialRent! * scenarios.twoYear.increases[0].percentIncrease / 100, '2-year preferential year 1 increase')}
+                              >
+                                <Copy className="h-2 w-2" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-xs text-slate-500 mb-2">{scenarios.twoYear.increases[1].period}</div>
+                          <div className="space-y-1">
+                            <div className="flex items-center justify-center gap-1">
+                              <span className="text-sm font-medium">{formatPercent(scenarios.twoYear.increases[1].percentIncrease)}</span>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-3 w-3 p-0"
+                                onClick={() => onCopyAmount(`${scenarios.twoYear.increases[1].percentIncrease}%`, '2-year preferential year 2 rate')}
+                              >
+                                <Copy className="h-2 w-2" />
+                              </Button>
+                            </div>
+                            <div className="flex items-center justify-center gap-1">
+                              <span className="text-xs text-slate-500">{formatCurrency((scenarios.twoYear?.preferentialResult?.newTenantPay || 0) - (scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!))}</span>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-3 w-3 p-0"
+                                onClick={() => onCopyAmount((scenarios.twoYear?.preferentialResult?.newTenantPay || 0) - (scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!), '2-year preferential year 2 increase')}
+                              >
+                                <Copy className="h-2 w-2" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   )
                   : 'N/A'
                 }
               </div>
-              
-              {scenarios.twoYear?.increases.length === 2 && (
-                <div className="text-xs md:text-sm text-slate-600 italic mt-1">
-                  {scenarios.twoYear.increases[0].period} / {scenarios.twoYear.increases[1].period}
-                </div>
-              )}
             </div>
           )}
 
