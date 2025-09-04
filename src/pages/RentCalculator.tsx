@@ -68,13 +68,13 @@ export default function RentCalculator() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20">
       {/* Logo Header */}
-      <div className="bg-white py-6 sm:py-8 border-b border-border/20">
+      <div className="bg-white py-8 sm:py-12 border-b border-border/20">
         <div className="container mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center">
             <img 
               src="/lovable-uploads/9e2195e0-6e83-40de-9b1b-aa6ee8ef1e34.png" 
               alt="NYC Landlords & Managers" 
-              className="h-16 sm:h-20 md:h-24 w-auto object-contain"
+              className="h-20 sm:h-28 md:h-32 lg:h-36 w-auto object-contain"
             />
           </div>
         </div>
