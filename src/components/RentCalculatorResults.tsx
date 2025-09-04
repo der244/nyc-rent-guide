@@ -335,34 +335,34 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   {/* Main rent calculation row */}
                   <TableRow className="border-b-2">
                     <TableCell className="font-bold text-base sm:text-lg">
-                      <div className="flex flex-col items-center text-center">
-                        <div className="text-calculator-success">{formatCurrency(inputs.currentRent)}</div>
-                        <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-1" onClick={() => copyLeaseAmount(inputs.currentRent, 'current legal rent')} title="Copy current legal rent">
-                          <Copy className="h-2 w-2" />
-                        </Button>
-                      </div>
+        <div className="flex items-center justify-center gap-2">
+          <div className="text-calculator-success">{formatCurrency(inputs.currentRent)}</div>
+          <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(inputs.currentRent, 'current legal rent')} title="Copy current legal rent">
+            <Copy className="h-2 w-2" />
+          </Button>
+        </div>
                       <div className="text-xs md:text-sm text-muted-foreground text-center">Legal Regulated Rent</div>
                     </TableCell>
                     <TableCell className="text-center space-y-1 px-2 sm:px-4">
                       <div className="flex flex-col items-center justify-center gap-1">
                         {scenarios.oneYear?.increases.length === 2 ? <div className="flex items-center justify-center gap-2 relative">
-                            <div className="flex flex-col items-center">
-                              <div className="text-sm sm:text-lg font-bold text-calculator-success">
-                                {formatCurrency(scenarios.oneYear.increases[0].newRent)}
-                              </div>
-                              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.oneYear.increases[0].newRent, '1-year year 1')} title="Copy Year 1 amount">
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
+            <div className="flex items-center justify-center gap-2">
+              <div className="text-sm sm:text-lg font-bold text-calculator-success">
+                {formatCurrency(scenarios.oneYear.increases[0].newRent)}
+              </div>
+              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.oneYear.increases[0].newRent, '1-year year 1')} title="Copy Year 1 amount">
+                <Copy className="h-2 w-2" />
+              </Button>
+            </div>
                             <div className="text-sm sm:text-lg font-bold text-calculator-success">/</div>
-                            <div className="flex flex-col items-center">
-                              <div className="text-sm sm:text-lg font-bold text-calculator-success">
-                                {formatCurrency(scenarios.oneYear.newLegalRent)}
-                              </div>
-                              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.oneYear.newLegalRent, '1-year final')} title="Copy final amount">
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
+            <div className="flex items-center justify-center gap-2">
+              <div className="text-sm sm:text-lg font-bold text-calculator-success">
+                {formatCurrency(scenarios.oneYear.newLegalRent)}
+              </div>
+              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.oneYear.newLegalRent, '1-year final')} title="Copy final amount">
+                <Copy className="h-2 w-2" />
+              </Button>
+            </div>
                           </div> : <div className="flex flex-col items-center">
                             <div className="text-sm sm:text-lg font-bold text-calculator-success break-words">
                               {formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}
@@ -453,23 +453,23 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                     <TableCell className="text-center space-y-1 px-2 sm:px-4">
                       <div className="flex flex-col items-center justify-center gap-1">
                         {scenarios.twoYear?.increases.length === 2 ? <div className="flex items-center justify-center gap-2 relative">
-                            <div className="flex flex-col items-center">
-                              <div className="text-sm sm:text-lg font-bold text-calculator-success">
-                                {formatCurrency(scenarios.twoYear.increases[0].newRent)}
-                              </div>
-                              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.twoYear.increases[0].newRent, '2-year year 1')} title="Copy Year 1 amount">
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
+            <div className="flex items-center justify-center gap-2">
+              <div className="text-sm sm:text-lg font-bold text-calculator-success">
+                {formatCurrency(scenarios.twoYear.increases[0].newRent)}
+              </div>
+              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.twoYear.increases[0].newRent, '2-year year 1')} title="Copy Year 1 amount">
+                <Copy className="h-2 w-2" />
+              </Button>
+            </div>
                             <div className="text-sm sm:text-lg font-bold text-calculator-success">/</div>
-                            <div className="flex flex-col items-center">
-                              <div className="text-sm sm:text-lg font-bold text-calculator-success">
-                                {formatCurrency(scenarios.twoYear.newLegalRent)}
-                              </div>
-                              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.twoYear.newLegalRent, '2-year final')} title="Copy final amount">
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
+            <div className="flex items-center justify-center gap-2">
+              <div className="text-sm sm:text-lg font-bold text-calculator-success">
+                {formatCurrency(scenarios.twoYear.newLegalRent)}
+              </div>
+              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.twoYear.newLegalRent, '2-year final')} title="Copy final amount">
+                <Copy className="h-2 w-2" />
+              </Button>
+            </div>
                           </div> : <div className="flex flex-col items-center">
                             <div className="text-sm sm:text-lg font-bold text-calculator-success break-words">
                               {formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}
@@ -560,24 +560,24 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                   {/* Preferential rent row if applicable */}
                   {inputs.preferentialRent && scenarios.oneYear?.preferentialResult && scenarios.twoYear?.preferentialResult && <TableRow className="bg-calculator-info/5">
                       <TableCell className="font-semibold text-calculator-info">
-                        <div className="flex flex-col items-center text-center">
-                          <div className="text-sm sm:text-lg font-bold text-calculator-info">{formatCurrency(inputs.preferentialRent)}</div>
-                          <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-1" onClick={() => copyLeaseAmount(inputs.preferentialRent!, 'current preferential rent')} title="Copy current preferential rent">
-                            <Copy className="h-2 w-2" />
-                          </Button>
-                        </div>
+        <div className="flex items-center justify-center gap-2">
+          <div className="text-sm sm:text-lg font-bold text-calculator-info">{formatCurrency(inputs.preferentialRent)}</div>
+          <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(inputs.preferentialRent!, 'current preferential rent')} title="Copy current preferential rent">
+            <Copy className="h-2 w-2" />
+          </Button>
+        </div>
                         <div className="text-xs md:text-sm text-muted-foreground text-center">Preferential Rent (Tenant Pays)</div>
                       </TableCell>
                       <TableCell className="text-center space-y-1 px-2 sm:px-4">
                         {scenarios.oneYear?.increases.length === 2 ? <div className="flex items-center justify-center gap-2 relative">
-                            <div className="flex flex-col items-center">
-                              <div className="text-sm sm:text-lg font-bold text-calculator-info">
-                                {formatCurrency(scenarios.oneYear.increases[0].newRent === inputs.preferentialRent ? inputs.preferentialRent! : inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100))}
-                              </div>
-                              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.oneYear.increases[0].newRent === inputs.preferentialRent ? inputs.preferentialRent! : inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100), '1-year preferential year 1')} title="Copy Year 1 preferential amount">
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
+            <div className="flex items-center justify-center gap-2">
+              <div className="text-sm sm:text-lg font-bold text-calculator-info">
+                {formatCurrency(scenarios.oneYear.increases[0].newRent === inputs.preferentialRent ? inputs.preferentialRent! : inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100))}
+              </div>
+              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.oneYear.increases[0].newRent === inputs.preferentialRent ? inputs.preferentialRent! : inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100), '1-year preferential year 1')} title="Copy Year 1 preferential amount">
+                <Copy className="h-2 w-2" />
+              </Button>
+            </div>
                             <div className="text-sm sm:text-lg font-bold text-calculator-info">/</div>
                             <div className="flex flex-col items-center">
                               <div className="text-sm sm:text-lg font-bold text-calculator-info">
@@ -675,23 +675,23 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                       </TableCell>
                       <TableCell className="text-center space-y-1 px-2 sm:px-4">
                         {scenarios.twoYear?.preferentialResult && scenarios.twoYear.increases.length === 2 ? <div className="flex items-center justify-center gap-2 relative">
-                            <div className="flex flex-col items-center">
-                              <div className="text-sm sm:text-lg font-bold text-calculator-info">
-                                {formatCurrency(scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!)}
-                              </div>
-                              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!, '2-year preferential year 1')} title="Copy Year 1 preferential amount">
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
+            <div className="flex items-center justify-center gap-2">
+              <div className="text-sm sm:text-lg font-bold text-calculator-info">
+                {formatCurrency(scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!)}
+              </div>
+              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!, '2-year preferential year 1')} title="Copy Year 1 preferential amount">
+                <Copy className="h-2 w-2" />
+              </Button>
+            </div>
                             <div className="text-sm sm:text-lg font-bold text-calculator-info">/</div>
-                            <div className="flex flex-col items-center">
-                              <div className="text-sm sm:text-lg font-bold text-calculator-info">
-                                {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
-                              </div>
-                              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.twoYear.preferentialResult.newTenantPay, '2-year preferential final')} title="Copy final preferential amount">
-                                <Copy className="h-2 w-2" />
-                              </Button>
-                            </div>
+            <div className="flex items-center justify-center gap-2">
+              <div className="text-sm sm:text-lg font-bold text-calculator-info">
+                {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
+              </div>
+              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.twoYear.preferentialResult.newTenantPay, '2-year preferential final')} title="Copy final preferential amount">
+                <Copy className="h-2 w-2" />
+              </Button>
+            </div>
                           </div> : <div className="flex flex-col items-center">
                             <div className="text-sm sm:text-lg font-bold text-calculator-info">
                               {formatCurrency(scenarios.twoYear?.preferentialResult?.newTenantPay || inputs.preferentialRent!)}

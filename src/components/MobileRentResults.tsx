@@ -51,14 +51,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="text-center">
-            <div className="flex flex-col items-center">
+            <div className="flex items-center justify-center gap-2">
               <div className="text-2xl font-bold text-foreground">
                 {formatCurrency(inputs.currentRent)}
               </div>
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-2"
+                className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                 onClick={() => onCopyAmount(inputs.currentRent, 'current legal rent')}
                 title="Copy current legal rent"
               >
@@ -70,14 +70,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
           
           {inputs.preferentialRent && (
             <div className="text-center pt-2 border-t">
-              <div className="flex flex-col items-center">
+              <div className="flex items-center justify-center gap-2">
                 <div className="text-2xl font-bold text-calculator-info">
                   {formatCurrency(inputs.preferentialRent)}
                 </div>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-2"
+                  className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                   onClick={() => onCopyAmount(inputs.preferentialRent!, 'current preferential rent')}
                   title="Copy current preferential rent"
                 >
@@ -104,14 +104,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
             <div className="text-xs md:text-sm font-medium text-muted-foreground mb-2">Legal Regulated Rent</div>
             {scenarios.oneYear?.increases.length === 2 ? (
               <div className="flex items-center justify-center gap-3">
-                <div className="flex flex-col items-center">
+                <div className="flex items-center justify-center gap-2">
                   <div className="text-xl font-bold text-calculator-success">
                     {formatCurrency(scenarios.oneYear.increases[0].newRent)}
                   </div>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-1"
+                    className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                     onClick={() => onCopyAmount(scenarios.oneYear.increases[0].newRent, '1-year year 1')}
                     title="Copy Year 1 amount"
                   >
@@ -119,14 +119,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                   </Button>
                 </div>
                 <div className="text-xl font-bold text-calculator-success">/</div>
-                <div className="flex flex-col items-center">
+                <div className="flex items-center justify-center gap-2">
                   <div className="text-xl font-bold text-calculator-success">
                     {formatCurrency(scenarios.oneYear.newLegalRent)}
                   </div>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-1"
+                    className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                     onClick={() => onCopyAmount(scenarios.oneYear.newLegalRent, '1-year final')}
                     title="Copy final amount"
                   >
@@ -135,14 +135,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col items-center">
+              <div className="flex items-center justify-center gap-2">
                 <div className="text-2xl font-bold text-calculator-success">
                   {formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}
                 </div>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-2"
+                  className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                   onClick={() => onCopyAmount(scenarios.oneYear?.newLegalRent || inputs.currentRent, '1-year')}
                   title="Copy amount"
                 >
@@ -239,14 +239,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               <div className="text-xs md:text-sm font-medium text-muted-foreground mb-2">Tenant Pays (Preferential)</div>
               {scenarios.oneYear.increases.length === 2 ? (
                 <div className="flex items-center justify-center gap-3">
-                  <div className="flex flex-col items-center">
+                  <div className="flex items-center justify-center gap-2">
                     <div className="text-xl font-bold text-calculator-info">
                       {formatCurrency(scenarios.oneYear.increases[0].newRent === inputs.preferentialRent ? inputs.preferentialRent! : (inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100)))}
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-1"
+                      className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                       onClick={() => onCopyAmount(scenarios.oneYear.increases[0].newRent === inputs.preferentialRent ? inputs.preferentialRent! : (inputs.preferentialRent! * (1 + scenarios.oneYear.increases[0].percentIncrease / 100)), '1-year preferential year 1')}
                       title="Copy Year 1 preferential amount"
                     >
@@ -254,14 +254,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                     </Button>
                   </div>
                   <div className="text-xl font-bold text-calculator-info">/</div>
-                  <div className="flex flex-col items-center">
+                  <div className="flex items-center justify-center gap-2">
                     <div className="text-xl font-bold text-calculator-info">
                       {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-1"
+                      className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                       onClick={() => onCopyAmount(scenarios.oneYear.preferentialResult.newTenantPay, '1-year preferential final')}
                       title="Copy final preferential amount"
                     >
@@ -270,14 +270,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col items-center">
+                <div className="flex items-center justify-center gap-2">
                   <div className="text-2xl font-bold text-calculator-info">
                     {formatCurrency(scenarios.oneYear.preferentialResult.newTenantPay)}
                   </div>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-2"
+                    className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                     onClick={() => onCopyAmount(scenarios.oneYear.preferentialResult.newTenantPay, '1-year preferential')}
                     title="Copy preferential amount"
                   >
@@ -466,14 +466,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
             <div className="text-xs md:text-sm font-medium text-muted-foreground mb-2">Legal Regulated Rent</div>
             {scenarios.twoYear?.increases.length === 2 ? (
               <div className="flex items-center justify-center gap-3">
-                <div className="flex flex-col items-center">
+                <div className="flex items-center justify-center gap-2">
                   <div className="text-xl font-bold text-calculator-success">
                     {formatCurrency(scenarios.twoYear.increases[0].newRent)}
                   </div>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-1"
+                    className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                     onClick={() => onCopyAmount(scenarios.twoYear.increases[0].newRent, '2-year year 1')}
                     title="Copy Year 1 amount"
                   >
@@ -481,14 +481,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                   </Button>
                 </div>
                 <div className="text-xl font-bold text-calculator-success">/</div>
-                <div className="flex flex-col items-center">
+                <div className="flex items-center justify-center gap-2">
                   <div className="text-xl font-bold text-calculator-success">
                     {formatCurrency(scenarios.twoYear.newLegalRent)}
                   </div>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-1"
+                    className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                     onClick={() => onCopyAmount(scenarios.twoYear.newLegalRent, '2-year final')}
                     title="Copy final amount"
                   >
@@ -497,14 +497,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col items-center">
+              <div className="flex items-center justify-center gap-2">
                 <div className="text-2xl font-bold text-calculator-success">
                   {formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}
                 </div>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-2"
+                  className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                   onClick={() => onCopyAmount(scenarios.twoYear?.newLegalRent || inputs.currentRent, '2-year')}
                   title="Copy amount"
                 >
@@ -601,14 +601,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
               <div className="text-xs md:text-sm font-medium text-muted-foreground mb-2">Tenant Pays (Preferential)</div>
               {scenarios.twoYear.increases.length === 2 ? (
                 <div className="flex items-center justify-center gap-3">
-                  <div className="flex flex-col items-center">
+                  <div className="flex items-center justify-center gap-2">
                     <div className="text-xl font-bold text-calculator-info">
                       {formatCurrency(scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!)}
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-1"
+                      className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                       onClick={() => onCopyAmount(scenarios.twoYear.preferentialResult.year1Amount || inputs.preferentialRent!, '2-year preferential year 1')}
                       title="Copy Year 1 preferential amount"
                     >
@@ -616,14 +616,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                     </Button>
                   </div>
                   <div className="text-xl font-bold text-calculator-info">/</div>
-                  <div className="flex flex-col items-center">
+                  <div className="flex items-center justify-center gap-2">
                     <div className="text-xl font-bold text-calculator-info">
                       {formatCurrency(scenarios.twoYear.preferentialResult.newTenantPay)}
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-1"
+                      className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                       onClick={() => onCopyAmount(scenarios.twoYear.preferentialResult.newTenantPay, '2-year preferential final')}
                       title="Copy final preferential amount"
                     >
@@ -632,14 +632,14 @@ export default function MobileRentResults({ result, inputs, onCopyAmount }: Mobi
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col items-center">
+                <div className="flex items-center justify-center gap-2">
                   <div className="text-2xl font-bold text-calculator-info">
                     {formatCurrency(scenarios.twoYear?.preferentialResult?.newTenantPay || inputs.preferentialRent!)}
                   </div>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground mt-2"
+                    className="h-6 w-6 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
                     onClick={() => onCopyAmount(scenarios.twoYear?.preferentialResult?.newTenantPay || inputs.preferentialRent!, '2-year preferential')}
                     title="Copy preferential amount"
                   >
