@@ -284,7 +284,7 @@ export default function RentCalculatorResults({
                 </TableHeader>
                 <TableBody>
                    {/* Main rent calculation row - Legal Rent Section */}
-                   <TableRow className="border-b-2 border-primary/20 bg-calculator-success/5">
+                   <TableRow className="border-b-2 border-primary/20 bg-muted/20">
                      <TableCell className="font-bold text-base sm:text-lg">
          <div className="flex items-center justify-center gap-2">
            <div className="text-primary text-xl font-extrabold">{formatCurrency(inputs.currentRent)}</div>
