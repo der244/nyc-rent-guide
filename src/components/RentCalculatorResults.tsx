@@ -515,7 +515,7 @@ export default function RentCalculatorResults({
                           : 'Split increase'
                         }
                       </div>
-                      <div className="text-xs md:text-sm text-foreground italic">Year 1 / Year 2 amounts shown above</div>
+                      {scenarios.twoYear?.increases.length === 2 && <div className="text-xs md:text-sm text-foreground italic">Year 1 / Year 2 amounts shown above</div>}
                     </TableCell>
                   </TableRow>
 
