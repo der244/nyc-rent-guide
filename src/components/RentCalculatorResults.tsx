@@ -358,7 +358,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
             <Copy className="h-2 w-2" />
           </Button>
         </div>
-                      <div className="text-xs md:text-sm text-calculator-header font-semibold text-center">Legal Regulated Rent</div>
+                      <div className="text-xs md:text-sm text-foreground font-semibold text-center">Legal Regulated Rent</div>
                     </TableCell>
                     <TableCell className="text-center space-y-1 px-2 sm:px-4">
                       <div className="flex flex-col items-center justify-center gap-1">
@@ -389,7 +389,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             </Button>
                           </div>}
                       </div>
-                      <div className="text-sm md:text-base text-muted-foreground leading-tight whitespace-nowrap">
+                      <div className="text-sm md:text-base text-foreground leading-tight whitespace-nowrap">
                         {scenarios.oneYear?.increases.length === 1 
                           ? (
                             <span className="inline-flex items-center gap-1">
@@ -463,7 +463,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           : 'N/A'
                         }
                       </div>
-                      {scenarios.oneYear?.increases.length === 2 && <div className="text-xs md:text-sm text-muted-foreground italic">
+                      {scenarios.oneYear?.increases.length === 2 && <div className="text-xs md:text-sm text-foreground italic">
                           {scenarios.oneYear.increases[0].period} / {scenarios.oneYear.increases[1].period}
                         </div>}
                     </TableCell>
@@ -496,7 +496,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             </Button>
                           </div>}
                       </div>
-                      <div className="text-sm md:text-base text-muted-foreground leading-tight whitespace-nowrap">
+                      <div className="text-sm md:text-base text-foreground leading-tight whitespace-nowrap">
                         {scenarios.twoYear?.increases.length === 1 
                           ? (
                             <span className="inline-flex items-center gap-1">
@@ -570,7 +570,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                           : 'Split increase'
                         }
                       </div>
-                      {scenarios.twoYear?.increases.length === 2 && <div className="text-xs md:text-sm text-muted-foreground italic">Year 1 / Year 2 amounts shown above</div>}
+                      <div className="text-xs md:text-sm text-foreground italic">Year 1 / Year 2 amounts shown above</div>
                     </TableCell>
                   </TableRow>
 
@@ -583,7 +583,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
             <Copy className="h-2 w-2" />
           </Button>
         </div>
-                        <div className="text-xs md:text-sm text-calculator-header font-semibold text-center">Preferential Rent (Tenant Pays)</div>
+                        <div className="text-xs md:text-sm text-foreground font-semibold text-center">Preferential Rent (Tenant Pays)</div>
                       </TableCell>
                       <TableCell className="text-center space-y-1 px-2 sm:px-4">
                         {scenarios.oneYear?.increases.length === 2 ? <div className="flex items-center justify-center gap-2 relative">
@@ -612,7 +612,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                               <Copy className="h-2 w-2" />
                             </Button>
                           </div>}
-                        <div className="text-sm md:text-base text-muted-foreground whitespace-nowrap">
+                        <div className="text-sm md:text-base text-foreground whitespace-nowrap">
                           {scenarios.oneYear?.increases.length === 1 
                             ? (
                               <span className="inline-flex items-center gap-1">
@@ -686,7 +686,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             : 'N/A'
                           }
                         </div>
-                        {scenarios.oneYear?.increases.length === 2 && <div className="text-xs md:text-sm text-muted-foreground italic">
+                        {scenarios.oneYear?.increases.length === 2 && <div className="text-xs md:text-sm text-foreground italic">
                             {scenarios.oneYear.increases[0].period} / {scenarios.oneYear.increases[1].period}
                           </div>}
                       </TableCell>
@@ -717,7 +717,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                               <Copy className="h-2 w-2" />
                             </Button>
                           </div>}
-                        <div className="text-sm md:text-base text-muted-foreground whitespace-nowrap">
+                        <div className="text-sm md:text-base text-foreground whitespace-nowrap">
                           {scenarios.twoYear?.increases.length === 1 
                             ? (
                               <span className="inline-flex items-center gap-1">
@@ -791,7 +791,7 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
                             : 'Split increase'
                           }
                         </div>
-                        {scenarios.twoYear?.increases.length === 2 && <div className="text-xs md:text-sm text-muted-foreground italic">Year 1 / Year 2 amounts shown above</div>}
+                        {scenarios.twoYear?.increases.length === 2 && <div className="text-xs md:text-sm text-foreground italic">Year 1 / Year 2 amounts shown above</div>}
                       </TableCell>
                     </TableRow>}
                 </TableBody>
