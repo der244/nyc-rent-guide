@@ -25,8 +25,6 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
   const [preferentialRent, setPreferentialRent] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [unit, setUnit] = useState<string>("");
-  const [tenantName, setTenantName] = useState<string>("");
-  const [showOptionalFields, setShowOptionalFields] = useState<boolean>(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showSplash, setShowSplash] = useState<boolean>(false);
 
@@ -87,7 +85,6 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
           preferentialRent: prefAmount,
           address: address.trim() || undefined,
           unit: unit.trim() || undefined,
-          tenantName: tenantName.trim() || undefined,
         });
       }, 300);
     } else {
@@ -308,12 +305,12 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
       />
       <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
         <CardHeader className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
-          <CardTitle className="text-xl sm:text-2xl lg:text-3xl font-semibold">Lease Information</CardTitle>
+          <CardTitle className="text-lg sm:text-xl font-semibold">Lease Information</CardTitle>
         </CardHeader>
-      <CardContent className="space-y-6 sm:space-y-8 p-6 sm:p-8">
+      <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
         {/* Lease Start Date */}
-        <div className="space-y-3">
-          <Label htmlFor="lease-start" className="text-base sm:text-lg font-medium">
+        <div className="space-y-2">
+          <Label htmlFor="lease-start" className="text-sm font-medium">
             Lease Start Date
           </Label>
           <div className="relative">
@@ -325,7 +322,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
               onChange={handleDateInputChange}
               onBlur={handleDateBlur}
               className={cn(
-                "pr-12 h-12 text-base",
+                "pr-10",
                 errors.leaseStartDate && "border-destructive"
               )}
               placeholder="1/1/24 or mm/dd/yyyy"
@@ -352,17 +349,17 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
             </Popover>
           </div>
           {errors.leaseStartDate && (
-            <p className="text-base text-destructive">{errors.leaseStartDate}</p>
+            <p className="text-sm text-destructive">{errors.leaseStartDate}</p>
           )}
-           <p className="text-sm text-muted-foreground">
+           <p className="text-xs text-muted-foreground">
              Enter date manually (1/1/24 or mm/dd/yyyy) or click the calendar icon.
            </p>
         </div>
 
 
         {/* Current Legal Regulated Rent */}
-        <div className="space-y-3">
-          <Label htmlFor="current-rent" className="text-base sm:text-lg font-medium">
+        <div className="space-y-2">
+          <Label htmlFor="current-rent" className="text-sm font-medium">
             Current Legal Regulated Rent
           </Label>
           <div className="relative">
@@ -376,19 +373,19 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
               inputMode="decimal"
               pattern="[0-9]*"
               className={cn(
-                "pl-10 h-12 text-base",
+                "pl-8",
                 errors.currentRent && "border-destructive"
               )}
             />
           </div>
           {errors.currentRent && (
-            <p className="text-base text-destructive">{errors.currentRent}</p>
+            <p className="text-sm text-destructive">{errors.currentRent}</p>
           )}
         </div>
 
         {/* Preferential Rent (Optional) */}
-        <div className="space-y-3">
-          <Label htmlFor="preferential-rent" className="text-base sm:text-lg font-medium">
+        <div className="space-y-2">
+          <Label htmlFor="preferential-rent" className="text-sm font-medium">
             Preferential Rent <span className="text-muted-foreground font-normal">(Optional)</span>
           </Label>
           <div className="relative">
@@ -402,93 +399,59 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
               inputMode="decimal"
               pattern="[0-9]*"
               className={cn(
-                "pl-10 h-12 text-base",
+                "pl-8",
                 errors.preferentialRent && "border-destructive"
               )}
             />
           </div>
           {errors.preferentialRent && (
-            <p className="text-base text-destructive">{errors.preferentialRent}</p>
+            <p className="text-sm text-destructive">{errors.preferentialRent}</p>
           )}
-           <p className="text-sm text-muted-foreground">
-             If the Tenant pays less than the legal regulated rent due to a preferential rent agreement
-           </p>
+          <p className="text-xs text-muted-foreground">
+            If you pay less than the legal regulated rent due to a preferential rent agreement
+          </p>
         </div>
 
-        {/* Optional Fields Toggle */}
-        <div className="space-y-4">
-          <div className="flex justify-center">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setShowOptionalFields(!showOptionalFields)}
-              className="bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-yellow-100 hover:to-yellow-200 border-blue-200 hover:border-yellow-300 text-blue-700 hover:text-yellow-800 transition-all duration-300 ease-in-out font-medium text-base px-8 py-4 h-auto rounded-lg shadow-sm hover:shadow-md"
-            >
-              {showOptionalFields ? "Hide Tenant Info" : "Tenant Info (Optional)"}
-            </Button>
-          </div>
+        {/* Address (Optional) */}
+        <div className="space-y-2">
+          <Label htmlFor="address" className="text-sm font-medium">
+            Property Address <span className="text-muted-foreground font-normal">(Optional)</span>
+          </Label>
+          <Input
+            id="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="123 Main Street, New York, NY 10001"
+            className="w-full"
+          />
+          <p className="text-xs text-muted-foreground">
+            Include address for reference in printed calculations
+          </p>
+        </div>
 
-          {showOptionalFields && (
-            <div className="space-y-6 pt-4 animate-fade-in">
-              {/* Tenant Name (Optional) */}
-              <div className="space-y-3">
-                <Label htmlFor="tenant-name" className="text-base sm:text-lg font-medium">
-                  Tenant Name <span className="text-muted-foreground font-normal">(Optional)</span>
-                </Label>
-                <Input
-                  id="tenant-name"
-                  value={tenantName}
-                  onChange={(e) => setTenantName(e.target.value)}
-                  placeholder="John Doe"
-                  className="w-full h-12 text-base"
-                />
-                <p className="text-sm text-muted-foreground">
-                  Name for reference in printed calculations
-                </p>
-              </div>
-
-              {/* Address (Optional) */}
-              <div className="space-y-3">
-                <Label htmlFor="address" className="text-base sm:text-lg font-medium">
-                  Property Address <span className="text-muted-foreground font-normal">(Optional)</span>
-                </Label>
-                <Input
-                  id="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  placeholder="123 Main Street, New York, NY 10001"
-                  className="w-full h-12 text-base"
-                />
-                <p className="text-sm text-muted-foreground">
-                  Include address for reference in printed calculations
-                </p>
-              </div>
-
-              {/* Unit (Optional) */}
-              <div className="space-y-3">
-                <Label htmlFor="unit" className="text-base sm:text-lg font-medium">
-                  Unit Number <span className="text-muted-foreground font-normal">(Optional)</span>
-                </Label>
-                <Input
-                  id="unit"
-                  value={unit}
-                  onChange={(e) => setUnit(e.target.value)}
-                  placeholder="Apt 4B"
-                  className="w-full h-12 text-base"
-                />
-                <p className="text-sm text-muted-foreground">
-                  Apartment or unit identifier
-                </p>
-              </div>
-            </div>
-          )}
+        {/* Unit (Optional) */}
+        <div className="space-y-2">
+          <Label htmlFor="unit" className="text-sm font-medium">
+            Unit Number <span className="text-muted-foreground font-normal">(Optional)</span>
+          </Label>
+          <Input
+            id="unit"
+            value={unit}
+            onChange={(e) => setUnit(e.target.value)}
+            placeholder="Apt 4B"
+            className="w-full"
+          />
+          <p className="text-xs text-muted-foreground">
+            Apartment or unit identifier
+          </p>
         </div>
 
         {/* Calculate Button */}
         <Button 
           onClick={validateAndSubmit}
           disabled={isCalculating}
-          className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary font-medium text-base sm:text-lg h-14"
+          className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary font-medium text-sm sm:text-base"
+          size="lg"
         >
           {isCalculating ? 'Calculating...' : 'Calculate Rent Increase'}
         </Button>
