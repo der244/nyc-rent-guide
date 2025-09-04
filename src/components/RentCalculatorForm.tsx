@@ -303,7 +303,7 @@ export default function RentCalculatorForm({ onCalculate, isCalculating }: RentC
         isVisible={showSplash} 
         onComplete={() => setShowSplash(false)} 
       />
-      <Card className="shadow-lg border-0" style={{ boxShadow: 'var(--shadow-card)' }}>
+      <Card className="shadow-lg border-0 bg-muted/50" style={{ boxShadow: 'var(--shadow-card)' }}>
         <CardHeader className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
           <CardTitle className="text-2xl sm:text-3xl font-semibold">Lease Information</CardTitle>
         </CardHeader>
