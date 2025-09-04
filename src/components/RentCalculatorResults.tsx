@@ -883,13 +883,13 @@ NYC rent-stabilized apartments only. Not legal advice. Confirm with HCR/RGB.`;
 
 
       {/* Important Notice - Screen only */}
-      <Card className="border-calculator-warning/50 bg-calculator-warning/5 print:hidden">
+      <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 print:hidden shadow-md">
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
-            <AlertCircle className="h-5 w-5 text-calculator-warning mt-0.5 flex-shrink-0" />
+            <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
             <div className="space-y-2 text-sm">
-              <p className="font-medium text-calculator-warning">Important Disclaimer</p>
-              <p className="text-foreground/80">
+              <p className="font-semibold text-amber-800">Important Disclaimer</p>
+              <p className="text-slate-700 leading-relaxed">
                 This calculation is for NYC rent-stabilized apartments only and is not legal advice. 
                 Please confirm with the NYC Housing and Community Renewal (HCR) or Rent Guidelines Board (RGB). 
                 Vacancy allowances, Major Capital Improvements (MCI), Individual Apartment Improvements (IAI), 
