@@ -239,8 +239,25 @@ export default function RentCalculator() {
         </div>
       </main>
 
+      {/* Contact Bubble */}
+      <div className="flex justify-center mt-8 sm:mt-12 lg:mt-16 px-3 sm:px-6 lg:px-8">
+        <div className="bg-green-500 hover:bg-green-600 transition-colors duration-300 rounded-full px-4 sm:px-6 lg:px-8 py-3 sm:py-4 shadow-lg max-w-md sm:max-w-lg lg:max-w-xl mx-auto">
+          <p className="text-white text-center text-xs sm:text-sm lg:text-base font-medium leading-relaxed">
+            This site was created by Mitch Silverman.{" "}
+            <a 
+              href="https://wa.me/18482456749?text=Hi%2C%20I%27m%20interested%20in%20creating%20a%20website%2Fautomation%20solution%21%20Please%20let%20me%20know%20the%20details."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:no-underline font-semibold"
+            >
+              Contact Mitch for your website and automation needs!
+            </a>
+          </p>
+        </div>
+      </div>
+
       {/* Footer */}
-      <footer className="bg-muted/50 mt-8 sm:mt-12 lg:mt-16">
+      <footer className="bg-muted/50 mt-6 sm:mt-8">
         <div className="container mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
           <div className="text-center text-xs sm:text-sm text-muted-foreground space-y-1">
             <p>
