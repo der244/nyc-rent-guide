@@ -245,7 +245,7 @@ export default function RentCalculator() {
           <p className="text-white text-center text-xs sm:text-sm lg:text-base font-medium leading-relaxed">
             This site was created by Mitch Silverman.{" "}
             <a 
-              href="https://wa.me/18482456749?text=Hi%2C%20I%27m%20interested%20in%20creating%20a%20website%2Fautomation%20solution%21%20Please%20let%20me%20know%20the%20details."
+              href="https://api.whatsapp.com/send?phone=18482456749&text=Hi,+I'm+interested+in+creating+a+website%2Fautomation+solution!+Please+let+me+know+the+details&utm_source=chatgpt.com"
               target="_blank"
               rel="noopener noreferrer"
               className="underline hover:no-underline font-semibold"
