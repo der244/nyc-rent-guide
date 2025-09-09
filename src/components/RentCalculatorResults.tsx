@@ -38,18 +38,73 @@ export default function RentCalculatorResults({
     orderNumber: result.oneYear.order
   };
   
-  const copyLeaseAmount = async (amount: number | string, leaseType: string) => {
+  const copyLeaseAmount = async (amount: number | string, leaseType: string, event?: React.MouseEvent) => {
+    // Prevent event propagation to avoid interference
+    if (event) {
+      event.stopPropagation();
+    }
+
+    const textToCopy = typeof amount === 'number' ? formatCurrency(amount) : amount.toString();
+    
+    console.log('Copy attempt:', { textToCopy, leaseType, hasClipboard: !!navigator.clipboard });
+
     try {
-      const textToCopy = typeof amount === 'number' ? formatCurrency(amount) : amount.toString();
-      await navigator.clipboard.writeText(textToCopy);
-      toast({
-        title: "Amount copied",
-        description: `${leaseType} ${typeof amount === 'number' ? formatCurrency(amount) : amount} copied to clipboard`
-      });
-    } catch (err) {
+      // Modern Clipboard API (preferred method)
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(textToCopy);
+        console.log('✅ Modern clipboard API success');
+        
+        toast({
+          title: "Amount copied",
+          description: `${leaseType} ${typeof amount === 'number' ? formatCurrency(amount) : amount} copied to clipboard`
+        });
+        return;
+      }
+
+      // Fallback method for older browsers or non-secure contexts
+      console.log('⚠️ Using fallback clipboard method');
+      
+      const textArea = document.createElement('textarea');
+      textArea.value = textToCopy;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      
+      textArea.focus();
+      textArea.select();
+      
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textArea);
+      
+      if (successful) {
+        console.log('✅ Fallback clipboard method success');
+        toast({
+          title: "Amount copied",
+          description: `${leaseType} ${typeof amount === 'number' ? formatCurrency(amount) : amount} copied to clipboard`
+        });
+      } else {
+        throw new Error('execCommand failed');
+      }
+      
+    } catch (err: any) {
+      console.error('❌ Copy failed:', err);
+      
+      let errorMessage = "Unable to copy to clipboard.";
+      
+      if (!navigator.clipboard) {
+        errorMessage = "Clipboard not supported in this browser.";
+      } else if (!window.isSecureContext) {
+        errorMessage = "Clipboard requires secure connection (HTTPS).";
+      } else if (err.name === 'NotAllowedError') {
+        errorMessage = "Clipboard access denied. Please allow clipboard permissions.";
+      } else if (err.name === 'NotSupportedError') {
+        errorMessage = "Clipboard not supported on this device.";
+      }
+      
       toast({
         title: "Copy failed",
-        description: "Unable to copy to clipboard. Please try again.",
+        description: errorMessage,
         variant: "destructive"
       });
     }
@@ -264,11 +319,11 @@ export default function RentCalculatorResults({
                         year: "numeric"
                       })}
                         </div>
-                        <Button variant="ghost" size="sm" className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", {
+                        <Button variant="ghost" size="sm" className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={(e) => copyLeaseAmount(new Date(inputs.leaseStartDate.getFullYear() + 1, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", {
                       month: "2-digit",
                       day: "2-digit",
                       year: "numeric"
-                    }), '1-year lease end date')} title="Copy lease end date">
+                    }), '1-year lease end date', e)} title="Copy lease end date">
                           <Copy className="h-2.5 w-2.5" />
                         </Button>
                       </div>
@@ -282,11 +337,11 @@ export default function RentCalculatorResults({
                         year: "numeric"
                       })}
                         </div>
-                        <Button variant="ghost" size="sm" className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", {
+                        <Button variant="ghost" size="sm" className="h-5 w-5 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={(e) => copyLeaseAmount(new Date(inputs.leaseStartDate.getFullYear() + 2, inputs.leaseStartDate.getMonth(), inputs.leaseStartDate.getDate() - 1).toLocaleDateString("en-US", {
                       month: "2-digit",
                       day: "2-digit",
                       year: "numeric"
-                    }), '2-year lease end date')} title="Copy lease end date">
+                    }), '2-year lease end date', e)} title="Copy lease end date">
                           <Copy className="h-2.5 w-2.5" />
                         </Button>
                       </div>
@@ -299,7 +354,7 @@ export default function RentCalculatorResults({
                      <TableCell className="font-bold text-base sm:text-lg">
          <div className="flex items-center justify-center gap-2">
            <div className="text-primary text-xl font-extrabold">{formatCurrency(inputs.currentRent)}</div>
-           <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(inputs.currentRent, 'current legal rent')} title="Copy current legal rent">
+           <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={(e) => copyLeaseAmount(inputs.currentRent, 'current legal rent', e)} title="Copy current legal rent">
              <Copy className="h-2 w-2" />
            </Button>
          </div>
@@ -312,7 +367,7 @@ export default function RentCalculatorResults({
                <div className="text-sm sm:text-lg font-extrabold text-primary">
                  {formatCurrency(scenarios.oneYear.increases[0].newRent)}
                </div>
-               <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.oneYear.increases[0].newRent, '1-year year 1')} title="Copy Year 1 amount">
+               <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={(e) => copyLeaseAmount(scenarios.oneYear.increases[0].newRent, '1-year year 1', e)} title="Copy Year 1 amount">
                  <Copy className="h-2 w-2" />
                </Button>
              </div>
@@ -321,7 +376,7 @@ export default function RentCalculatorResults({
                <div className="text-sm sm:text-lg font-extrabold text-primary">
                  {formatCurrency(scenarios.oneYear.newLegalRent)}
                </div>
-               <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.oneYear.newLegalRent, '1-year final')} title="Copy final amount">
+               <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={(e) => copyLeaseAmount(scenarios.oneYear.newLegalRent, '1-year final', e)} title="Copy final amount">
                  <Copy className="h-2 w-2" />
                </Button>
              </div>
@@ -329,7 +384,7 @@ export default function RentCalculatorResults({
                              <div className="text-sm sm:text-lg font-extrabold text-primary break-words">
                                {formatCurrency(scenarios.oneYear?.newLegalRent || inputs.currentRent)}
                              </div>
-                             <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.oneYear?.newLegalRent || inputs.currentRent, '1-year')} title="Copy amount">
+                             <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={(e) => copyLeaseAmount(scenarios.oneYear?.newLegalRent || inputs.currentRent, '1-year', e)} title="Copy amount">
                                <Copy className="h-2 w-2" />
                              </Button>
                            </div>}
@@ -343,7 +398,7 @@ export default function RentCalculatorResults({
                                 variant="ghost"
                                 size="sm"
                                 className="h-3 w-3 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(`${scenarios.oneYear.increases[0].percentIncrease}%`, '1-year percentage increase')}
+                                onClick={(e) => copyLeaseAmount(`${scenarios.oneYear.increases[0].percentIncrease}%`, '1-year percentage increase', e)}
                                 title="Copy percentage increase"
                               >
                                 <Copy className="h-2 w-2" />
@@ -353,7 +408,7 @@ export default function RentCalculatorResults({
                                 variant="ghost"
                                 size="sm"
                                 className="h-3 w-3 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.oneYear.increases[0].dollarIncrease, '1-year dollar increase')}
+                                onClick={(e) => copyLeaseAmount(scenarios.oneYear.increases[0].dollarIncrease, '1-year dollar increase', e)}
                                 title="Copy dollar increase"
                               >
                                 <Copy className="h-2 w-2" />
@@ -368,7 +423,7 @@ export default function RentCalculatorResults({
                                 variant="ghost"
                                 size="sm"
                                 className="h-3 w-3 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(`${scenarios.oneYear.increases[0].percentIncrease}%`, '1-year year 1 percentage increase')}
+                                onClick={(e) => copyLeaseAmount(`${scenarios.oneYear.increases[0].percentIncrease}%`, '1-year year 1 percentage increase', e)}
                                 title="Copy year 1 percentage increase"
                               >
                                 <Copy className="h-2 w-2" />
@@ -378,7 +433,7 @@ export default function RentCalculatorResults({
                                 variant="ghost"
                                 size="sm"
                                 className="h-3 w-3 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(`${scenarios.oneYear.increases[1].percentIncrease}%`, '1-year year 2 percentage increase')}
+                                onClick={(e) => copyLeaseAmount(`${scenarios.oneYear.increases[1].percentIncrease}%`, '1-year year 2 percentage increase', e)}
                                 title="Copy year 2 percentage increase"
                               >
                                 <Copy className="h-2 w-2" />
@@ -388,7 +443,7 @@ export default function RentCalculatorResults({
                                 variant="ghost"
                                 size="sm"
                                 className="h-3 w-3 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.oneYear.increases[0].dollarIncrease, '1-year year 1 dollar increase')}
+                                onClick={(e) => copyLeaseAmount(scenarios.oneYear.increases[0].dollarIncrease, '1-year year 1 dollar increase', e)}
                                 title="Copy year 1 dollar increase"
                               >
                                 <Copy className="h-2 w-2" />
@@ -398,7 +453,7 @@ export default function RentCalculatorResults({
                                 variant="ghost"
                                 size="sm"
                                 className="h-3 w-3 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.oneYear.increases[1].dollarIncrease, '1-year year 2 dollar increase')}
+                                onClick={(e) => copyLeaseAmount(scenarios.oneYear.increases[1].dollarIncrease, '1-year year 2 dollar increase', e)}
                                 title="Copy year 2 dollar increase"
                               >
                                 <Copy className="h-2 w-2" />
@@ -419,7 +474,7 @@ export default function RentCalculatorResults({
               <div className="text-sm sm:text-lg font-bold text-primary">
                 {formatCurrency(scenarios.twoYear.increases[0].newRent)}
               </div>
-              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.twoYear.increases[0].newRent, '2-year year 1')} title="Copy Year 1 amount">
+              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={(e) => copyLeaseAmount(scenarios.twoYear.increases[0].newRent, '2-year year 1', e)} title="Copy Year 1 amount">
                 <Copy className="h-2 w-2" />
               </Button>
             </div>
@@ -428,7 +483,7 @@ export default function RentCalculatorResults({
               <div className="text-sm sm:text-lg font-bold text-primary">
                 {formatCurrency(scenarios.twoYear.newLegalRent)}
               </div>
-              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.twoYear.newLegalRent, '2-year final')} title="Copy final amount">
+              <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={(e) => copyLeaseAmount(scenarios.twoYear.newLegalRent, '2-year final', e)} title="Copy final amount">
                 <Copy className="h-2 w-2" />
               </Button>
             </div>
@@ -436,7 +491,7 @@ export default function RentCalculatorResults({
                             <div className="text-sm sm:text-lg font-bold text-primary break-words">
                               {formatCurrency(scenarios.twoYear?.newLegalRent || inputs.currentRent)}
                             </div>
-                            <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(scenarios.twoYear?.newLegalRent || inputs.currentRent, '2-year')} title="Copy amount">
+                            <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={(e) => copyLeaseAmount(scenarios.twoYear?.newLegalRent || inputs.currentRent, '2-year', e)} title="Copy amount">
                               <Copy className="h-2 w-2" />
                             </Button>
                           </div>}
@@ -450,7 +505,7 @@ export default function RentCalculatorResults({
                                 variant="ghost"
                                 size="sm"
                                 className="h-3 w-3 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(`${scenarios.twoYear.increases[0].percentIncrease}%`, '2-year percentage increase')}
+                                onClick={(e) => copyLeaseAmount(`${scenarios.twoYear.increases[0].percentIncrease}%`, '2-year percentage increase', e)}
                                 title="Copy percentage increase"
                               >
                                 <Copy className="h-2 w-2" />
@@ -460,7 +515,7 @@ export default function RentCalculatorResults({
                                 variant="ghost"
                                 size="sm"
                                 className="h-3 w-3 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.twoYear.increases[0].dollarIncrease, '2-year dollar increase')}
+                                onClick={(e) => copyLeaseAmount(scenarios.twoYear.increases[0].dollarIncrease, '2-year dollar increase', e)}
                                 title="Copy dollar increase"
                               >
                                 <Copy className="h-2 w-2" />
@@ -475,7 +530,7 @@ export default function RentCalculatorResults({
                                 variant="ghost"
                                 size="sm"
                                 className="h-3 w-3 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(`${scenarios.twoYear.increases[0].percentIncrease}%`, '2-year year 1 percentage increase')}
+                                onClick={(e) => copyLeaseAmount(`${scenarios.twoYear.increases[0].percentIncrease}%`, '2-year year 1 percentage increase', e)}
                                 title="Copy year 1 percentage increase"
                               >
                                 <Copy className="h-2 w-2" />
@@ -485,7 +540,7 @@ export default function RentCalculatorResults({
                                 variant="ghost"
                                 size="sm"
                                 className="h-3 w-3 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(`${scenarios.twoYear.increases[1].percentIncrease}%`, '2-year year 2 percentage increase')}
+                                onClick={(e) => copyLeaseAmount(`${scenarios.twoYear.increases[1].percentIncrease}%`, '2-year year 2 percentage increase', e)}
                                 title="Copy year 2 percentage increase"
                               >
                                 <Copy className="h-2 w-2" />
@@ -495,7 +550,7 @@ export default function RentCalculatorResults({
                                 variant="ghost"
                                 size="sm"
                                 className="h-3 w-3 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.twoYear.increases[0].dollarIncrease, '2-year year 1 dollar increase')}
+                                onClick={(e) => copyLeaseAmount(scenarios.twoYear.increases[0].dollarIncrease, '2-year year 1 dollar increase', e)}
                                 title="Copy year 1 dollar increase"
                               >
                                 <Copy className="h-2 w-2" />
@@ -505,7 +560,7 @@ export default function RentCalculatorResults({
                                 variant="ghost"
                                 size="sm"
                                 className="h-3 w-3 p-0 hover:bg-muted text-muted-foreground hover:text-foreground"
-                                onClick={() => copyLeaseAmount(scenarios.twoYear.increases[1].dollarIncrease, '2-year year 2 dollar increase')}
+                                onClick={(e) => copyLeaseAmount(scenarios.twoYear.increases[1].dollarIncrease, '2-year year 2 dollar increase', e)}
                                 title="Copy year 2 dollar increase"
                               >
                                 <Copy className="h-2 w-2" />
@@ -524,7 +579,7 @@ export default function RentCalculatorResults({
                        <TableCell className="font-semibold">
          <div className="flex items-center justify-center gap-2">
            <div className="text-xl font-bold text-slate-700">{formatCurrency(inputs.preferentialRent)}</div>
-           <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={() => copyLeaseAmount(inputs.preferentialRent!, 'current preferential rent')} title="Copy current preferential rent">
+           <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-muted text-muted-foreground hover:text-foreground" onClick={(e) => copyLeaseAmount(inputs.preferentialRent!, 'current preferential rent', e)} title="Copy current preferential rent">
              <Copy className="h-2 w-2" />
            </Button>
          </div>
