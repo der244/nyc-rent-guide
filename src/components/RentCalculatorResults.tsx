@@ -46,33 +46,40 @@ export default function RentCalculatorResults({
 
     const textToCopy = typeof amount === 'number' ? formatCurrency(amount) : amount.toString();
     
-    console.log('Copy attempt:', { textToCopy, leaseType, hasClipboard: !!navigator.clipboard });
+    console.log('🔄 Copy attempt:', { textToCopy, leaseType, hasClipboard: !!navigator.clipboard, isSecure: window.isSecureContext });
 
     try {
-      // Modern Clipboard API (preferred method)
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(textToCopy);
-        console.log('✅ Modern clipboard API success');
-        
-        toast({
-          title: "Amount copied",
-          description: `${leaseType} ${typeof amount === 'number' ? formatCurrency(amount) : amount} copied to clipboard`
-        });
-        return;
+      // Try modern Clipboard API first (most browsers support this now)
+      if (navigator.clipboard) {
+        try {
+          await navigator.clipboard.writeText(textToCopy);
+          console.log('✅ Modern clipboard API success');
+          
+          toast({
+            title: "Amount copied",
+            description: `${leaseType} ${typeof amount === 'number' ? formatCurrency(amount) : amount} copied to clipboard`
+          });
+          return;
+        } catch (clipboardErr: any) {
+          console.warn('⚠️ Modern clipboard failed, trying fallback:', clipboardErr.message);
+          // Don't return here - fall through to fallback method
+        }
       }
 
-      // Fallback method for older browsers or non-secure contexts
-      console.log('⚠️ Using fallback clipboard method');
+      // Fallback method using execCommand
+      console.log('🎯 Using fallback clipboard method');
       
       const textArea = document.createElement('textarea');
       textArea.value = textToCopy;
       textArea.style.position = 'fixed';
       textArea.style.left = '-999999px';
       textArea.style.top = '-999999px';
+      textArea.style.opacity = '0';
       document.body.appendChild(textArea);
       
       textArea.focus();
       textArea.select();
+      textArea.setSelectionRange(0, 99999); // For mobile devices
       
       const successful = document.execCommand('copy');
       document.body.removeChild(textArea);
@@ -84,27 +91,15 @@ export default function RentCalculatorResults({
           description: `${leaseType} ${typeof amount === 'number' ? formatCurrency(amount) : amount} copied to clipboard`
         });
       } else {
-        throw new Error('execCommand failed');
+        throw new Error('All clipboard methods failed');
       }
       
     } catch (err: any) {
-      console.error('❌ Copy failed:', err);
-      
-      let errorMessage = "Unable to copy to clipboard.";
-      
-      if (!navigator.clipboard) {
-        errorMessage = "Clipboard not supported in this browser.";
-      } else if (!window.isSecureContext) {
-        errorMessage = "Clipboard requires secure connection (HTTPS).";
-      } else if (err.name === 'NotAllowedError') {
-        errorMessage = "Clipboard access denied. Please allow clipboard permissions.";
-      } else if (err.name === 'NotSupportedError') {
-        errorMessage = "Clipboard not supported on this device.";
-      }
+      console.error('❌ All copy methods failed:', err);
       
       toast({
         title: "Copy failed",
-        description: errorMessage,
+        description: "Please manually select and copy the text. Your browser may be blocking clipboard access.",
         variant: "destructive"
       });
     }
