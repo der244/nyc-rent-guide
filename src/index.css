@@ -127,18 +127,38 @@ All colors MUST be HSL.
 @media print {
   /* Hide everything except the print-only content */
   body * {
-    visibility: hidden;
+    display: none !important;
   }
-  
-  .print-only, .print-only * {
-    visibility: visible;
-  }
-  
+
   .print-only {
-    position: absolute;
-    left: 0;
-    top: 0;
+    display: block !important;
+    position: static;
     width: 100%;
+  }
+
+  .print-only * {
+    display: revert !important;
+  }
+
+  .print-only table {
+    display: table !important;
+  }
+
+  .print-only thead {
+    display: table-header-group !important;
+  }
+
+  .print-only tbody {
+    display: table-row-group !important;
+  }
+
+  .print-only tr {
+    display: table-row !important;
+  }
+
+  .print-only th,
+  .print-only td {
+    display: table-cell !important;
   }
   
   /* General print formatting */
